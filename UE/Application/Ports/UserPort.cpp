@@ -31,12 +31,18 @@ void UserPort::showConnecting()
     gui.showConnecting();
 }
 
+void UserPort::startListViewHandler(OptionalSelection index)
+{
+    logger.logInfo(index.second);
+}
+
 void UserPort::showConnected()
 {
     IUeGui::IListViewMode& menu = gui.setListViewMode();
     menu.clearSelectionList();
     menu.addSelectionListItem("Compose SMS", "");
     menu.addSelectionListItem("View SMS", "");
+    gui.setAcceptCallback([&](){startListViewHandler(menu.getCurrentItemIndex());});
 }
 
 }
