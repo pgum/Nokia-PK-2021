@@ -11,6 +11,7 @@ namespace ue{
             MOCK_METHOD(SMS,getSMS,(int smsIndex),(final));
             MOCK_METHOD(std::vector<SMS>,getAllSms,(),(final));
             MOCK_METHOD(void,addSMS,(SMS sms),(final));
+            MOCK_METHOD(void,deleteReadSMS,(int smsIndex),(final));
     };
 }
 

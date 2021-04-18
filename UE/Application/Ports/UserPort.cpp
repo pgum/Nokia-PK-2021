@@ -39,6 +39,8 @@ void UserPort::smsListViewHandler(OptionalSelection messageIndex)
     IUeGui::ITextMode& messageView = gui.setViewTextMode();
     currentSms.setRead();
     messageView.setText(currentSms.getMessage());
+    smsdb.deleteReadSMS(messageIndex.second);
+    gui.setRejectCallback([this](){showSmsList();});
 }
 
 void UserPort::showSmsList()
@@ -46,17 +48,15 @@ void UserPort::showSmsList()
     std::vector<SMS> smsList = this->smsdb.getAllSms();
     IUeGui::IListViewMode& menu = gui.setListViewMode();
     menu.clearSelectionList();
-    int smsIndex=0;
     for(std::vector<SMS>::iterator i=smsList.begin();
             i!=smsList.end();
             i++
         ){
-        SMS currentSms = smsdb.getSMS(smsIndex);
-        std::string messageFrom = "From: " + to_string(currentSms.getPhoneNumber());
+        std::string messageFrom = "From: " + to_string(i->getPhoneNumber());
         menu.addSelectionListItem(messageFrom,"");
-        smsIndex++;
     }
     gui.setAcceptCallback([&](){smsListViewHandler(menu.getCurrentItemIndex());});
+    gui.setRejectCallback([this](){showConnected();});
 }
 
 void UserPort::ListViewHandler(OptionalSelection index)

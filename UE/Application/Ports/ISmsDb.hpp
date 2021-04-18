@@ -12,6 +12,7 @@ namespace ue
         virtual std::vector<SMS> getAllSms() = 0;
         virtual void addSMS(SMS sms) = 0;
         virtual SMS getSMS(int smsIndex) = 0;
+        virtual void deleteReadSMS(int smsIndex) = 0;
     };
 }
 

@@ -24,5 +24,9 @@ namespace ue
         return this->smsList.at(smsIndex);
     }
 
+    void SmsDb::deleteReadSMS(int smsIndex){
+        this->smsList.erase(smsList.begin()+smsIndex);
+    }
+
 }
 
