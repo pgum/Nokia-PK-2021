@@ -26,9 +26,9 @@ public:
     MOCK_METHOD(void, showNotConnected, (), (final));
     MOCK_METHOD(void, showConnecting, (), (final));
     MOCK_METHOD(void, showConnected, (), (final));
-
-    //virtual void startListViewHandler(OptionalSelection index) = 0;
-    MOCK_METHOD(void,startListViewHandler,(OptionalSelection index),(final));
+    MOCK_METHOD(void,showSmsList,(),(final));
+    MOCK_METHOD(void,ListViewHandler,(OptionalSelection index),(final));
+    MOCK_METHOD(void,smsListViewHandler,(OptionalSelection messageIndex),(final));
 };
 
 }

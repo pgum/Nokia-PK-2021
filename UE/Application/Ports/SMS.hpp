@@ -13,6 +13,11 @@ namespace ue {
 
         public:
             SMS(std::string message,common::PhoneNumber from,bool read);
+            bool getRead();
+            std::string getMessage();
+            common::PhoneNumber getPhoneNumber();
+            void setRead();
+
     };
 }
 

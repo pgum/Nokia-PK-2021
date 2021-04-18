@@ -23,8 +23,9 @@ public:
     virtual void showConnecting() = 0;
     virtual void showConnected() = 0;
 
-    //virtual void showSmsList() = 0;
-    virtual void startListViewHandler(OptionalSelection index) = 0;
+    virtual void showSmsList() = 0;
+    virtual void ListViewHandler(OptionalSelection index) = 0;
+    virtual void smsListViewHandler(OptionalSelection messageIndex) = 0;
 };
 
 }

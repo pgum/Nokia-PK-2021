@@ -10,10 +10,10 @@ namespace ue {
             std::vector<SMS> smsList;
 
         public:
-
+            SmsDb();
             std::vector<SMS> getAllSms() override;
             void addSMS(SMS sms) override;
-
+            SMS getSMS(int smsIndex) override;
     };
 
 
