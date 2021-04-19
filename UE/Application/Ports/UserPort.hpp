@@ -4,7 +4,6 @@
 #include "Logger/PrefixedLogger.hpp"
 #include "IUeGui.hpp"
 #include "Messages/PhoneNumber.hpp"
-#include "SmsDb.hpp"
 
 namespace ue
 {
@@ -15,7 +14,7 @@ public:
     using Selection = unsigned;
     using OptionalSelection = std::pair<bool,Selection>;
 
-    UserPort(common::ILogger& logger, IUeGui& gui, common::PhoneNumber phoneNumber,ISmsDb& smsdb);
+    UserPort(common::ILogger& logger, IUeGui& gui, common::PhoneNumber phoneNumber);
     void start(IUserEventsHandler& handler);
     void stop();
 
@@ -23,16 +22,17 @@ public:
     void showConnecting() override;
     void showConnected() override;
 
-    void showSmsList() override;
+    void showSmsList(std::vector<SMS> smsList) override;
     void ListViewHandler(OptionalSelection index) override;
     void smsListViewHandler(OptionalSelection messageIndex) override;
+    void composeSms() override;
+    void showSingleSms(SMS sms) override;
 
 private:
     common::PrefixedLogger logger;
     IUeGui& gui;
     common::PhoneNumber phoneNumber;
     IUserEventsHandler* handler = nullptr;
-    ISmsDb& smsdb;
 };
 
 }

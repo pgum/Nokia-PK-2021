@@ -39,5 +39,12 @@ void BaseState::handleAttachReject()
 {
     logger.logError("Uexpected: handleAttachReject");
 }
-
+void BaseState::handleViewSmsList()
+{
+    logger.logError("Unexpected: handleViewSms");
+}
+void BaseState::handleSingleSms(int messageIndex)
+{
+    logger.logError("Unexpected: handleSingleSms: " + messageIndex);
+}
 }

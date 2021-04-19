@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
 
     SmsDb smsDb;
     BtsPort bts(logger, tranport, phoneNumber);
-    UserPort user(logger, gui, phoneNumber,smsDb);
+    UserPort user(logger, gui, phoneNumber);
     TimerPort timer(logger);
     Application app(phoneNumber, logger, bts, user, timer, smsDb);
     bts.start(app);

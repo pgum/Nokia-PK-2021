@@ -46,5 +46,14 @@ void Application::handleAttachReject()
 {
     context.state->handleAttachReject();
 }
-
+void Application::handleViewSmsList()
+{
+    std::vector<SMS> smsList = context.smsDb.getAllSms();
+    this->context.user.showSmsList(smsList);
+}
+void Application::handleSingleSms(int messageIndex)
+{
+    SMS currentSms = context.smsDb.getSMS(messageIndex);
+    context.user.showSingleSms(currentSms);
+}
 }

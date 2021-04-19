@@ -31,6 +31,10 @@ public:
     void handleAttachAccept() override;
     void handleAttachReject() override;
 
+    //IUserEventsHandler
+    void handleViewSmsList() override;
+    void handleSingleSms(int messageIndex) override;
+
 private:
     Context context;
     common::PrefixedLogger logger;

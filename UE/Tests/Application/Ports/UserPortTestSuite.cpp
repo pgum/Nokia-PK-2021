@@ -22,7 +22,7 @@ protected:
     StrictMock<IListViewModeMock> listViewModeMock;
     StrictMock<ISmsDBMock> smsdb;
 
-    UserPort objectUnderTest{loggerMock, guiMock, PHONE_NUMBER,smsdb};
+    UserPort objectUnderTest{loggerMock, guiMock, PHONE_NUMBER};
 
     UserPortTestSuite()
     {
