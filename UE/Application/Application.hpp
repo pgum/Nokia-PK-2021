@@ -34,6 +34,7 @@ public:
     //IUserEventsHandler
     void handleViewSmsList() override;
     void handleSingleSms(int messageIndex) override;
+    void handleSendSms(common::PhoneNumber from,common::PhoneNumber to,std::string text) override;
 
 private:
     Context context;

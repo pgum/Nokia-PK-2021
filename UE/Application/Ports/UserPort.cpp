@@ -63,7 +63,10 @@ void UserPort::showSmsList(std::vector<SMS> smsList)
 
 void UserPort::composeSms(){
     IUeGui::ISmsComposeMode &composeMode = gui.setSmsComposeMode();
-    //gui.setAcceptCallback([this](){sendSMS();});
+    gui.setAcceptCallback([&](){handler->handleSendSms(phoneNumber,composeMode.getPhoneNumber(),composeMode.getSmsText());
+        composeMode.clearSmsText();
+        showConnected();});
+    gui.setRejectCallback([&](){composeMode.clearSmsText();showConnected();});
 }
 
 void UserPort::ListViewHandler(OptionalSelection index)

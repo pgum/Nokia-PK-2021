@@ -56,4 +56,8 @@ void Application::handleSingleSms(int messageIndex)
     SMS currentSms = context.smsDb.getSMS(messageIndex);
     context.user.showSingleSms(currentSms);
 }
+void Application::handleSendSms(common::PhoneNumber from, common::PhoneNumber to, std::string text)
+{
+    context.bts.sendSms(from,to,text);
+}
 }

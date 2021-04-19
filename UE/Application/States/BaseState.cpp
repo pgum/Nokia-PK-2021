@@ -45,6 +45,10 @@ void BaseState::handleViewSmsList()
 }
 void BaseState::handleSingleSms(int messageIndex)
 {
-    logger.logError("Unexpected: handleSingleSms: " + messageIndex);
+    logger.logError("Unexpected: handleSingleSms");
+}
+void BaseState::handleSendSms(common::PhoneNumber from, common::PhoneNumber to, std::string text)
+{
+    logger.logError("Unexpected: handleSendSms");
 }
 }
