@@ -2,6 +2,7 @@
 
 #include "Messages/BtsId.hpp"
 #include "Messages/PhoneNumber.hpp"
+#include "Ports/SMS.hpp"
 
 namespace ue
 {
@@ -15,6 +16,9 @@ public:
     virtual void handleSib(common::BtsId) = 0;
     virtual void handleAttachAccept() = 0;
     virtual void handleAttachReject() = 0;
+
+    virtual void handleNewSms(SMS newSms) = 0;
+    virtual void handleUnknownRecipient() = 0;
 };
 
 class IBtsPort

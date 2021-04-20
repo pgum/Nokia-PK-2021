@@ -51,4 +51,12 @@ void BaseState::handleSendSms(common::PhoneNumber from, common::PhoneNumber to, 
 {
     logger.logError("Unexpected: handleSendSms");
 }
+void BaseState::handleNewSms(SMS newSms)
+{
+    logger.logError("Unexpected: handleNewSms");
+}
+void BaseState::handleUnknownRecipient()
+{
+    logger.logError("Unexpected: handleUnknownRecipient");
+}
 }

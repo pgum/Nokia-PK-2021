@@ -36,7 +36,7 @@ void UserPort::showConnecting()
 void UserPort::showSingleSms(SMS currentSms)
 {
     IUeGui::ITextMode& messageView = gui.setViewTextMode();
-    currentSms.setRead();
+    //currentSms.setRead();
     messageView.setText(currentSms.getMessage());
     gui.setRejectCallback([*this](){this->handler->handleViewSmsList();});
 }
@@ -50,12 +50,18 @@ void UserPort::showSmsList(std::vector<SMS> smsList)
 {
     IUeGui::IListViewMode& menu = gui.setListViewMode();
     menu.clearSelectionList();
-    for(std::vector<SMS>::iterator i=smsList.begin();
-            i!=smsList.end();
-            i++
-        ){
-        std::string messageFrom = "From: " + to_string(i->getPhoneNumber());
-        menu.addSelectionListItem(messageFrom,"");
+    for(std::vector<SMS>::iterator i=smsList.begin();i!=smsList.end();i++)
+    {
+        if(i->getPhoneNumberTo()==phoneNumber)
+        {
+            std::string messageFrom = "From:" + to_string(i->getPhoneNumberFrom());
+            if(!i->getRead())
+            {
+                messageFrom = messageFrom + "-Not Read!";
+            }
+            menu.addSelectionListItem(messageFrom,"");
+        }
+
     }
     gui.setAcceptCallback([&](){smsListViewHandler(menu.getCurrentItemIndex());});
     gui.setRejectCallback([this](){showConnected();});
@@ -63,6 +69,7 @@ void UserPort::showSmsList(std::vector<SMS> smsList)
 
 void UserPort::composeSms(){
     IUeGui::ISmsComposeMode &composeMode = gui.setSmsComposeMode();
+    composeMode.clearSmsText();
     gui.setAcceptCallback([&](){handler->handleSendSms(phoneNumber,composeMode.getPhoneNumber(),composeMode.getSmsText());
         composeMode.clearSmsText();
         showConnected();});
@@ -83,5 +90,11 @@ void UserPort::showConnected()
     menu.addSelectionListItem("View SMS", "");
     gui.setAcceptCallback([&](){ListViewHandler(menu.getCurrentItemIndex());});
 }
+void UserPort::smsNotification()
+{
+    gui.showNewSms();
+}
+void UserPort::disableSmsNotification(){
 
+}
 }

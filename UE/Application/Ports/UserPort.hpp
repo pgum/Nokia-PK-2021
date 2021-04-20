@@ -27,6 +27,8 @@ public:
     void smsListViewHandler(OptionalSelection messageIndex) override;
     void composeSms() override;
     void showSingleSms(SMS sms) override;
+    void smsNotification() override;
+    void disableSmsNotification() override;
 
 private:
     common::PrefixedLogger logger;

@@ -53,11 +53,25 @@ void Application::handleViewSmsList()
 }
 void Application::handleSingleSms(int messageIndex)
 {
-    SMS currentSms = context.smsDb.getSMS(messageIndex);
-    context.user.showSingleSms(currentSms);
+    SMS* currentSms = context.smsDb.getSMS(messageIndex);
+    currentSms->setRead();
+    if(context.smsDb.checkIfAllRead())context.user.disableSmsNotification();
+    context.user.showSingleSms(*currentSms);
 }
 void Application::handleSendSms(common::PhoneNumber from, common::PhoneNumber to, std::string text)
 {
+    SMS sendingSms = SMS(text,from,to,true,true);
+    context.smsDb.addSMS(sendingSms);
     context.bts.sendSms(from,to,text);
+}
+void Application::handleNewSms(SMS sms)
+{
+    context.smsDb.addSMS(sms);
+    context.user.smsNotification();
+}
+void Application::handleUnknownRecipient()
+{
+    SMS* notReceivedSms = context.smsDb.getSMS(context.smsDb.getAllSms().size()-1);
+    notReceivedSms->setNotReceived();
 }
 }

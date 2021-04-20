@@ -33,6 +33,8 @@ public:
     virtual void smsListViewHandler(OptionalSelection messageIndex) = 0;
     virtual void composeSms() = 0;
     virtual void showSingleSms(SMS sms) = 0;
+    virtual void smsNotification() = 0;
+    virtual void disableSmsNotification() = 0;
 };
 
 }

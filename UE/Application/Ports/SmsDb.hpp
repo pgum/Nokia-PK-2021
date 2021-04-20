@@ -13,8 +13,9 @@ namespace ue {
             SmsDb();
             std::vector<SMS> getAllSms() override;
             void addSMS(SMS sms) override;
-            SMS getSMS(int smsIndex) override;
-            void deleteReadSMS(int smsIndex) override;
+            SMS* getSMS(int smsIndex) override;
+            bool checkIfAllRead() override;
+            //void deleteReadSMS(int smsIndex) override;
     };
 
 

@@ -35,6 +35,8 @@ public:
     void handleViewSmsList() override;
     void handleSingleSms(int messageIndex) override;
     void handleSendSms(common::PhoneNumber from,common::PhoneNumber to,std::string text) override;
+    void handleNewSms(SMS sms) override;
+    void handleUnknownRecipient() override;
 
 private:
     Context context;

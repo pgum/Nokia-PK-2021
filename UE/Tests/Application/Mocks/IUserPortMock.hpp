@@ -33,8 +33,9 @@ public:
     MOCK_METHOD(void,ListViewHandler,(OptionalSelection index),(final));
     MOCK_METHOD(void,smsListViewHandler,(OptionalSelection messageIndex),(final));
     MOCK_METHOD(void,composeSms,(),(final));
-    //MOCK_METHOD(void,sendSMS,(),(final));
     MOCK_METHOD(void,showSingleSms,(SMS sms),(final));
+    MOCK_METHOD(void,smsNotification,(),(final));
+    MOCK_METHOD(void,disableSmsNotification,(),(final));
 };
 
 }

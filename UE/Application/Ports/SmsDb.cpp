@@ -2,15 +2,8 @@
 
 namespace ue
 {
-    SmsDb::SmsDb(){
-        common::PhoneNumber phone1,phone2;
-        phone1.value=1;
-        phone2.value=2;
-        SMS testSms1("hello world",phone1,false);
-        SMS testSms2("hello world 2",phone2,false);
-        this->smsList.push_back(testSms1);
-        this->smsList.push_back(testSms2);
-    }
+
+    SmsDb::SmsDb(){}
 
     std::vector<SMS> SmsDb::getAllSms(){
         return this->smsList;
@@ -20,13 +13,20 @@ namespace ue
         this->smsList.push_back(sms);
     }
 
-    SMS SmsDb::getSMS(int smsIndex){
-        return this->smsList.at(smsIndex);
+    SMS* SmsDb::getSMS(int smsIndex){
+        return &this->smsList.at(smsIndex);
     }
 
+    /*
     void SmsDb::deleteReadSMS(int smsIndex){
         this->smsList.erase(smsList.begin()+smsIndex);
     }
-
+    */
+    bool SmsDb::checkIfAllRead(){
+        for(auto it:this->smsList){
+            if(it.getRead()==false)return false;
+        }
+        return true;
+    }
 }
 

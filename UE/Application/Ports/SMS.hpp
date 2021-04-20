@@ -10,13 +10,17 @@ namespace ue {
             bool                read;
             std::string         message;
             common::PhoneNumber from;
+            common::PhoneNumber to;
+            bool                received;
 
         public:
-            SMS(std::string message,common::PhoneNumber from,bool read);
+            SMS(std::string message,common::PhoneNumber from,common::PhoneNumber to,bool read,bool received);
             bool getRead();
             std::string getMessage();
-            common::PhoneNumber getPhoneNumber();
+            common::PhoneNumber getPhoneNumberTo();
+            common::PhoneNumber getPhoneNumberFrom();
             void setRead();
+            void setNotReceived();
 
     };
 }
