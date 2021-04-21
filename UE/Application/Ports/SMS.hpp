@@ -19,7 +19,7 @@ namespace ue {
             std::string getMessage();
             common::PhoneNumber getPhoneNumberTo();
             common::PhoneNumber getPhoneNumberFrom();
-            void setRead();
+            SMS setRead();
             void setNotReceived();
 
     };

@@ -5,16 +5,24 @@ namespace ue
 
     SmsDb::SmsDb(){}
 
-    std::vector<SMS> SmsDb::getAllSms(){
-        return this->smsList;
+    std::vector<SMS> SmsDb::getAllReceivedSms(){
+        return this->receivedSMS;
     }
 
-    void SmsDb::addSMS(SMS sms){
-        this->smsList.push_back(sms);
+    void SmsDb::addSendSMS(SMS sms){
+        this->sendSMS.push_back(sms);
     }
 
-    SMS* SmsDb::getSMS(int smsIndex){
-        return &this->smsList.at(smsIndex);
+    void SmsDb::addReceivedSMS(SMS sms){
+        this->receivedSMS.push_back(sms);
+    }
+
+    SMS SmsDb::getReceivedSMS(int smsIndex){
+        return this->receivedSMS.at(smsIndex).setRead();
+    }
+
+    void SmsDb::unknownRecipientSMS(int smsIndex){
+        return this->sendSMS.at(smsIndex).setNotReceived();
     }
 
     /*
@@ -22,8 +30,8 @@ namespace ue
         this->smsList.erase(smsList.begin()+smsIndex);
     }
     */
-    bool SmsDb::checkIfAllRead(){
-        for(auto it:this->smsList){
+    bool SmsDb::checkIfAllReceivedRead(){
+        for(auto it:this->receivedSMS){
             if(it.getRead()==false)return false;
         }
         return true;

@@ -24,8 +24,9 @@ common::PhoneNumber SMS::getPhoneNumberTo(){
 common::PhoneNumber SMS::getPhoneNumberFrom(){
     return this->from;
 }
-void SMS::setRead(){
+SMS SMS::setRead(){
     this->read=true;
+    return *this;
 }
 void SMS::setNotReceived(){
     this->received=false;

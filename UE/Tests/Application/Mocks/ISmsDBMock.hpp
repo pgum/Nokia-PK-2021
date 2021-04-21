@@ -8,11 +8,12 @@ namespace ue{
     {
         public:
             ISmsDBMock();
-            MOCK_METHOD(SMS*,getSMS,(int smsIndex),(final));
-            MOCK_METHOD(std::vector<SMS>,getAllSms,(),(final));
-            MOCK_METHOD(void,addSMS,(SMS sms),(final));
-            //MOCK_METHOD(void,deleteReadSMS,(int smsIndex),(final));
-            MOCK_METHOD(bool,checkIfAllRead,(),(final));
+            MOCK_METHOD(SMS,getReceivedSMS,(int smsIndex),(final));
+            MOCK_METHOD(std::vector<SMS>,getAllReceivedSms,(),(final));
+            MOCK_METHOD(void,addSendSMS,(SMS sms),(final));
+            MOCK_METHOD(void,addReceivedSMS,(SMS sms),(final));
+            MOCK_METHOD(bool,checkIfAllReceivedRead,(),(final));
+            MOCK_METHOD(void,unknownRecipientSMS,(int smsIndex),(final));
     };
 }
 
