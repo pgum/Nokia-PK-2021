@@ -39,4 +39,37 @@ void UserPort::showConnected()
     menu.addSelectionListItem("View SMS", "");
 }
 
+void UserPort::showSmsReceived()
+{
+    gui.showSmsReceived();
+}
+
+void UserPort::showSms(int id)
+{
+    IUeGui::ITextMode& menu = gui.setViewTextMode();
+    Sms* sms = db.get(id);
+    std::string text="From: "+to_string(sms->from)+"\n\n"+sms->message;
+    menu.setText(text);
+    sms->read=true;
+    bool allRead=true;
+    for(Sms sms : db.getAll())
+        if(sms.read==false){allRead=false;break;}
+    if(allRead==true)showSmsReceived();
+    setCurrentMode(View::SmsView, &menu);
+}
+
+void UserPort::showSentSMS(int id)
+{
+    IUeGui::ITextMode& menu = gui.setViewTextMode();
+    Sms* sms = db_w.get(id);
+    std::string text="To: "+to_string(sms->from)+"\n\n"+sms->message;
+    menu.setText(text);
+    sms->read=true;
+    bool allRead=true;
+    for(Sms sms : db_w.getAll())
+        if(sms.read==false){allRead=false;break;}
+    if(allRead==true)showSmsReceived();
+    setCurrentMode(View::SentSmsView, &menu);
+}
+
 }

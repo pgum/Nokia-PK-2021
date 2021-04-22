@@ -15,4 +15,13 @@ void ConnectedState::handleDisconnected()
     context.setState<NotConnectedState>();
 }
 
+void ConnectedState::handleSmsReceived(common::PhoneNumber from,
+                                       std::string text)
+{
+    Sms incomingSms(from,text);
+    incomingSms.read = false;
+    context.db.insert(incomingSms);
+    context.user.showNewSms();
+}
+
 }
