@@ -46,4 +46,9 @@ void Application::handleAttachReject()
     context.state->handleAttachReject();
 }
 
+void Application::handleComposeMessage()
+{
+    context.state->handleComposeMessage();
+}
+
 }

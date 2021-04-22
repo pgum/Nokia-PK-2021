@@ -30,6 +30,8 @@ public:
     void handleAttachAccept() override;
     void handleAttachReject() override;
 
+    void handleComposeMessage() override;
+
 private:
     Context context;
     common::PrefixedLogger logger;

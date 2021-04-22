@@ -39,4 +39,9 @@ void UserPort::showConnected()
     menu.addSelectionListItem("View SMS", "");
 }
 
+void UserPort::setSmsComposeMode()
+{
+    IUeGui::ISmsComposeMode& sms = gui.setSmsComposeMode();
+}
+
 }

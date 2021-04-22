@@ -13,6 +13,8 @@ public:
     // IBtsEventsHandler interface
 public:
     void handleDisconnected() final;
+
+    void handleComposeMessage() final;
 };
 
 }

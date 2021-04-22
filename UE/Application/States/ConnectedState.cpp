@@ -15,4 +15,9 @@ void ConnectedState::handleDisconnected()
     context.setState<NotConnectedState>();
 }
 
+void ConnectedState::handleComposeMessage()
+{
+    context.user.setSmsComposeMode();
+}
+
 }
