@@ -15,9 +15,9 @@ void ConnectedState::handleDisconnected()
     context.setState<NotConnectedState>();
 }
 
-void ConnectedState::handleComposeMessage()
+void ConnectedState::handleSendMessage(common::PhoneNumber from, std::string message)
 {
-    context.user.setSmsComposeMode();
+    context.bts.sendMessage(from, message);
 }
 
 }

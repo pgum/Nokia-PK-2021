@@ -14,7 +14,7 @@ public:
 public:
     void handleDisconnected() final;
 
-    void handleComposeMessage() final;
+    void handleSendMessage(common::PhoneNumber from, std::string message) final;
 };
 
 }

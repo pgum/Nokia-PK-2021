@@ -46,9 +46,9 @@ void Application::handleAttachReject()
     context.state->handleAttachReject();
 }
 
-void Application::handleComposeMessage()
+void Application::handleSendMessage(common::PhoneNumber from, std::string message)
 {
-    context.state->handleComposeMessage();
+    context.state->handleSendMessage(from, message);
 }
 
 }
