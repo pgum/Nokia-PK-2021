@@ -7,6 +7,11 @@
 
 namespace ue
 {
+enum class View
+{
+    SmsList,
+    SmsReceived
+};
 
 class UserPort : public IUserPort
 {
