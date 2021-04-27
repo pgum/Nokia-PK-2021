@@ -27,10 +27,6 @@ public:
     void showSmsReceived() override;
     void showSmsList() override;
     void showMenu() override;
-    void showSms(int id) override;
-    void showComposeSmsMode() override;
-    void showSentSMSList() override;
-    void showSentSMS(int id) override;
 
 private:
     IUeGui& gui;

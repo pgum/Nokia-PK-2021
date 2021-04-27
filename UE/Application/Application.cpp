@@ -8,8 +8,11 @@ Application::Application(common::PhoneNumber phoneNumber,
                          common::ILogger &iLogger,
                          IBtsPort &bts,
                          IUserPort &user,
-                         ITimerPort &timer)
-    : context{iLogger, bts, user, timer},
+                         ITimerPort &timer,
+                         ISmsDatabase &db,
+                         ISmsDatabase &db_w
+                         )
+    : context{iLogger, bts, user, timer, db, db_w},
       logger(iLogger, "[APP] ")
 {
     logger.logInfo("Started");

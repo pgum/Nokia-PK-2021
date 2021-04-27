@@ -17,6 +17,7 @@ public:
     class IDialMode;
     class ICallMode;
     class ITextMode;
+    class BaseMode;
 
     using AcceptClose = bool;
     using CloseGuard = std::function<AcceptClose()>;
@@ -34,6 +35,7 @@ public:
     virtual void showNotConnected() = 0;
     virtual void showNewSms() = 0;
     virtual void showPeerUserNotAvailable(PhoneNumber) = 0;
+    virtual void showSmsReceived() =0;
 
     virtual IListViewMode& setListViewMode() = 0;
     virtual ISmsComposeMode& setSmsComposeMode() = 0;

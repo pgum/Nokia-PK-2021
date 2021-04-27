@@ -1,5 +1,6 @@
 #include "ConnectedState.hpp"
 #include "NotConnectedState.hpp"
+#include "SmsForDatabase/Sms.hpp"
 
 namespace ue
 {

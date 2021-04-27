@@ -37,7 +37,7 @@ void BaseState::handleAttachAccept()
 
 void BaseState::handleAttachReject()
 {
-    logger.logError("Uexpected: handleAttachReject");
+    logger.logError("Unexpected: handleAttachReject");
 }
 
 }
