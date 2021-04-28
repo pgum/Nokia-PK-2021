@@ -49,20 +49,21 @@ void UserPort::showSmsList(std::vector<SMS> smsList)
 {
     IUeGui::IListViewMode& menu = gui.setListViewMode();
     menu.clearSelectionList();
-    for(std::vector<SMS>::iterator i=smsList.begin();i!=smsList.end();i++)
-    {
-        if(i->getPhoneNumberTo()==phoneNumber)
+    for(auto i : smsList)
+    { 
+        std::string messageFrom = "From:" + to_string(i.getPhoneNumberFrom());
+        if(!i.getRead())
         {
-            std::string messageFrom = "From:" + to_string(i->getPhoneNumberFrom());
-            if(!i->getRead())
-            {
-                messageFrom = messageFrom + "-Not Read!";
-            }
-            menu.addSelectionListItem(messageFrom,"");
+            messageFrom = messageFrom + "-Not Read!";
         }
+        menu.addSelectionListItem(messageFrom,"");
 
     }
-    gui.setAcceptCallback([&](){smsListViewHandler(menu.getCurrentItemIndex());});
+    gui.setAcceptCallback([this,&menu](){
+                    OptionalSelection selectedItem = menu.getCurrentItemIndex();
+                    Selection selectedItemIndex = selectedItem.second;
+                    this->handler->handleSingleSms(selectedItemIndex);
+    });
     gui.setRejectCallback([this](){showConnected();});
 }
 
@@ -74,7 +75,7 @@ void UserPort::composeSms(){
                     handler->handleSendSms(sendingSMS);
                     composeMode.clearSmsText();
                     showConnected();});
-    gui.setRejectCallback([&](){composeMode.clearSmsText();showConnected();});
+    gui.setRejectCallback([this,&composeMode](){composeMode.clearSmsText();showConnected();});
 }
 
 void UserPort::showConnected()
