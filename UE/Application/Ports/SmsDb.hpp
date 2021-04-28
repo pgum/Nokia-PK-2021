@@ -13,12 +13,12 @@ namespace ue {
         public:
             SmsDb();
             std::vector<SMS> getAllReceivedSms() override;
-            void addSendSMS(SMS sms) override;
-            void addReceivedSMS(SMS sms) override;
-            SMS getReceivedSMS(int smsIndex) override;
-            void unknownRecipientSMS() override;
-            bool checkIfAllReceivedRead() override;
-            //void deleteReadSMS(int smsIndex) override;
+            SMS getReceivedSms(int smsIndex) override;
+            void addReceivedSms(SMS sms) override;
+
+            void addSendSms(SMS sms) override;
+
+            void unknownRecipientSms() override;
     };
 
 

@@ -15,13 +15,19 @@ namespace ue {
 
         public:
             SMS(std::string message,common::PhoneNumber from,common::PhoneNumber to,bool read,bool received);
-            SMS();
             bool getRead();
             std::string getMessage();
             common::PhoneNumber getPhoneNumberTo();
             common::PhoneNumber getPhoneNumberFrom();
-            SMS setRead();
-            void setNotReceived();
+
+            SMS* setRead(bool read);
+            SMS* setReceived(bool received);
+            SMS* setFrom(common::PhoneNumber from);
+            SMS* setTo(common::PhoneNumber to);
+            SMS* setMessage(std::string message);
+
+            //for google tests
+            SMS();
             bool operator==(const SMS &sms2) const;
 
     };

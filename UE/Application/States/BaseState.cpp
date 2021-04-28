@@ -47,7 +47,7 @@ void BaseState::handleSingleSms(int messageIndex)
 {
     logger.logError("Unexpected: handleSingleSms");
 }
-void BaseState::handleSendSms(common::PhoneNumber from, common::PhoneNumber to, std::string text)
+void BaseState::handleSendSms(SMS sendingSMS)
 {
     logger.logError("Unexpected: handleSendSms");
 }
@@ -58,5 +58,9 @@ void BaseState::handleNewSms(SMS newSms)
 void BaseState::handleUnknownRecipient()
 {
     logger.logError("Unexpected: handleUnknownRecipient");
+}
+void BaseState::handleMenuList(unsigned int selectionIndex)
+{
+    logger.logError("Unexpected: handleMenuList");
 }
 }

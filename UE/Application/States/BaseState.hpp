@@ -25,9 +25,11 @@ public:
     //IUserEventsHandler
     void handleViewSmsList() override;
     void handleSingleSms(int messageIndex) override;
-    void handleSendSms(common::PhoneNumber from,common::PhoneNumber to,std::string text) override;
+    void handleSendSms(SMS sendingSMS) override;
     void handleNewSms(SMS sms) override;
     void handleUnknownRecipient() override;
+    void handleMenuList(unsigned int selectionIndex) override;
+
 
 protected:
     Context& context;

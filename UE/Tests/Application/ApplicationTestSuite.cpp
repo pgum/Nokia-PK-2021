@@ -126,29 +126,27 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSingleSms)
 {
     SMS testSms;
     int testMessageIndex;
-    EXPECT_CALL(smsDbMock,getReceivedSMS(testMessageIndex)).WillOnce(Return (testSms));
+    EXPECT_CALL(smsDbMock,getReceivedSms(testMessageIndex)).WillOnce(Return (testSms));
     EXPECT_CALL(userPortMock,showSingleSms(testSms));
     objectUnderTest.handleSingleSms(testMessageIndex);
 }
 TEST_F(ApplicationConnectedTestSuite,shallHandleSendSms)
 {
     SMS testSendingSms;
-    EXPECT_CALL(smsDbMock,addSendSMS(_));
-    EXPECT_CALL(btsPortMock,sendSms(_,_,_));
-    objectUnderTest.handleSendSms(testSendingSms.getPhoneNumberFrom(),
-                                  testSendingSms.getPhoneNumberTo(),
-                                  testSendingSms.getMessage());
+    EXPECT_CALL(smsDbMock,addSendSms(_));
+    EXPECT_CALL(btsPortMock,sendSms(_));
+    objectUnderTest.handleSendSms(testSendingSms);
 }
 TEST_F(ApplicationConnectedTestSuite,shallHandleNewSms)
 {
     SMS testSms;
-    EXPECT_CALL(smsDbMock,addReceivedSMS(testSms));
+    EXPECT_CALL(smsDbMock,addReceivedSms(testSms));
     EXPECT_CALL(userPortMock,smsNotification());
     objectUnderTest.handleNewSms(testSms);
 }
 TEST_F(ApplicationConnectedTestSuite,shallHandleUnknownRecipient)
 {
-    EXPECT_CALL(smsDbMock,unknownRecipientSMS());
+    EXPECT_CALL(smsDbMock,unknownRecipientSms());
     objectUnderTest.handleUnknownRecipient();
 }
 }

@@ -23,12 +23,10 @@ public:
     void showConnected() override;
 
     void showSmsList(std::vector<SMS> smsList) override;
-    void ListViewHandler(OptionalSelection index) override;
     void smsListViewHandler(OptionalSelection messageIndex) override;
     void composeSms() override;
     void showSingleSms(SMS sms) override;
     void smsNotification() override;
-    void disableSmsNotification() override;
 
 private:
     common::PrefixedLogger logger;

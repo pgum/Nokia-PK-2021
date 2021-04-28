@@ -16,26 +16,47 @@ SMS::SMS(){
     this->to=common::PhoneNumber{0};
     this->message="";
 }
-std::string SMS::getMessage(){
+std::string SMS::getMessage()
+{
     return this->message;
 }
 
-bool SMS::getRead(){
+bool SMS::getRead()
+{
     return this->read;
 }
 
-common::PhoneNumber SMS::getPhoneNumberTo(){
+common::PhoneNumber SMS::getPhoneNumberTo()
+{
     return this->to;
 }
-common::PhoneNumber SMS::getPhoneNumberFrom(){
+common::PhoneNumber SMS::getPhoneNumberFrom()
+{
     return this->from;
 }
-SMS SMS::setRead(){
-    this->read=true;
-    return *this;
+SMS* SMS::setRead(bool read)
+{
+    this->read=read;
+    return this;
 }
-void SMS::setNotReceived(){
-    this->received=false;
+SMS* SMS::setReceived(bool received)
+{
+    this->received=received;
+    return this;
+}
+SMS* SMS::setFrom(common::PhoneNumber from){
+    this->from=from;
+    return this;
+}
+SMS* SMS::setTo(common::PhoneNumber to)
+{
+    this->to=to;
+    return this;
+}
+SMS* SMS::setMessage(std::string message)
+{
+    this->message=message;
+    return this;
 }
 bool SMS::operator==(const SMS& sms2) const
 {

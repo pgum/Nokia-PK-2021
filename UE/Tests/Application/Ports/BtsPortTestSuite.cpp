@@ -122,10 +122,11 @@ TEST_F(BtsPortTestSuite,shallHandleSms)
 TEST_F(BtsPortTestSuite,shallSendSms)
 {
     common::BinaryMessage msg;
+    SMS testSMS;
 
     EXPECT_CALL(transportMock,sendMessage(_)).WillOnce([&msg](auto param){msg = std::move(param);return true;});
 
-    objectUnderTest.sendSms(PHONE_NUMBER,common::PhoneNumber{},"testString");
+    objectUnderTest.sendSms(testSMS);
 
     common::IncomingMessage reader(msg);
     ASSERT_NO_THROW(EXPECT_EQ(common::MessageId::Sms, reader.readMessageId()) );

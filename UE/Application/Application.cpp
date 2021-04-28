@@ -46,30 +46,33 @@ void Application::handleAttachReject()
 {
     context.state->handleAttachReject();
 }
+void Application::handleMenuList(unsigned int selectionIndex)
+{
+    if(selectionIndex == 0)context.user.composeSms();
+    else handleViewSmsList();
+}
 void Application::handleViewSmsList()
 {
     std::vector<SMS> smsList = context.smsDb.getAllReceivedSms();
-    this->context.user.showSmsList(smsList);
+    context.user.showSmsList(smsList);
 }
 void Application::handleSingleSms(int messageIndex)
 {
-    SMS currentSms = context.smsDb.getReceivedSMS(messageIndex);
-    //if(context.smsDb.checkIfAllReceivedRead())context.user.disableSmsNotification();
+    SMS currentSms = context.smsDb.getReceivedSms(messageIndex);
     context.user.showSingleSms(currentSms);
 }
-void Application::handleSendSms(common::PhoneNumber from, common::PhoneNumber to, std::string text)
+void Application::handleSendSms(SMS sendingSms)
 {
-    SMS sendingSms = SMS(text,from,to,true,true);
-    context.smsDb.addSendSMS(sendingSms);
-    context.bts.sendSms(from,to,text);
+    context.smsDb.addSendSms(sendingSms);
+    context.bts.sendSms(sendingSms);
 }
 void Application::handleNewSms(SMS sms)
 {
-    context.smsDb.addReceivedSMS(sms);
+    context.smsDb.addReceivedSms(sms);
     context.user.smsNotification();
 }
 void Application::handleUnknownRecipient()
 {
-    context.smsDb.unknownRecipientSMS();
+    context.smsDb.unknownRecipientSms();
 }
 }

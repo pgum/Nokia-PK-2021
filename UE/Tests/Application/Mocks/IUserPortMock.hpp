@@ -13,7 +13,8 @@ public:
     ~IUserEventsHandlerMock() override;
     MOCK_METHOD(void,handleViewSmsList,(),(final));
     MOCK_METHOD(void,handleSingleSms,(int messageIndex),(final));
-    MOCK_METHOD(void,handleSendSms,(common::PhoneNumber from,common::PhoneNumber to,std::string text),(final));
+    MOCK_METHOD(void,handleSendSms,(SMS sendingSMS),(final));
+    MOCK_METHOD(void,handleMenuList,(unsigned int selectionIndex),(final));
 
 };
 
@@ -30,12 +31,10 @@ public:
     MOCK_METHOD(void, showConnecting, (), (final));
     MOCK_METHOD(void, showConnected, (), (final));
     MOCK_METHOD(void,showSmsList,(std::vector<SMS> smsList),(final));
-    MOCK_METHOD(void,ListViewHandler,(OptionalSelection index),(final));
     MOCK_METHOD(void,smsListViewHandler,(OptionalSelection messageIndex),(final));
     MOCK_METHOD(void,composeSms,(),(final));
     MOCK_METHOD(void,showSingleSms,(SMS sms),(final));
     MOCK_METHOD(void,smsNotification,(),(final));
-    MOCK_METHOD(void,disableSmsNotification,(),(final));
 };
 
 }

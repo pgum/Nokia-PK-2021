@@ -10,12 +10,10 @@ namespace ue
     public:
         virtual ~ISmsDb() = default;
         virtual std::vector<SMS> getAllReceivedSms() = 0;
-        virtual void addSendSMS(SMS sms) = 0;
-        virtual void addReceivedSMS(SMS sms) = 0;
-        virtual SMS getReceivedSMS(int smsIndex) = 0;
-        virtual void unknownRecipientSMS() = 0;
-        //virtual void deleteReadSMS(int smsIndex) = 0;
-        virtual bool checkIfAllReceivedRead() = 0;
+        virtual void addSendSms(SMS sms) = 0;
+        virtual void addReceivedSms(SMS sms) = 0;
+        virtual SMS getReceivedSms(int smsIndex) = 0;
+        virtual void unknownRecipientSms() = 0;
     };
 }
 

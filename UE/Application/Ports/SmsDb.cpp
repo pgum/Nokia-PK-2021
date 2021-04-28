@@ -9,34 +9,23 @@ namespace ue
         return this->receivedSMS;
     }
 
-    void SmsDb::addSendSMS(SMS sms){
+    void SmsDb::addSendSms(SMS sms){
         this->sendSMS.push_back(sms);
     }
 
-    void SmsDb::addReceivedSMS(SMS sms){
+    void SmsDb::addReceivedSms(SMS sms){
         this->receivedSMS.push_back(sms);
     }
 
-    SMS SmsDb::getReceivedSMS(int smsIndex){
-        return this->receivedSMS.at(smsIndex).setRead();
+    SMS SmsDb::getReceivedSms(int smsIndex){
+        return *this->receivedSMS.at(smsIndex).setRead(true);
     }
 
-    void SmsDb::unknownRecipientSMS(){
+    void SmsDb::unknownRecipientSms(){
         int vectorSize = this->receivedSMS.size();
         int lastSmsIndex = vectorSize -1;
-        return this->sendSMS.at(lastSmsIndex).setNotReceived();
+        this->sendSMS.at(lastSmsIndex).setReceived(false);
     }
 
-    /*
-    void SmsDb::deleteReadSMS(int smsIndex){
-        this->smsList.erase(smsList.begin()+smsIndex);
-    }
-    */
-    bool SmsDb::checkIfAllReceivedRead(){
-        for(auto it:this->receivedSMS){
-            if(it.getRead()==false)return false;
-        }
-        return true;
-    }
 }
 

@@ -91,12 +91,12 @@ void BtsPort::sendAttachRequest(common::BtsId btsId)
 
 
 }
-void BtsPort::sendSms(common::PhoneNumber from, common::PhoneNumber to, std::string text)
+void BtsPort::sendSms(SMS sendingSMS)
 {
     common::OutgoingMessage msg{common::MessageId::Sms,
-                               from,
-                               to};
-    msg.writeText(text);
+                               sendingSMS.getPhoneNumberFrom(),
+                               sendingSMS.getPhoneNumberTo()};
+    msg.writeText(sendingSMS.getMessage());
     transport.sendMessage(msg.getMessage());
 }
 }

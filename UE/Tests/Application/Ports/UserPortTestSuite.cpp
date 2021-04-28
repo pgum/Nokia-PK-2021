@@ -59,16 +59,6 @@ TEST_F(UserPortTestSuite, shallShowMenuOnConnected)
     EXPECT_CALL(guiMock,setAcceptCallback(_));
     objectUnderTest.showConnected();
 }
-TEST_F(UserPortTestSuite,shallHandleHomeMenu)
-{
-    std::pair<bool,unsigned> testPair;
-    testPair.first=true;
-    testPair.second=1;
-
-    EXPECT_CALL(handlerMock,handleViewSmsList());
-
-    objectUnderTest.ListViewHandler(testPair);
-}
 TEST_F(UserPortTestSuite,shallShowSmsList)
 {
     EXPECT_CALL(guiMock, setListViewMode()).WillOnce(ReturnRef(listViewModeMock));
