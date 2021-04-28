@@ -54,7 +54,7 @@ void Application::handleViewSmsList()
 void Application::handleSingleSms(int messageIndex)
 {
     SMS currentSms = context.smsDb.getReceivedSMS(messageIndex);
-    if(context.smsDb.checkIfAllReceivedRead())context.user.disableSmsNotification();
+    //if(context.smsDb.checkIfAllReceivedRead())context.user.disableSmsNotification();
     context.user.showSingleSms(currentSms);
 }
 void Application::handleSendSms(common::PhoneNumber from, common::PhoneNumber to, std::string text)
@@ -70,6 +70,6 @@ void Application::handleNewSms(SMS sms)
 }
 void Application::handleUnknownRecipient()
 {
-    context.smsDb.unknownRecipientSMS(context.smsDb.getAllReceivedSms().size()-1);
+    context.smsDb.unknownRecipientSMS();
 }
 }

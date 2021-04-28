@@ -13,7 +13,7 @@ namespace ue{
             MOCK_METHOD(void,addSendSMS,(SMS sms),(final));
             MOCK_METHOD(void,addReceivedSMS,(SMS sms),(final));
             MOCK_METHOD(bool,checkIfAllReceivedRead,(),(final));
-            MOCK_METHOD(void,unknownRecipientSMS,(int smsIndex),(final));
+            MOCK_METHOD(void,unknownRecipientSMS,(),(final));
     };
 }
 

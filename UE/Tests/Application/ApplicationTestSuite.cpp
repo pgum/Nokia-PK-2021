@@ -9,6 +9,7 @@
 #include "Mocks/ISmsDBMock.hpp"
 #include "Messages/PhoneNumber.hpp"
 #include "Messages/BtsId.hpp"
+#include "Ports/SMS.hpp"
 #include <memory>
 
 namespace ue
@@ -114,7 +115,40 @@ TEST_F(ApplicationConnectedTestSuite, shallReattach)
     doConnecting();
     doConnected();
 }
-
-
-
+TEST_F(ApplicationConnectedTestSuite, shallHandleViewSmsList)
+{
+    std::vector<SMS> smsVector;
+    EXPECT_CALL(smsDbMock,getAllReceivedSms()).WillOnce(Return (smsVector));
+    EXPECT_CALL(userPortMock,showSmsList(smsVector));
+    objectUnderTest.handleViewSmsList();
+}
+TEST_F(ApplicationConnectedTestSuite, shallHandleSingleSms)
+{
+    SMS testSms;
+    int testMessageIndex;
+    EXPECT_CALL(smsDbMock,getReceivedSMS(testMessageIndex)).WillOnce(Return (testSms));
+    EXPECT_CALL(userPortMock,showSingleSms(testSms));
+    objectUnderTest.handleSingleSms(testMessageIndex);
+}
+TEST_F(ApplicationConnectedTestSuite,shallHandleSendSms)
+{
+    SMS testSendingSms;
+    EXPECT_CALL(smsDbMock,addSendSMS(_));
+    EXPECT_CALL(btsPortMock,sendSms(_,_,_));
+    objectUnderTest.handleSendSms(testSendingSms.getPhoneNumberFrom(),
+                                  testSendingSms.getPhoneNumberTo(),
+                                  testSendingSms.getMessage());
+}
+TEST_F(ApplicationConnectedTestSuite,shallHandleNewSms)
+{
+    SMS testSms;
+    EXPECT_CALL(smsDbMock,addReceivedSMS(testSms));
+    EXPECT_CALL(userPortMock,smsNotification());
+    objectUnderTest.handleNewSms(testSms);
+}
+TEST_F(ApplicationConnectedTestSuite,shallHandleUnknownRecipient)
+{
+    EXPECT_CALL(smsDbMock,unknownRecipientSMS());
+    objectUnderTest.handleUnknownRecipient();
+}
 }

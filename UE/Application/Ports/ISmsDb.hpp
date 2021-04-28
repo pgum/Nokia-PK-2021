@@ -13,7 +13,7 @@ namespace ue
         virtual void addSendSMS(SMS sms) = 0;
         virtual void addReceivedSMS(SMS sms) = 0;
         virtual SMS getReceivedSMS(int smsIndex) = 0;
-        virtual void unknownRecipientSMS(int smsIndex) = 0;
+        virtual void unknownRecipientSMS() = 0;
         //virtual void deleteReadSMS(int smsIndex) = 0;
         virtual bool checkIfAllReceivedRead() = 0;
     };

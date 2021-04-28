@@ -16,7 +16,7 @@ namespace ue {
             void addSendSMS(SMS sms) override;
             void addReceivedSMS(SMS sms) override;
             SMS getReceivedSMS(int smsIndex) override;
-            void unknownRecipientSMS(int smsIndex) override;
+            void unknownRecipientSMS() override;
             bool checkIfAllReceivedRead() override;
             //void deleteReadSMS(int smsIndex) override;
     };

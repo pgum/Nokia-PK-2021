@@ -21,8 +21,10 @@ namespace ue
         return this->receivedSMS.at(smsIndex).setRead();
     }
 
-    void SmsDb::unknownRecipientSMS(int smsIndex){
-        return this->sendSMS.at(smsIndex).setNotReceived();
+    void SmsDb::unknownRecipientSMS(){
+        int vectorSize = this->receivedSMS.size();
+        int lastSmsIndex = vectorSize -1;
+        return this->sendSMS.at(lastSmsIndex).setNotReceived();
     }
 
     /*
