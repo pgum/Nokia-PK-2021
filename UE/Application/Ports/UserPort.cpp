@@ -87,9 +87,9 @@ void UserPort::showConnected()
     menu.addSelectionListItem("Compose SMS", "");
     menu.addSelectionListItem("View SMS", "");
     gui.setAcceptCallback([this,&menu](){
-                    OptionalSelection selectedItem = menu.getCurrentItemIndex();
-                    Selection selectedItemIndex = selectedItem.second;
-                    this->handler->handleMenuList(selectedItemIndex);
+        OptionalSelection selectedItem = menu.getCurrentItemIndex();
+        Selection selectedItemIndex = selectedItem.second;
+        this->handler->handleMenuList(selectedItemIndex);
     });
 }
 void UserPort::smsNotification()

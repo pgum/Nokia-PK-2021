@@ -68,6 +68,21 @@ void BtsPort::handleMessage(BinaryMessage msg)
             handler->handleUnknownRecipient();
             break;
         }
+        /*
+        case common::MessageId::CallRequest:
+        {
+            handler->handleCallRequest();
+            break;
+        }
+        todo: dodanie common::MessageId::CallRequest i odpalenie odpowieniego->handle str 16 specyfikacji
+        todo:
+         {
+            Call newCall(from,to)
+            handle->IncomingCall(Call)
+
+          }
+
+        */
         default:
             logger.logError("unknow message: ", msgId, ", from: ", from," to: ",to);
 
@@ -99,4 +114,10 @@ void BtsPort::sendSms(SMS sendingSMS)
     msg.writeText(sendingSMS.getMessage());
     transport.sendMessage(msg.getMessage());
 }
+
+/*
+ * todo:
+void BtsPort::sendCallRequestAccepted(common::PhoneNumber){}
+void BtsPort::sendCallRequestRejected(common::PhoneNumber){}
+*/
 }

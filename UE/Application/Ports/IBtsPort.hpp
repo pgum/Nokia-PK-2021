@@ -19,6 +19,10 @@ public:
 
     virtual void handleNewSms(SMS newSms) = 0;
     virtual void handleUnknownRecipient() = 0;
+    /*
+    virtual void sendCallRequestAccepted(common::PhoneNumber) = 0;
+    virtual void sendCallRequestRejected(common::PhoneNumber) = 0;
+     */
 };
 
 class IBtsPort
