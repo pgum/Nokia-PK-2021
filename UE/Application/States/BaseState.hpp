@@ -22,6 +22,8 @@ public:
     void handleAttachAccept() override;
     void handleAttachReject() override;
 
+    void handleSendMessage(common::PhoneNumber from, std::string message) override;
+
 protected:
     Context& context;
     common::PrefixedLogger logger;

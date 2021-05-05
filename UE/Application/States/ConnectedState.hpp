@@ -13,6 +13,8 @@ public:
     // IBtsEventsHandler interface
 public:
     void handleDisconnected() final;
+
+    void handleSendMessage(common::PhoneNumber from, std::string message) final;
 };
 
 }
