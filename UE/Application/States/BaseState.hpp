@@ -23,6 +23,8 @@ public:
     void handleAttachReject() override;
     void handleSmsReceived(common::PhoneNumber from, std::string text) override;
 
+    void handleSendMessage(common::PhoneNumber from, std::string message) override;
+
 protected:
     Context& context;
     common::PrefixedLogger logger;
