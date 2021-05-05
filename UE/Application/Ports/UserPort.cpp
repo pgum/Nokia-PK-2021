@@ -56,4 +56,9 @@ void UserPort::setSmsComposeMode()
     });
 }
 
+void UserPort::showSmsReceived()
+{
+    gui.showSmsReceived();
+}
+
 }

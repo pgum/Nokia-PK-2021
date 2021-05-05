@@ -26,11 +26,12 @@ public:
 
     // IBtsEventsHandler interface
     void handleDisconnected() override;
+    void handleSmsReceived(common::PhoneNumber PhoneNumber, std::string msg) override;
     void handleSib(common::BtsId btsId) override;
     void handleAttachAccept() override;
     void handleAttachReject() override;
-
     void handleSendMessage(common::PhoneNumber from, std::string message) override;
+
 
 private:
     Context context;
