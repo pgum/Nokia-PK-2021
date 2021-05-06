@@ -1,6 +1,7 @@
 #include "BtsPort.hpp"
 #include "Messages/IncomingMessage.hpp"
 #include "Messages/OutgoingMessage.hpp"
+#include "Ports/SMS.hpp"
 
 namespace ue
 {
@@ -56,8 +57,19 @@ void BtsPort::handleMessage(BinaryMessage msg)
                 handler->handleAttachReject();
             break;
         }
+        case common::MessageId::Sms:
+        {
+            SMS newSms(reader.readRemainingText(),from,to,false,true);
+            handler->handleNewSms(newSms);
+            break;
+        }
+        case common::MessageId::UnknownRecipient:
+        {
+            handler->handleUnknownRecipient();
+            break;
+        }
         default:
-            logger.logError("unknow message: ", msgId, ", from: ", from);
+            logger.logError("unknow message: ", msgId, ", from: ", from," to: ",to);
 
         }
     }
@@ -79,5 +91,12 @@ void BtsPort::sendAttachRequest(common::BtsId btsId)
 
 
 }
-
+void BtsPort::sendSms(SMS sendingSMS)
+{
+    common::OutgoingMessage msg{common::MessageId::Sms,
+                               sendingSMS.getPhoneNumberFrom(),
+                               sendingSMS.getPhoneNumberTo()};
+    msg.writeText(sendingSMS.getMessage());
+    transport.sendMessage(msg.getMessage());
+}
 }

@@ -8,8 +8,9 @@ Application::Application(common::PhoneNumber phoneNumber,
                          common::ILogger &iLogger,
                          IBtsPort &bts,
                          IUserPort &user,
-                         ITimerPort &timer)
-    : context{iLogger, bts, user, timer},
+                         ITimerPort &timer,
+                         ISmsDb &smsDb)
+    : context{iLogger, bts, user, timer,smsDb},
       logger(iLogger, "[APP] ")
 {
     logger.logInfo("Started");
@@ -45,5 +46,33 @@ void Application::handleAttachReject()
 {
     context.state->handleAttachReject();
 }
-
+void Application::handleMenuList(unsigned int selectionIndex)
+{
+    if(selectionIndex == 0)context.user.composeSms();
+    else handleViewSmsList();
+}
+void Application::handleViewSmsList()
+{
+    std::vector<SMS> smsList = context.smsDb.getAllReceivedSms();
+    context.user.showSmsList(smsList);
+}
+void Application::handleSingleSms(int messageIndex)
+{
+    SMS currentSms = context.smsDb.getReceivedSms(messageIndex);
+    context.user.showSingleSms(currentSms);
+}
+void Application::handleSendSms(SMS sendingSms)
+{
+    context.smsDb.addSendSms(sendingSms);
+    context.bts.sendSms(sendingSms);
+}
+void Application::handleNewSms(SMS sms)
+{
+    context.smsDb.addReceivedSms(sms);
+    context.user.smsNotification();
+}
+void Application::handleUnknownRecipient()
+{
+    context.smsDb.unknownRecipientSms();
+}
 }

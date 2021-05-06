@@ -6,8 +6,10 @@
 #include "Mocks/IBtsPortMock.hpp"
 #include "Mocks/IUserPortMock.hpp"
 #include "Mocks/ITimerPortMock.hpp"
+#include "Mocks/ISmsDBMock.hpp"
 #include "Messages/PhoneNumber.hpp"
 #include "Messages/BtsId.hpp"
+#include "Ports/SMS.hpp"
 #include <memory>
 
 namespace ue
@@ -24,13 +26,16 @@ protected:
     StrictMock<IBtsPortMock> btsPortMock;
     StrictMock<IUserPortMock> userPortMock;
     StrictMock<ITimerPortMock> timerPortMock;
+    StrictMock<ISmsDBMock> smsDbMock;
 
     Expectation expectShowNotConnected = EXPECT_CALL(userPortMock, showNotConnected());
     Application objectUnderTest{PHONE_NUMBER,
                                 loggerMock,
                                 btsPortMock,
                                 userPortMock,
-                                timerPortMock};
+                                timerPortMock,
+                                smsDbMock
+                               };
 };
 
 struct ApplicationNotConnectedTestSuite : ApplicationTestSuite
@@ -110,7 +115,38 @@ TEST_F(ApplicationConnectedTestSuite, shallReattach)
     doConnecting();
     doConnected();
 }
-
-
-
+TEST_F(ApplicationConnectedTestSuite, shallHandleViewSmsList)
+{
+    std::vector<SMS> smsVector;
+    EXPECT_CALL(smsDbMock,getAllReceivedSms()).WillOnce(Return (smsVector));
+    EXPECT_CALL(userPortMock,showSmsList(smsVector));
+    objectUnderTest.handleViewSmsList();
+}
+TEST_F(ApplicationConnectedTestSuite, shallHandleSingleSms)
+{
+    SMS testSms;
+    int testMessageIndex;
+    EXPECT_CALL(smsDbMock,getReceivedSms(testMessageIndex)).WillOnce(Return (testSms));
+    EXPECT_CALL(userPortMock,showSingleSms(testSms));
+    objectUnderTest.handleSingleSms(testMessageIndex);
+}
+TEST_F(ApplicationConnectedTestSuite,shallHandleSendSms)
+{
+    SMS testSendingSms;
+    EXPECT_CALL(smsDbMock,addSendSms(_));
+    EXPECT_CALL(btsPortMock,sendSms(_));
+    objectUnderTest.handleSendSms(testSendingSms);
+}
+TEST_F(ApplicationConnectedTestSuite,shallHandleNewSms)
+{
+    SMS testSms;
+    EXPECT_CALL(smsDbMock,addReceivedSms(testSms));
+    EXPECT_CALL(userPortMock,smsNotification());
+    objectUnderTest.handleNewSms(testSms);
+}
+TEST_F(ApplicationConnectedTestSuite,shallHandleUnknownRecipient)
+{
+    EXPECT_CALL(smsDbMock,unknownRecipientSms());
+    objectUnderTest.handleUnknownRecipient();
+}
 }

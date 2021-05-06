@@ -17,6 +17,8 @@ public:
 
     void sendAttachRequest(common::BtsId) override;
 
+    void sendSms(SMS sendingSMS) override;
+
 private:
     void handleDisconnected();
     void handleMessage(BinaryMessage msg);

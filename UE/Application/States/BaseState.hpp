@@ -22,6 +22,15 @@ public:
     void handleAttachAccept() override;
     void handleAttachReject() override;
 
+    //IUserEventsHandler
+    void handleViewSmsList() override;
+    void handleSingleSms(int messageIndex) override;
+    void handleSendSms(SMS sendingSMS) override;
+    void handleNewSms(SMS sms) override;
+    void handleUnknownRecipient() override;
+    void handleMenuList(unsigned int selectionIndex) override;
+
+
 protected:
     Context& context;
     common::PrefixedLogger logger;

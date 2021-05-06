@@ -1,5 +1,7 @@
 #include "UserPort.hpp"
 #include "UeGui/IListViewMode.hpp"
+#include "UeGui/ITextMode.hpp"
+#include "UeGui/ISmsComposeMode.hpp"
 
 namespace ue
 {
@@ -31,12 +33,67 @@ void UserPort::showConnecting()
     gui.showConnecting();
 }
 
+void UserPort::showSingleSms(SMS currentSms)
+{
+    IUeGui::ITextMode& messageView = gui.setViewTextMode();
+    messageView.setText(currentSms.getMessage());
+    gui.setRejectCallback([*this](){this->handler->handleViewSmsList();});
+}
+
+void UserPort::smsListViewHandler(OptionalSelection messageIndex)
+{
+    this->handler->handleSingleSms(messageIndex.second);
+}
+
+void UserPort::showSmsList(std::vector<SMS> smsList)
+{
+    IUeGui::IListViewMode& menu = gui.setListViewMode();
+    menu.clearSelectionList();
+    for(auto i : smsList)
+    { 
+        std::string messageFrom = "From:" + to_string(i.getPhoneNumberFrom());
+        if(!i.getRead())
+        {
+            messageFrom = messageFrom + "-Not Read!";
+        }
+        menu.addSelectionListItem(messageFrom,"");
+
+    }
+    gui.setAcceptCallback([this,&menu](){
+                    OptionalSelection selectedItem = menu.getCurrentItemIndex();
+                    Selection selectedItemIndex = selectedItem.second;
+                    this->handler->handleSingleSms(selectedItemIndex);
+    });
+    gui.setRejectCallback([this](){showConnected();});
+}
+
+void UserPort::composeSms(){
+    IUeGui::ISmsComposeMode &composeMode = gui.setSmsComposeMode();
+    composeMode.clearSmsText();
+    gui.setAcceptCallback([&composeMode,this](){
+                    SMS sendingSMS{composeMode.getSmsText(),phoneNumber,composeMode.getPhoneNumber(),true,true};
+                    handler->handleSendSms(sendingSMS);
+                    composeMode.clearSmsText();
+                    showConnected();});
+    gui.setRejectCallback([this,&composeMode](){composeMode.clearSmsText();showConnected();});
+}
+
 void UserPort::showConnected()
 {
+
+
     IUeGui::IListViewMode& menu = gui.setListViewMode();
     menu.clearSelectionList();
     menu.addSelectionListItem("Compose SMS", "");
     menu.addSelectionListItem("View SMS", "");
+    gui.setAcceptCallback([this,&menu](){
+                    OptionalSelection selectedItem = menu.getCurrentItemIndex();
+                    Selection selectedItemIndex = selectedItem.second;
+                    this->handler->handleMenuList(selectedItemIndex);
+    });
 }
-
+void UserPort::smsNotification()
+{
+    gui.showNewSms();
+}
 }
