@@ -5,8 +5,8 @@ namespace ue
 
     SmsDb::SmsDb(){}
 
-    std::vector<SMS> SmsDb::getAllReceivedSms(){
-        return this->receivedSMS;
+    std::unique_ptr<std::vector<SMS>> SmsDb::getAllReceivedSms(){
+        return std::make_unique<std::vector<SMS>>(this->receivedSMS);
     }
 
     void SmsDb::addSendSms(SMS sms){
@@ -18,13 +18,11 @@ namespace ue
     }
 
     SMS SmsDb::getReceivedSms(int smsIndex){
-        return *this->receivedSMS.at(smsIndex).setRead(true);
+        return *this->receivedSMS.at(smsIndex).setRead(smsRead::Read);
     }
 
     void SmsDb::unknownRecipientSms(){
-        int vectorSize = this->receivedSMS.size();
-        int lastSmsIndex = vectorSize -1;
-        this->sendSMS.at(lastSmsIndex).setReceived(false);
+        this->sendSMS.back().setReceived(smsReceived::NotReceived);
     }
 
 }

@@ -59,7 +59,7 @@ void BtsPort::handleMessage(BinaryMessage msg)
         }
         case common::MessageId::Sms:
         {
-            SMS newSms(reader.readRemainingText(),from,to,false,true);
+            SMS newSms(reader.readRemainingText(),from,to,smsRead::NotRead,smsReceived::Received);
             handler->handleNewSms(newSms);
             break;
         }

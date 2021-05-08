@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
     auto& gui = appEnv->getUeGui();
     auto phoneNumber = appEnv->getMyPhoneNumber();
 
-    SmsDb smsDb;
+    SmsDb smsDb{};
     BtsPort bts(logger, tranport, phoneNumber);
     UserPort user(logger, gui, phoneNumber);
     TimerPort timer(logger);
