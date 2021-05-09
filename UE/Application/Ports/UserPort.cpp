@@ -36,7 +36,7 @@ void UserPort::showConnecting()
 void UserPort::showSingleSms(SMS currentSms)
 {
     IUeGui::ITextMode& messageView = gui.setViewTextMode();
-    messageView.setText(currentSms.getMessage());
+    messageView.setText(currentSms.message);
     gui.setRejectCallback([this](){this->handler->handleViewSmsList();});
 }
 
@@ -51,8 +51,8 @@ void UserPort::showSmsList(std::unique_ptr<std::vector<SMS>> smsList)
     menu.clearSelectionList();
     for(auto&& sms : *smsList)
     { 
-        std::string messageFrom = "(unique,struct)From:" + to_string(sms.getPhoneNumberFrom());
-        if(sms.isRead()==smsRead::NotRead)
+        std::string messageFrom = "From:" + to_string(sms.from);
+        if(sms.read==smsRead::NotRead)
         {
             messageFrom = messageFrom + "-Not Read!";
         }

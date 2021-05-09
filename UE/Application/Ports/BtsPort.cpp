@@ -94,9 +94,9 @@ void BtsPort::sendAttachRequest(common::BtsId btsId)
 void BtsPort::sendSms(SMS sendingSMS)
 {
     common::OutgoingMessage msg{common::MessageId::Sms,
-                               sendingSMS.getPhoneNumberFrom(),
-                               sendingSMS.getPhoneNumberTo()};
-    msg.writeText(sendingSMS.getMessage());
+                               sendingSMS.from,
+                               sendingSMS.to};
+    msg.writeText(sendingSMS.message);
     transport.sendMessage(msg.getMessage());
 }
 }

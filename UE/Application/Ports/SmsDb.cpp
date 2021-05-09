@@ -18,11 +18,12 @@ namespace ue
     }
 
     SMS SmsDb::getReceivedSms(int smsIndex){
-        return *this->receivedSMS.at(smsIndex).setRead(smsRead::Read);
+        this->receivedSMS.at(smsIndex).read=smsRead::Read;
+        return  this->receivedSMS.at(smsIndex);
     }
 
     void SmsDb::unknownRecipientSms(){
-        this->sendSMS.back().setReceived(smsReceived::NotReceived);
+        this->sendSMS.back().received=smsReceived::NotReceived;
     }
 
 }
