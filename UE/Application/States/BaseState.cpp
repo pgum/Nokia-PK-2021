@@ -63,4 +63,9 @@ void BaseState::handleMenuList(unsigned int selectionIndex)
 {
     logger.logError("Unexpected: handleMenuList");
 }
+
+void BaseState::handleCallRequest(common::PhoneNumber from)
+{
+    logger.logError("Unexpepected: handleCallRequest");
+}
 }

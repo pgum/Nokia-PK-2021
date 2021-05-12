@@ -27,6 +27,7 @@ public:
     void composeSms() override;
     void showSingleSms(SMS sms) override;
     void smsNotification() override;
+    void showCalling(common::PhoneNumber from) override;
 
 private:
     common::PrefixedLogger logger;
