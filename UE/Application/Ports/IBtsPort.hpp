@@ -15,10 +15,10 @@ public:
     virtual void handleDisconnected() = 0;
     virtual void handleSib(common::BtsId) = 0;
     virtual void handleAttachAccept() = 0;
-    virtual void handleAttachReject() = 0;
-
+    virtual void handleAttachReject()=0;
     virtual void handleNewSms(SMS newSms) = 0;
     virtual void handleUnknownRecipient() = 0;
+    virtual void handleCallRequest(common::PhoneNumber from)=0;
     /*
     virtual void sendCallRequestAccepted(common::PhoneNumber) = 0;
     virtual void sendCallRequestRejected(common::PhoneNumber) = 0;

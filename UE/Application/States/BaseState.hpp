@@ -29,7 +29,7 @@ public:
     void handleNewSms(SMS sms) override;
     void handleUnknownRecipient() override;
     void handleMenuList(unsigned int selectionIndex) override;
-
+    void handleCallRequest(common::PhoneNumber from) override;
 
 protected:
     Context& context;

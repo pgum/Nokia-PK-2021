@@ -15,4 +15,10 @@ void ConnectedState::handleDisconnected()
     context.setState<NotConnectedState>();
 }
 
+void ConnectedState::handleCallRequest(common::PhoneNumber from) {
+    context.user.showCalling(from);
+    //TODO: timerStart
+}
+
+
 }

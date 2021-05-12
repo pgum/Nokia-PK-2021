@@ -96,4 +96,20 @@ void UserPort::smsNotification()
 {
     gui.showNewSms();
 }
+
+void UserPort::showCalling(common::PhoneNumber from)
+{
+    logger.logInfo("showCalling");
+    IUeGu& alertMode = gui.setAlertMode();
+    alertMode.setText("call from " + to_string(from));
+    gui.
+}
+/*todo:
+ * void UserPort::incomingCall(Call recv){
+ * gui.showNewCall() zmiana state gui na incomingcall
+ * gui.setAcceptCallback(handle(acceptCall))
+ * gui.setAcceptCallback(handle(disconnectCall))
+ *
+ * }
+ * */
 }
