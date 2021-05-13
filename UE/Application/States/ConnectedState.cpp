@@ -19,10 +19,11 @@ void ConnectedState::handleDisconnected()
 void ConnectedState::handleSmsReceived(common::PhoneNumber from,
                                        std::string text)
 {
-    Sms incomingSms(from,text);
-    incomingSms.read = false;
-    context.db.insert(incomingSms);
-    context.user.showNewSms();
+    //Sms incomingSms(from,text);
+    //incomingSms.read = false;
+    //context.db.insert(incomingSms);
+    context.user.showSmsReceived();
+}
 
 void ConnectedState::handleSendMessage(common::PhoneNumber from, std::string message)
 {

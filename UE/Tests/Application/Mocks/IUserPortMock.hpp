@@ -25,6 +25,7 @@ public:
     MOCK_METHOD(void, showConnecting, (), (final));
     MOCK_METHOD(void, showConnected, (), (final));
     MOCK_METHOD(void, setSmsComposeMode, (), (final));
+    MOCK_METHOD(void, showSmsReceived, (), (final));
 };
 
 }

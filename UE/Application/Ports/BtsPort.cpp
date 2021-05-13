@@ -95,6 +95,8 @@ void BtsPort::sendMessage(common::PhoneNumber from, std::string message)
                                 phoneNumber,
                                 from};
     msg.writeText(message);
+    //Sms outgoingSms(from, message);
+    //context.db.insert(outgoingSms);
     transport.sendMessage(msg.getMessage());
 }
 
