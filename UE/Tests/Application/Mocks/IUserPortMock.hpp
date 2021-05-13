@@ -11,7 +11,7 @@ class IUserEventsHandlerMock : public IUserEventsHandler
 public:
     IUserEventsHandlerMock();
     ~IUserEventsHandlerMock() override;
-    MOCK_METHOD(void, handleSendMessage, (common::PhoneNumber from, std::string message), (final));
+    MOCK_METHOD(void, handleSendMessage, (const common::PhoneNumber from, const std::string& message), (final));
 
 };
 
