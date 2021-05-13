@@ -26,6 +26,7 @@ public:
 
     virtual void sendAttachRequest(common::BtsId) = 0;
     virtual void sendMessage(const common::PhoneNumber from, const std::string& message) = 0;
+    virtual void sendCallRequest(const common::PhoneNumber to) = 0;
 };
 
 }

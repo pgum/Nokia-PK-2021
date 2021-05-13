@@ -100,4 +100,10 @@ void BtsPort::sendMessage(const common::PhoneNumber from, const std::string& mes
     transport.sendMessage(msg.getMessage());
 }
 
+void BtsPort::sendCallRequest(const common::PhoneNumber to)
+{
+    logger.logDebug("sendCallRequest: ", to);
+    //CallRequest(phoneNumber, to);
+}
+
 }

@@ -30,4 +30,9 @@ void ConnectedState::handleSendMessage(const common::PhoneNumber from, const std
     context.bts.sendMessage(from, message);
 }
 
+void ConnectedState::handleSendCallRequest(const common::PhoneNumber to)
+{
+    context.bts.sendCallRequest(to);
+}
+
 }

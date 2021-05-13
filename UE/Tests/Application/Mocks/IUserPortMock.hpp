@@ -12,6 +12,7 @@ public:
     IUserEventsHandlerMock();
     ~IUserEventsHandlerMock() override;
     MOCK_METHOD(void, handleSendMessage, (const common::PhoneNumber from, const std::string& message), (final));
+    MOCK_METHOD(void, handleSendCallRequest, (const common::PhoneNumber to), (final));
 
 };
 
@@ -26,6 +27,7 @@ public:
     MOCK_METHOD(void, showConnected, (), (final));
     MOCK_METHOD(void, setSmsComposeMode, (), (final));
     MOCK_METHOD(void, showSmsReceived, (), (final));
+    MOCK_METHOD(void, setDialMode, (), (final));
 };
 
 }
