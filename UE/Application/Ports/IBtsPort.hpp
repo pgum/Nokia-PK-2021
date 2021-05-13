@@ -25,7 +25,7 @@ public:
     virtual ~IBtsPort() = default;
 
     virtual void sendAttachRequest(common::BtsId) = 0;
-    virtual void sendMessage(const common::PhoneNumber from, const std::string& message) = 0;
+    virtual void sendMessage(const common::PhoneNumber to, const std::string& message) = 0;
 };
 
 }

@@ -12,7 +12,7 @@ class IUserEventsHandler
 {
 public:
     virtual ~IUserEventsHandler() = default;
-    virtual void handleSendMessage(const common::PhoneNumber from, const std::string& message) = 0;
+    virtual void handleSendMessage(const common::PhoneNumber to, const std::string& message) = 0;
 };
 
 class IUserPort

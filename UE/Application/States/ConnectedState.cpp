@@ -25,9 +25,9 @@ void ConnectedState::handleSmsReceived(common::PhoneNumber from,
     context.user.showSmsReceived();
 }
 
-void ConnectedState::handleSendMessage(const common::PhoneNumber from, const std::string& message)
+void ConnectedState::handleSendMessage(const common::PhoneNumber to, const std::string& message)
 {
-    context.bts.sendMessage(from, message);
+    context.bts.sendMessage(to, message);
 }
 
 }
