@@ -100,9 +100,9 @@ void UserPort::smsNotification()
 void UserPort::showCalling(common::PhoneNumber from)
 {
     logger.logInfo("showCalling");
-    IUeGu& alertMode = gui.setAlertMode();
+    IUeGui::ITextMode& alertMode = gui.setAlertMode();
     alertMode.setText("call from " + to_string(from));
-    gui.
+
 }
 /*todo:
  * void UserPort::incomingCall(Call recv){
