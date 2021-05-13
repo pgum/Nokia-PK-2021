@@ -107,8 +107,8 @@ void BtsPort::sendSms(SMS sendingSMS)
     transport.sendMessage(msg.getMessage());
 }
 
+
 /*
- * !!!todo (nietak) tylko tak: TODO warrning :
 void BtsPort::sendCallRequestAccepted(common::PhoneNumber){}
 void BtsPort::sendCallRequestRejected(common::PhoneNumber){}
 */

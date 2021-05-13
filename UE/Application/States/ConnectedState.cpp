@@ -1,5 +1,6 @@
 #include "ConnectedState.hpp"
 #include "NotConnectedState.hpp"
+#include "TalkingState.h"
 
 namespace ue
 {
@@ -20,5 +21,8 @@ void ConnectedState::handleCallRequest(common::PhoneNumber from) {
     //TODO: timerStart
 }
 
+void ConnectedState::handleAcceptCall(common::PhoneNumber from){
+    context.setState<TalkingState>();
+}
 
 }

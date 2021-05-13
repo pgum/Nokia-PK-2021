@@ -15,7 +15,7 @@ public:
     virtual void handleSingleSms(int messageIndex) = 0;
     virtual void handleSendSms(SMS sendingSMS) = 0;
     virtual void handleMenuList(unsigned int selectionIndex) = 0;
-
+    virtual void handleAcceptCall(common::PhoneNumber from)=0;
 };
 
 class IUserPort

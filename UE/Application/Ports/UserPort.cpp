@@ -102,14 +102,13 @@ void UserPort::showCalling(common::PhoneNumber from)
     logger.logInfo("showCalling");
     IUeGui::ITextMode& alertMode = gui.setAlertMode();
     alertMode.setText("call from " + to_string(from));
+    gui.setAcceptCallback([this,&from]{
+        this->handler->handleAcceptCall(from);
+    });
 
+//    gui.setRejectCallback([this]{
+//       this->handler->handleRejectCall();
+//    });
 }
-/*todo:
- * void UserPort::incomingCall(Call recv){
- * gui.showNewCall() zmiana state gui na incomingcall
- * gui.setAcceptCallback(handle(acceptCall))
- * gui.setAcceptCallback(handle(disconnectCall))
- *
- * }
- * */
+
 }

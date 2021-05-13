@@ -1,3 +1,4 @@
+#include <States/TalkingState.h>
 #include "Application.hpp"
 #include "States/NotConnectedState.hpp"
 
@@ -40,7 +41,6 @@ namespace ue {
     }
 
     void Application::handleMenuList(unsigned int selectionIndex) {
-
         if (selectionIndex == 0)context.user.composeSms();
         else handleViewSmsList();
     }
@@ -72,6 +72,12 @@ namespace ue {
     void Application::handleCallRequest(common::PhoneNumber from){
         context.state->handleCallRequest(from);
     }
+    void Application::handleAcceptCall(common::PhoneNumber from){
+        context.state->handleAcceptCall(from);
+    }
+//    void Application::handleRejectCall(){
+//        context->handleRejectCall();
+//    }
 
 }
 /*
