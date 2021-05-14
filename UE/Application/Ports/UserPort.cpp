@@ -81,7 +81,7 @@ void UserPort::showSms(int id) {
     });
 }
 
-void UserPort::showSmsReceived(){
+void UserPort::showSmsNew(){
     gui.showNewSms();
 }
 

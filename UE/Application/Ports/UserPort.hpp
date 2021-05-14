@@ -20,7 +20,7 @@ public:
     void showConnecting() override;
     void showConnected() override;
 
-    void showSmsReceived() override;
+    void showSmsNew() override;
     void showSmsList() override;
     void showSms(int id) override;
 

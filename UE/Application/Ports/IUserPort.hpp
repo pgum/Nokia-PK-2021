@@ -19,7 +19,7 @@ public:
     virtual void showConnecting() = 0;
     virtual void showConnected() = 0;
 
-    virtual void showSmsReceived() = 0;
+    virtual void showSmsNew() = 0;
     virtual void showSmsList() = 0;
     virtual void showSms(int id) = 0;
 };
