@@ -103,4 +103,14 @@ TEST_F(BtsPortTestSuite, shallSendAttachRequest)
     ASSERT_NO_THROW(reader.checkEndOfMessage());
 }
 
+TEST_F(BtsPortTestSuite, shallHandleSmsReceived)
+{
+    EXPECT_CALL(handlerMock, handleSmsReceived);
+    common::OutgoingMessage msg{common::MessageId::Sms,
+                            common::PhoneNumber{},
+                            PHONE_NUMBER};
+    msg.writeNumber(false);
+    messageCallback(msg.getMessage());
+}
+
 }
