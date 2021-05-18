@@ -18,11 +18,19 @@ void ConnectedState::handleDisconnected()
 
 void ConnectedState::handleCallRequest(common::PhoneNumber from) {
     context.user.showCalling(from);
-    //TODO: timerStart
 }
 
 void ConnectedState::handleAcceptCall(common::PhoneNumber from){
-    context.setState<TalkingState>();
+    context.setState<TalkingState>(from);
 }
 
+void ConnectedState::handleRejectCall(common::PhoneNumber from){
+    context.user.showConnected();
+    context.bts.sendCallRespond(context.phoneNumber,from,
+                                common::MessageId::CallDropped);
+}
+
+void ConnectedState::handleSendCallRequest(common::PhoneNumber to) {
+    context.bts.sendCallRequest(context.phoneNumber,to);
+}
 }

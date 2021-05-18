@@ -16,6 +16,9 @@ public:
     virtual void handleSendSms(SMS sendingSMS) = 0;
     virtual void handleMenuList(unsigned int selectionIndex) = 0;
     virtual void handleAcceptCall(common::PhoneNumber from)=0;
+    virtual void handleRejectCall(common::PhoneNumber from)=0;
+    virtual void handleSendCallRequest(common::PhoneNumber to)=0;
+
 };
 
 class IUserPort
@@ -36,6 +39,7 @@ public:
     virtual void showSingleSms(SMS sms) = 0;
     virtual void smsNotification() = 0;
     virtual  void showCalling(common::PhoneNumber from)=0;
+    virtual void makeACall()=0;
 };
 
 }

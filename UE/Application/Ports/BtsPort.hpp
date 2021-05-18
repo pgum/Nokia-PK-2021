@@ -18,10 +18,8 @@ public:
     void sendAttachRequest(common::BtsId) override;
 
     void sendSms(SMS sendingSMS) override;
-    /*
-    void sendCallRequestAccepted(common::PhoneNumber) override;
-    void sendCallRequestRejected(common::PhoneNumber) override;
-     */
+    void sendCallRespond(common::PhoneNumber from, common::PhoneNumber to, common::MessageId id)override;
+    void sendCallRequest(common::PhoneNumber from, common::PhoneNumber to) override;
 
 private:
     void handleDisconnected();

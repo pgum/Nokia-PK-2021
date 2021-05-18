@@ -2,7 +2,7 @@
 #include "UeGui/IListViewMode.hpp"
 #include "UeGui/ITextMode.hpp"
 #include "UeGui/ISmsComposeMode.hpp"
-
+#include "UeGui/IDialMode.hpp"
 namespace ue
 {
 
@@ -80,17 +80,18 @@ void UserPort::composeSms(){
 
 void UserPort::showConnected()
 {
-
-
     IUeGui::IListViewMode& menu = gui.setListViewMode();
     menu.clearSelectionList();
     menu.addSelectionListItem("Compose SMS", "");
     menu.addSelectionListItem("View SMS", "");
+    menu.addSelectionListItem("Call","");
     gui.setAcceptCallback([this,&menu](){
         OptionalSelection selectedItem = menu.getCurrentItemIndex();
         Selection selectedItemIndex = selectedItem.second;
         this->handler->handleMenuList(selectedItemIndex);
     });
+    //todo: przetestować czy po otrzymaniu CallRequest  RejectCallback nie psuje działania
+    // programu
 }
 void UserPort::smsNotification()
 {
@@ -99,16 +100,29 @@ void UserPort::smsNotification()
 
 void UserPort::showCalling(common::PhoneNumber from)
 {
+    //todo: implementacja timera
     logger.logInfo("showCalling");
     IUeGui::ITextMode& alertMode = gui.setAlertMode();
     alertMode.setText("call from " + to_string(from));
+
     gui.setAcceptCallback([this,&from]{
         this->handler->handleAcceptCall(from);
     });
 
-//    gui.setRejectCallback([this]{
-//       this->handler->handleRejectCall();
-//    });
+    gui.setRejectCallback([this,&from]{
+       this->handler->handleRejectCall(from);
+    });
+}
+
+void UserPort::makeACall(){
+    IUeGui::IDialMode &callMenu=gui.setDialMode();
+
+    gui.setAcceptCallback([this,&callMenu](){
+        common::PhoneNumber enteredPhoneNumber=callMenu.getPhoneNumber();
+        logger.logInfo("Calling "+ to_string( enteredPhoneNumber));
+        handler->handleSendCallRequest(enteredPhoneNumber); });
+
+    gui.setRejectCallback([this](){showConnected();});
 }
 
 }

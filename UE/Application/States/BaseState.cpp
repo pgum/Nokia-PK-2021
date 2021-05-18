@@ -66,9 +66,17 @@ void BaseState::handleMenuList(unsigned int selectionIndex)
 
 void BaseState::handleCallRequest(common::PhoneNumber from)
 {
-    logger.logError("Unexpepected: handleCallRequest");
+    logger.logError("Unexpected: handleCallRequest");
 }
 void BaseState::handleAcceptCall(common::PhoneNumber from) {
-    logger.logError("Unexpepected: handleAcceptCall");
+    logger.logError("Unexpected: handleAcceptCall");
 }
+void BaseState::handleRejectCall(common::PhoneNumber from) {
+    logger.logError("Unexpected: handleRejectCall");
+}
+
+void BaseState::handleSendCallRequest(common::PhoneNumber to) {
+    logger.logError("Unexpected : handleSendCallRequest ");
+}
+
 }

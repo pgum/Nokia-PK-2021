@@ -7,9 +7,10 @@
 namespace ue
 {
 class TalkingState : public BaseState {
-public:
-    TalkingState(Context & context);
 
-    };
+public:
+    TalkingState(Context & context,common::PhoneNumber from);
+
+};
 }
 

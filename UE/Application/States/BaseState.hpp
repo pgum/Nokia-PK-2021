@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Messages/MessageId.hpp>
 #include "IEventsHandler.hpp"
 #include "Logger/PrefixedLogger.hpp"
 #include "Context.hpp"
@@ -10,6 +11,8 @@ namespace ue
 class BaseState : public IEventsHandler
 {
 public:
+
+
     BaseState(Context& context, const std::string& name);
     ~BaseState() override;
 
@@ -31,6 +34,8 @@ public:
     void handleMenuList(unsigned int selectionIndex) override;
     void handleCallRequest(common::PhoneNumber from) override;
     void handleAcceptCall(common::PhoneNumber from) override;
+    void handleRejectCall(common::PhoneNumber from) override;
+    void handleSendCallRequest(common::PhoneNumber to) override;
 protected:
     Context& context;
     common::PrefixedLogger logger;

@@ -107,9 +107,14 @@ void BtsPort::sendSms(SMS sendingSMS)
     transport.sendMessage(msg.getMessage());
 }
 
+void BtsPort::sendCallRespond(common::PhoneNumber from, common::PhoneNumber to, common::MessageId id) {
+    common::OutgoingMessage msg{id,from,to};
+    transport.sendMessage(msg.getMessage());
+}
 
-/*
-void BtsPort::sendCallRequestAccepted(common::PhoneNumber){}
-void BtsPort::sendCallRequestRejected(common::PhoneNumber){}
-*/
+void BtsPort::sendCallRequest(common::PhoneNumber from, common::PhoneNumber to) {
+    common::OutgoingMessage msg{common::MessageId::CallRequest,from,to};
+    transport.sendMessage(msg.getMessage());
+}
+
 }

@@ -1,4 +1,4 @@
-#include <States/TalkingState.h>
+
 #include "Application.hpp"
 #include "States/NotConnectedState.hpp"
 
@@ -10,7 +10,7 @@ namespace ue {
                              IUserPort &user,
                              ITimerPort &timer,
                              ISmsDb &smsDb)
-            : context{iLogger, bts, user, timer, smsDb},
+            : context{phoneNumber,iLogger, bts, user, timer, smsDb},
               logger(iLogger, "[APP] ") {
         logger.logInfo("Started");
         context.setState<NotConnectedState>();
@@ -41,8 +41,21 @@ namespace ue {
     }
 
     void Application::handleMenuList(unsigned int selectionIndex) {
-        if (selectionIndex == 0)context.user.composeSms();
-        else handleViewSmsList();
+        switch(selectionIndex){
+            case 0:
+                context.user.composeSms();
+                break;
+            case 1:
+                handleViewSmsList();
+                break;
+            case 2:
+                context.user.makeACall();
+                break;
+
+        }
+
+//        if (selectionIndex == 0)context.user.composeSms();
+//        else handleViewSmsList();
     }
 
     void Application::handleViewSmsList() {
@@ -68,22 +81,17 @@ namespace ue {
     void Application::handleUnknownRecipient() {
         context.smsDb.unknownRecipientSms();
     }
-
     void Application::handleCallRequest(common::PhoneNumber from){
         context.state->handleCallRequest(from);
     }
     void Application::handleAcceptCall(common::PhoneNumber from){
         context.state->handleAcceptCall(from);
     }
-//    void Application::handleRejectCall(){
-//        context->handleRejectCall();
-//    }
-
+    void Application::handleRejectCall(common::PhoneNumber from){
+        context.state->handleRejectCall(from);
+    }
+    void Application::handleSendCallRequest(common::PhoneNumber to){
+        context.state->handleSendCallRequest(to);
+    }
 }
-/*
- todo:
-void Application::handleIncomingCall(Call recv){
-    context.user.incomingCall()
-}
-*/
 

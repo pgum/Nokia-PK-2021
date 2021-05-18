@@ -15,6 +15,8 @@ public:
     void handleDisconnected() final;
     void handleCallRequest(common::PhoneNumber from) final;
     void handleAcceptCall(common::PhoneNumber from) final;
+    void handleRejectCall(common::PhoneNumber from) final;
+    void handleSendCallRequest(common::PhoneNumber to) final;
 };
 
 }
