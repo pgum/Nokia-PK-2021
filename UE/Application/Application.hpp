@@ -31,6 +31,7 @@ public:
     void handleAttachAccept() override;
     void handleAttachReject() override;
     void handleSendMessage(common::PhoneNumber from, std::string message) override;
+    void handleCallRequest(common::PhoneNumber from) override;
 
 
 private:
