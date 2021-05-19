@@ -56,4 +56,9 @@ void BaseState::handleSendCallRequest(const common::PhoneNumber to)
     logger.logError("Uexpected: handleSendCallRequest");
 }
 
+void BaseState::handleCallAccepted(const common::PhoneNumber from)
+{
+    logger.logError("Uexpected: handleCallAccepted");
+}
+
 }

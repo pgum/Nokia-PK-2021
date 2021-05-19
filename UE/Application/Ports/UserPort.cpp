@@ -2,6 +2,7 @@
 #include "UeGui/IListViewMode.hpp"
 #include "UeGui/ISmsComposeMode.hpp"
 #include "UeGui/IDialMode.hpp"
+#include "UeGui/ICallMode.hpp"
 
 namespace ue
 {
@@ -76,7 +77,12 @@ void UserPort::setDialMode()
     IUeGui::IDialMode& dial = gui.setDialMode();
     gui.setAcceptCallback([&](){
         handler->handleSendCallRequest(dial.getPhoneNumber());
-    });;
+    });
+}
+
+void UserPort::setConversationMode(const common::PhoneNumber from)
+{
+    IUeGui::ICallMode& call = gui.setCallMode();
 }
 
 }

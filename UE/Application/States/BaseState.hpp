@@ -24,7 +24,8 @@ public:
     void handleSmsReceived(common::PhoneNumber from, std::string text) override;
 
     void handleSendMessage(const common::PhoneNumber from, const std::string& message) override;
-    void handleSendCallRequest(const common::PhoneNumber) override;
+    void handleSendCallRequest(const common::PhoneNumber to) override;
+    void handleCallAccepted(const common::PhoneNumber from) override;
 
 protected:
     Context& context;

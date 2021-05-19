@@ -66,7 +66,8 @@ void BtsPort::handleMessage(BinaryMessage msg)
         }
         case common::MessageId::CallAccepted:
         {
-            //TODO
+            logger.logDebug("BtsPort, CallAccepted from: ", from);
+            handler->handleCallAccepted(from);
             break;
         }
         case common::MessageId::CallDropped:
@@ -121,7 +122,6 @@ void BtsPort::sendCallRequest(const common::PhoneNumber to)
     common::OutgoingMessage msg{common::MessageId::CallRequest,
                                 phoneNumber,
                                 to};
-    msg.writeText(message);
     transport.sendMessage(msg.getMessage());
     //timer start
 }
