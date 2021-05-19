@@ -17,7 +17,7 @@ public:
     void handleSmsReceived(common::PhoneNumber phoneNumber, std::string msg) final;
 
 
-    void handleSendMessage(common::PhoneNumber from, std::string message) final;
+    void handleSendMessage(const common::PhoneNumber to, const std::string& message) final;
 
 };
 
