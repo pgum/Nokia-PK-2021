@@ -9,11 +9,7 @@ class ConnectedState : public BaseState
 {
 public:
     ConnectedState(Context& context);
-    void handleSmsReceived(common::PhoneNumber phoneNumber, std::string msg);
-
-    // IBtsEventsHandler interface
-public:
-    void handleDisconnected() final;
+    void handleSms(common::PhoneNumber from, std::string text);
 };
 
 }

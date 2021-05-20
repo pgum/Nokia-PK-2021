@@ -18,7 +18,6 @@ public:
     void sendAttachRequest(common::BtsId) override;
 
 private:
-    void handleDisconnected();
     void handleMessage(BinaryMessage msg);
 
     common::PrefixedLogger logger;

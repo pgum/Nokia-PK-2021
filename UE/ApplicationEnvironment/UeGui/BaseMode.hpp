@@ -1,4 +1,5 @@
 #pragma once
+
 #include "IUeGui.hpp"
 
 namespace ue
@@ -6,7 +7,8 @@ namespace ue
 
 class IUeGui::BaseMode
 {
-    public:
-        virtual ~BaseMode() = default;
+public:
+    virtual ~BaseMode() = default;
 };
+
 }

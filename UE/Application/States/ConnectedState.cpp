@@ -1,6 +1,4 @@
 #include "ConnectedState.hpp"
-#include "NotConnectedState.hpp"
-#include "SmsForDatabase/Sms.hpp"
 
 namespace ue
 {
@@ -11,9 +9,11 @@ ConnectedState::ConnectedState(Context &context)
     context.user.showConnected();
 }
 
-void ConnectedState::handleDisconnected()
-{
-    context.setState<NotConnectedState>();
-}
+
+//void ConnectedState::handleSms(common::PhoneNumber from, std::string text)
+//{
+//    logger.logInfo("Received SMS from ", from, ": «", text, "»");
+//    context.user.showNewSms();
+//}
 
 }
