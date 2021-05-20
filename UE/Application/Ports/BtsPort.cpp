@@ -74,8 +74,20 @@ void BtsPort::handleMessage(BinaryMessage msg)
             handler->handleCallRequest(from);
             break;
         }
-
-
+        case common::MessageId::CallAccepted:
+        {
+            handler->handleReceivedCallAccept(from);
+            break;
+        }
+        case common::MessageId::CallDropped:
+        {
+            handler->handleReceivedCallReject(from);
+            break;
+        }
+        case common::MessageId::CallTalk:
+        {
+            break;
+        }
         default:
             logger.logError("unknow message: ", msgId, ", from: ", from," to: ",to);
         }
@@ -107,13 +119,19 @@ void BtsPort::sendSms(SMS sendingSMS)
     transport.sendMessage(msg.getMessage());
 }
 
-void BtsPort::sendCallRespond(common::PhoneNumber from, common::PhoneNumber to, common::MessageId id) {
-    common::OutgoingMessage msg{id,from,to};
+void BtsPort::sendCallAccept(common::PhoneNumber to) {
+    logger.logInfo("sending CallAccepted"+to_string(to));
+    common::OutgoingMessage msg{common::MessageId::CallAccepted,phoneNumber,to};
+    transport.sendMessage(msg.getMessage());
+}
+void BtsPort::sendCallDropped(common::PhoneNumber to) {
+    logger.logInfo("sending CallDropped"+to_string(to));
+    common::OutgoingMessage msg{common::MessageId::CallDropped,phoneNumber,to};
     transport.sendMessage(msg.getMessage());
 }
 
-void BtsPort::sendCallRequest(common::PhoneNumber from, common::PhoneNumber to) {
-    common::OutgoingMessage msg{common::MessageId::CallRequest,from,to};
+void BtsPort::sendCallRequest(common::PhoneNumber to) {
+    common::OutgoingMessage msg{common::MessageId::CallRequest,phoneNumber,to};
     transport.sendMessage(msg.getMessage());
 }
 

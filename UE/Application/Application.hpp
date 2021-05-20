@@ -31,6 +31,8 @@ public:
     void handleAttachAccept() override;
     void handleAttachReject() override;
     void handleCallRequest(common::PhoneNumber from) override;
+    void handleReceivedCallAccept(common::PhoneNumber from) override;
+    void handleReceivedCallReject(common::PhoneNumber from) override;
 
     //IUserEventsHandler
     void handleViewSmsList() override;
@@ -39,8 +41,8 @@ public:
     void handleNewSms(SMS sms) override;
     void handleUnknownRecipient() override;
     void handleMenuList(unsigned selectionIndex) override;
-    void handleAcceptCall(common::PhoneNumber from) override;
-    void handleRejectCall(common::PhoneNumber from) override;
+    void handleSendCallAccepted(common::PhoneNumber from) override;
+    void handleSendCallDropped(common::PhoneNumber from) override;
     void handleSendCallRequest(common::PhoneNumber to) override;
 private:
     Context context;

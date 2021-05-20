@@ -22,6 +22,7 @@ public:
     void showConnecting() override;
     void showConnected() override;
 
+    void alertUser(std::string msg) override;
     void showSmsList(std::vector<SMS> smsList) override;
     void smsListViewHandler(OptionalSelection messageIndex) override;
     void composeSms() override;

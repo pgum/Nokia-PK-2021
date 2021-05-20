@@ -10,7 +10,7 @@ namespace ue {
                              IUserPort &user,
                              ITimerPort &timer,
                              ISmsDb &smsDb)
-            : context{phoneNumber,iLogger, bts, user, timer, smsDb},
+            : context{iLogger, bts, user, timer, smsDb},
               logger(iLogger, "[APP] ") {
         logger.logInfo("Started");
         context.setState<NotConnectedState>();
@@ -41,6 +41,7 @@ namespace ue {
     }
 
     void Application::handleMenuList(unsigned int selectionIndex) {
+
         switch(selectionIndex){
             case 0:
                 context.user.composeSms();
@@ -53,9 +54,6 @@ namespace ue {
                 break;
 
         }
-
-//        if (selectionIndex == 0)context.user.composeSms();
-//        else handleViewSmsList();
     }
 
     void Application::handleViewSmsList() {
@@ -84,14 +82,20 @@ namespace ue {
     void Application::handleCallRequest(common::PhoneNumber from){
         context.state->handleCallRequest(from);
     }
-    void Application::handleAcceptCall(common::PhoneNumber from){
-        context.state->handleAcceptCall(from);
+    void Application::handleSendCallAccepted(common::PhoneNumber from){
+        context.state->handleSendCallAccepted(from);
     }
-    void Application::handleRejectCall(common::PhoneNumber from){
-        context.state->handleRejectCall(from);
+    void Application::handleSendCallDropped(common::PhoneNumber from){
+        context.state->handleSendCallDropped(from);
     }
     void Application::handleSendCallRequest(common::PhoneNumber to){
         context.state->handleSendCallRequest(to);
+    }
+    void Application::handleReceivedCallAccept(common::PhoneNumber from) {
+        context.state->handleReceivedCallAccept(from);
+    }
+    void Application::handleReceivedCallReject(common::PhoneNumber from) {
+        context.state->handleReceivedCallReject(from);
     }
 }
 

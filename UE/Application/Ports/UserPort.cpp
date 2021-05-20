@@ -1,3 +1,4 @@
+#include <future>
 #include "UserPort.hpp"
 #include "UeGui/IListViewMode.hpp"
 #include "UeGui/ITextMode.hpp"
@@ -90,8 +91,7 @@ void UserPort::showConnected()
         Selection selectedItemIndex = selectedItem.second;
         this->handler->handleMenuList(selectedItemIndex);
     });
-    //todo: przetestować czy po otrzymaniu CallRequest  RejectCallback nie psuje działania
-    // programu
+    gui.setRejectCallback(nullptr);
 }
 void UserPort::smsNotification()
 {
@@ -100,29 +100,46 @@ void UserPort::smsNotification()
 
 void UserPort::showCalling(common::PhoneNumber from)
 {
-    //todo: implementacja timera
+
     logger.logInfo("showCalling");
-    IUeGui::ITextMode& alertMode = gui.setAlertMode();
+    auto & alertMode = gui.setAlertMode();
     alertMode.setText("call from " + to_string(from));
 
-    gui.setAcceptCallback([this,&from]{
-        this->handler->handleAcceptCall(from);
+    gui.setAcceptCallback([this,from]{
+        this->handler->handleSendCallAccepted(from);
     });
 
-    gui.setRejectCallback([this,&from]{
-       this->handler->handleRejectCall(from);
+    gui.setRejectCallback([this,from]{
+        this->handler->handleSendCallDropped(from);
     });
 }
 
 void UserPort::makeACall(){
-    IUeGui::IDialMode &callMenu=gui.setDialMode();
+    auto &callMenu=gui.setDialMode();
+    bool calling= false;
 
-    gui.setAcceptCallback([this,&callMenu](){
+    gui.setAcceptCallback([this,&callMenu,&calling]()mutable{
         common::PhoneNumber enteredPhoneNumber=callMenu.getPhoneNumber();
         logger.logInfo("Calling "+ to_string( enteredPhoneNumber));
+        calling=true;
         handler->handleSendCallRequest(enteredPhoneNumber); });
 
-    gui.setRejectCallback([this](){showConnected();});
+    gui.setRejectCallback([this,&callMenu,calling](){
+        common::PhoneNumber enteredPhoneNumber=callMenu.getPhoneNumber();
+        logger.logInfo("Dropping Call  "+ to_string( enteredPhoneNumber));
+        logger.logInfo(calling);
+        if (calling){handler->handleSendCallDropped(enteredPhoneNumber);}
+        else {showConnected();}});
+
+}
+
+void UserPort::alertUser(std::string msg) {
+
+//      std::future<void>result=std::async( [this,msg]{ auto &alert=gui.setAlertMode();alert.setText((msg)); });
+//      result.wait();
+//    using namespace std::chrono_literals;
+//    std::this_thread::sleep_for(2s);
+    showConnected();
 }
 
 }

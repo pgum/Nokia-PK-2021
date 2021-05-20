@@ -15,8 +15,8 @@ public:
     virtual void handleSingleSms(int messageIndex) = 0;
     virtual void handleSendSms(SMS sendingSMS) = 0;
     virtual void handleMenuList(unsigned int selectionIndex) = 0;
-    virtual void handleAcceptCall(common::PhoneNumber from)=0;
-    virtual void handleRejectCall(common::PhoneNumber from)=0;
+    virtual void handleSendCallAccepted(common::PhoneNumber from)=0;
+    virtual void handleSendCallDropped(common::PhoneNumber from)=0;
     virtual void handleSendCallRequest(common::PhoneNumber to)=0;
 
 };
@@ -40,6 +40,7 @@ public:
     virtual void smsNotification() = 0;
     virtual  void showCalling(common::PhoneNumber from)=0;
     virtual void makeACall()=0;
+    virtual void alertUser(std::string msg)=0;
 };
 
 }

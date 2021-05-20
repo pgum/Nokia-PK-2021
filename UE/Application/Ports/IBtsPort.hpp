@@ -20,8 +20,8 @@ public:
     virtual void handleNewSms(SMS newSms) = 0;
     virtual void handleUnknownRecipient() = 0;
     virtual void handleCallRequest(common::PhoneNumber from)=0;
-
-
+    virtual void handleReceivedCallAccept(common::PhoneNumber from)=0;
+    virtual void handleReceivedCallReject(common::PhoneNumber from)=0;
 };
 
 class IBtsPort
@@ -31,8 +31,9 @@ public:
 
     virtual void sendAttachRequest(common::BtsId) = 0;
     virtual void sendSms(SMS sendingSMS) = 0;
-    virtual void sendCallRespond(common::PhoneNumber from, common::PhoneNumber to, common::MessageId id)=0;
-    virtual void sendCallRequest(common::PhoneNumber from, common::PhoneNumber to)=0;
+    virtual void sendCallAccept(common::PhoneNumber to) =0;
+    virtual void sendCallDropped(common::PhoneNumber to) =0;
+    virtual void sendCallRequest(common::PhoneNumber to) =0;
 };
 
 }

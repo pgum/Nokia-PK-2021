@@ -24,6 +24,8 @@ public:
     void handleSib(common::BtsId btsId) override;
     void handleAttachAccept() override;
     void handleAttachReject() override;
+    void handleReceivedCallAccept(common::PhoneNumber from) override;
+    void handleReceivedCallReject(common::PhoneNumber from) override;
 
     //IUserEventsHandler
     void handleViewSmsList() override;
@@ -33,8 +35,8 @@ public:
     void handleUnknownRecipient() override;
     void handleMenuList(unsigned int selectionIndex) override;
     void handleCallRequest(common::PhoneNumber from) override;
-    void handleAcceptCall(common::PhoneNumber from) override;
-    void handleRejectCall(common::PhoneNumber from) override;
+    void handleSendCallAccepted(common::PhoneNumber from) override;
+    void handleSendCallDropped(common::PhoneNumber from) override;
     void handleSendCallRequest(common::PhoneNumber to) override;
 protected:
     Context& context;
