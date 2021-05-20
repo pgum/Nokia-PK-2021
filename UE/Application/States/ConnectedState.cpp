@@ -34,4 +34,9 @@ void ConnectedState::handleCallRequest(common::PhoneNumber from)
     logger.logInfo("Received call request from ", from);
 }
 
+void ConnectedState::handleReceivedCallDrop(common::PhoneNumber recipient)
+{
+    context.logger.logDebug("Received Call drop from ", recipient);
+}
+
 }

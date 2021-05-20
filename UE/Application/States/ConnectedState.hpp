@@ -19,6 +19,7 @@ public:
 
 
     void handleSendMessage(common::PhoneNumber from, std::string message) final;
+    void handleReceivedCallDrop(common::PhoneNumber recipient) final;
 
 };
 
