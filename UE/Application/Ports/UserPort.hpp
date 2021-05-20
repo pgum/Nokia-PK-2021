@@ -10,6 +10,11 @@
 
 namespace ue
 {
+enum class View
+{
+    SmsList,
+    SmsReceived
+};
 
 class UserPort : public IUserPort
 {
@@ -40,6 +45,10 @@ public:
     void showComposeSmsMode() override;
     void showSentSMSList() override;
     void showSentSMS(int id) override;
+    void setSmsComposeMode() override;
+    void showSmsReceived() override;
+    void setDialMode() override;
+    void setConversationMode(const common::PhoneNumber from) override;
 
 private:
     common::PrefixedLogger logger;

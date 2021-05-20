@@ -2,6 +2,9 @@
 #include "SmsDbPort.hpp"
 #include "UeGui/IListViewMode.hpp"
 #include "UeGui/ITextMode.hpp"
+#include "UeGui/ISmsComposeMode.hpp"
+#include "UeGui/IDialMode.hpp"
+#include "UeGui/ICallMode.hpp"
 
 namespace ue
 {
@@ -113,7 +116,7 @@ void UserPort::showMenu()
 {
     IUeGui::IListViewMode& menu = gui.setListViewMode();
     menu.clearSelectionList();
-	menu.addSelectionListItem("Compose SMS", "");
+	  menu.addSelectionListItem("Compose SMS", "");
     menu.addSelectionListItem("View SMS", "");
     menu.addSelectionListItem("Sent SMS", "");
    // setCurMode(View::HomeMenu, &menu);
@@ -175,6 +178,49 @@ void UserPort::showSentSMS(int id)
         if(sms.read==false){allRead=false;break;}
     //if(allRead==true)showSmsReceived();
     //setCurMode(View::SentSmsView, &menu);
+    menu.addSelectionListItem("Call", "");
+    gui.setAcceptCallback([&](){
+        switch (menu.getCurrentItemIndex().second) {
+        case 0:
+            setSmsComposeMode();
+            break;
+        case 1:
+            //showSmsList();
+            break;
+        case 2:
+            setDialMode();
+            break;
+        }
+    });
+}
+
+void UserPort::setSmsComposeMode()
+{
+    IUeGui::ISmsComposeMode& sms = gui.setSmsComposeMode();
+    sms.clearSmsText();
+    gui.setAcceptCallback([&](){
+        handler->handleSendMessage(sms.getPhoneNumber(), sms.getSmsText());
+        showConnected();
+        sms.clearSmsText();
+    });
+}
+
+void UserPort::showSmsReceived()
+{
+    gui.showNewSms();
+}
+
+void UserPort::setDialMode()
+{
+    IUeGui::IDialMode& dial = gui.setDialMode();
+    gui.setAcceptCallback([&](){
+        handler->handleSendCallRequest(dial.getPhoneNumber());
+    });
+}
+
+void UserPort::setConversationMode(const common::PhoneNumber from)
+{
+    IUeGui::ICallMode& call = gui.setCallMode();
 }
 
 }
