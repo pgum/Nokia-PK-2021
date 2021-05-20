@@ -17,9 +17,10 @@ public:
     void handleSmsReceived(common::PhoneNumber phoneNumber, std::string msg) final;
     void handleCallRequest(common::PhoneNumber from);
 
-
-    void handleSendMessage(common::PhoneNumber from, std::string message) final;
     void handleReceivedCallDrop(common::PhoneNumber recipient) final;
+
+    void handleSendMessage(const common::PhoneNumber to, const std::string& message) final;
+
 
 };
 
