@@ -56,4 +56,13 @@ void Application::handleSendMessage(const common::PhoneNumber to, const std::str
     context.state->handleSendMessage(to, message);
 }
 
+void Application::handleCallRequest(common::PhoneNumber from)
+{
+    context.state->handleCallRequest(from);
+}
+void Application::handleReceivedCallDrop(common::PhoneNumber phoneNumber)
+{
+    context.state->handleReceivedCallDrop(phoneNumber);
+}
+
 }

@@ -22,12 +22,24 @@ void ConnectedState::handleSmsReceived(common::PhoneNumber from,
     //Sms incomingSms(from,text);
     //incomingSms.read = false;
     //context.db.insert(incomingSms);
+    context.user.showNewSms();
+}
+void ConnectedState::handleSendMessage(const common::PhoneNumber to, const std::string& message)
+{
+    //Sms incomingSms(from,text);
+    //incomingSms.read = false;
+    //context.db.insert(incomingSms);
     context.user.showSmsReceived();
 }
 
-void ConnectedState::handleSendMessage(const common::PhoneNumber to, const std::string& message)
+void ConnectedState::handleCallRequest(common::PhoneNumber from)
 {
-    context.bts.sendMessage(to, message);
+    logger.logInfo("Received call request from ", from);
+}
+
+void ConnectedState::handleReceivedCallDrop(common::PhoneNumber recipient)
+{
+    context.logger.logDebug("Received Call drop from ", recipient);
 }
 
 }
