@@ -70,9 +70,15 @@ void BtsPort::handleMessage(BinaryMessage msg)
             handler->handleCallAccepted(from);
             break;
         }
+        case common::MessageId::CallRequest:
+        {
+            handler->handleCallRequest(from);
+            break;
+        }
         case common::MessageId::CallDropped:
         {
-            //TODO
+            logger.logDebug("Call dropped from: ",from);
+            handler->handleReceivedCallDrop(from);
             break;
         }
         case common::MessageId::UnknownRecipient:
@@ -104,12 +110,12 @@ void BtsPort::sendAttachRequest(common::BtsId btsId)
 
 }
 
-void BtsPort::sendMessage(const common::PhoneNumber from, const std::string& message)
+void BtsPort::sendMessage(const common::PhoneNumber to, const std::string& message)
 {
-    logger.logDebug("sendMessage: ", from);
+    logger.logDebug("sendMessage: ", to);
     common::OutgoingMessage msg{common::MessageId::Sms,
                                 phoneNumber,
-                                from};
+                                to};
     msg.writeText(message);
     //Sms outgoingSms(from, message);
     //context.db.insert(outgoingSms);
