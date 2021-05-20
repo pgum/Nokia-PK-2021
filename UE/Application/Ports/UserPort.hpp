@@ -14,7 +14,7 @@ namespace ue
 class UserPort : public IUserPort
 {
 public:
-    UserPort(common::ILogger& logger, IUeGui& gui, common::PhoneNumber phoneNumber, ISmsDb& db, ISmsDb& dbw);
+    UserPort(common::ILogger& logger, IUeGui& gui, common::PhoneNumber phoneNumber, ISmsDb& db, ISmsDb& db_w);
     constexpr static unsigned ListSmsItem = 1;
     constexpr static unsigned NewSmsItem = 0;
     std::pair<View, IUeGui::BaseMode*> getCurMode()

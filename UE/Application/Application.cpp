@@ -10,8 +10,8 @@ Application::Application(common::PhoneNumber phoneNumber,
                          IUserPort &user,
                          ITimerPort &timer,
                          ISmsDb &db,
-                         ISmsDb &dbw)
-    : context{iLogger, bts, user, timer, db, dbw},
+                         ISmsDb &db_w)
+    : context{iLogger, bts, user, timer, db, db_w},
       logger(iLogger, "[APP] ")
 {
     logger.logInfo("Started");
@@ -31,6 +31,11 @@ void Application::handleTimeout()
 void Application::handleSms(common::PhoneNumber from, std::string text)
 {
     context.state->handleSms(from, text);
+}
+
+void Application::handleDisconnected()
+{
+    context.state->handleDisconnected();
 }
 
 void Application::handleSib(common::BtsId btsId)
