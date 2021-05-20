@@ -16,10 +16,9 @@ public:
     virtual void handleAttachAccept() = 0;
     virtual void handleAttachReject() = 0;
     virtual void handleSmsReceived(common::PhoneNumber, std::string) = 0;
+    virtual void handleCallAccepted(common::PhoneNumber from) = 0;
     virtual void handleCallRequest(common::PhoneNumber) = 0;
-
     virtual void handleReceivedCallDrop(common::PhoneNumber) = 0;
-
 
 };
 
@@ -29,6 +28,7 @@ public:
     virtual ~IBtsPort() = default;
 
     virtual void sendAttachRequest(common::BtsId) = 0;
+    virtual void sendCallRequest(const common::PhoneNumber to) = 0;
     virtual void sendMessage(const common::PhoneNumber to, const std::string& message) = 0;
 };
 

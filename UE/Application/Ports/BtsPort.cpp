@@ -64,6 +64,12 @@ void BtsPort::handleMessage(BinaryMessage msg)
             handler->handleSmsReceived(from, message);
             break;
         }
+        case common::MessageId::CallAccepted:
+        {
+            logger.logDebug("BtsPort, CallAccepted from: ", from);
+            handler->handleCallAccepted(from);
+            break;
+        }
         case common::MessageId::CallRequest:
         {
             handler->handleCallRequest(from);
@@ -73,6 +79,11 @@ void BtsPort::handleMessage(BinaryMessage msg)
         {
             logger.logDebug("Call dropped from: ",from);
             handler->handleReceivedCallDrop(from);
+            break;
+        }
+        case common::MessageId::UnknownRecipient:
+        {
+            //TODO
             break;
         }
         default:
@@ -109,6 +120,16 @@ void BtsPort::sendMessage(const common::PhoneNumber to, const std::string& messa
     //Sms outgoingSms(from, message);
     //context.db.insert(outgoingSms);
     transport.sendMessage(msg.getMessage());
+}
+
+void BtsPort::sendCallRequest(const common::PhoneNumber to)
+{
+    logger.logDebug("sendCallRequest: ", to);
+    common::OutgoingMessage msg{common::MessageId::CallRequest,
+                                phoneNumber,
+                                to};
+    transport.sendMessage(msg.getMessage());
+    //timer start
 }
 
 }

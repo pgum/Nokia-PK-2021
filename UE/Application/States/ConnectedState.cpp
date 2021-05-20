@@ -42,4 +42,14 @@ void ConnectedState::handleReceivedCallDrop(common::PhoneNumber recipient)
     context.logger.logDebug("Received Call drop from ", recipient);
 }
 
+void ConnectedState::handleSendCallRequest(const common::PhoneNumber to)
+{
+    context.bts.sendCallRequest(to);
+}
+
+void ConnectedState::handleCallAccepted(const common::PhoneNumber from)
+{
+    context.user.setConversationMode(from);
+}
+
 }
