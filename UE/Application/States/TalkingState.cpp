@@ -10,7 +10,6 @@ namespace ue
     : BaseState(context,"TalkingState")
     {
         logger.logInfo("sending Call Accept");
-        //        context.user.setCallMode();
-
+        context.user.setCallMode();
     }
 }

@@ -1,4 +1,5 @@
 #include <future>
+#include <UeGui/ICallMode.hpp>
 #include "UserPort.hpp"
 #include "UeGui/IListViewMode.hpp"
 #include "UeGui/ITextMode.hpp"
@@ -116,21 +117,26 @@ void UserPort::showCalling(common::PhoneNumber from)
 
 void UserPort::makeACall(){
     auto &callMenu=gui.setDialMode();
-    bool calling= false;
 
-    gui.setAcceptCallback([this,&callMenu,&calling]()mutable{
+    gui.setAcceptCallback([this,&callMenu](){
         common::PhoneNumber enteredPhoneNumber=callMenu.getPhoneNumber();
         logger.logInfo("Calling "+ to_string( enteredPhoneNumber));
-        calling=true;
         handler->handleSendCallRequest(enteredPhoneNumber); });
 
-    gui.setRejectCallback([this,&callMenu,calling](){
-        common::PhoneNumber enteredPhoneNumber=callMenu.getPhoneNumber();
-        logger.logInfo("Dropping Call  "+ to_string( enteredPhoneNumber));
-        logger.logInfo(calling);
-        if (calling){handler->handleSendCallDropped(enteredPhoneNumber);}
-        else {showConnected();}});
+    gui.setRejectCallback([this,&callMenu](){
+        showConnected();
+       });
 
+}
+
+void UserPort::setCallMode() {
+    auto &alert=gui.setCallMode();
+    //todo:
+}
+
+void UserPort::waitingForCallRespond() {
+    auto &alert=gui.setAlertMode();
+    alert.setText("Calling ...");
 }
 
 void UserPort::alertUser(std::string msg) {

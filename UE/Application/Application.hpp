@@ -30,9 +30,10 @@ public:
     void handleSib(common::BtsId btsId) override;
     void handleAttachAccept() override;
     void handleAttachReject() override;
-    void handleCallRequest(common::PhoneNumber from) override;
-    void handleReceivedCallAccept(common::PhoneNumber from) override;
-    void handleReceivedCallReject(common::PhoneNumber from) override;
+
+    void handleCallRequest(common::PhoneNumber from) override;//done Test
+    void handleReceivedCallAccept(common::PhoneNumber from) override;//done Test
+    void handleReceivedCallReject(common::PhoneNumber from) override;//done Test
 
     //IUserEventsHandler
     void handleViewSmsList() override;
@@ -41,9 +42,10 @@ public:
     void handleNewSms(SMS sms) override;
     void handleUnknownRecipient() override;
     void handleMenuList(unsigned selectionIndex) override;
-    void handleSendCallAccepted(common::PhoneNumber from) override;
-    void handleSendCallDropped(common::PhoneNumber from) override;
-    void handleSendCallRequest(common::PhoneNumber to) override;
+
+    void handleSendCallAccepted(common::PhoneNumber from) override;//done Test
+    void handleSendCallDropped(common::PhoneNumber from) override;//done Test
+    void handleSendCallRequest(common::PhoneNumber to) override;//done Test
 private:
     Context context;
     common::PrefixedLogger logger;

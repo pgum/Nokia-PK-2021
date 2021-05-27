@@ -18,6 +18,9 @@ public:
     MOCK_METHOD(void, handleAttachReject, (), (final));
     MOCK_METHOD(void, handleNewSms,(SMS sms),(final));
     MOCK_METHOD(void, handleUnknownRecipient,(),(final));
+    MOCK_METHOD(void,handleCallRequest,(common::PhoneNumber from),(final));
+    MOCK_METHOD(void,handleReceivedCallAccept,(common::PhoneNumber from),(final));
+    MOCK_METHOD(void,handleReceivedCallReject,(common::PhoneNumber from),(final));
 };
 
 class IBtsPortMock : public IBtsPort
@@ -27,6 +30,9 @@ public:
     ~IBtsPortMock() override;
     MOCK_METHOD(void, sendAttachRequest, (common::BtsId), (final));
     MOCK_METHOD(void,sendSms,(SMS sendingSMS),(final));
+    MOCK_METHOD(void,sendCallAccept,(common::PhoneNumber to),(final));
+    MOCK_METHOD(void,sendCallDropped,(common::PhoneNumber to),(final));
+    MOCK_METHOD(void,sendCallRequest,(common::PhoneNumber to),(final));
 };
 
 }

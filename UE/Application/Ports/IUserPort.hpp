@@ -32,15 +32,16 @@ public:
     virtual void showNotConnected() = 0;
     virtual void showConnecting() = 0;
     virtual void showConnected() = 0;
-
     virtual void showSmsList(std::vector<SMS> smsList) = 0;
     virtual void smsListViewHandler(OptionalSelection messageIndex) = 0;
     virtual void composeSms() = 0;
     virtual void showSingleSms(SMS sms) = 0;
     virtual void smsNotification() = 0;
-    virtual  void showCalling(common::PhoneNumber from)=0;
+    virtual void showCalling(common::PhoneNumber from)=0;
     virtual void makeACall()=0;
     virtual void alertUser(std::string msg)=0;
+    virtual void setCallMode()=0;
+    virtual void waitingForCallRespond()=0;
 };
 
 }

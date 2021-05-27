@@ -30,7 +30,8 @@ public:
     void smsNotification() override;
     void showCalling(common::PhoneNumber from) override;
     void makeACall() override;
-
+    void setCallMode() override;
+    void waitingForCallRespond() override;
 private:
     common::PrefixedLogger logger;
     IUeGui& gui;

@@ -15,7 +15,9 @@ public:
     MOCK_METHOD(void,handleSingleSms,(int messageIndex),(final));
     MOCK_METHOD(void,handleSendSms,(SMS sendingSMS),(final));
     MOCK_METHOD(void,handleMenuList,(unsigned int selectionIndex),(final));
-
+    MOCK_METHOD(void,handleSendCallAccepted,(common::PhoneNumber from),(final));
+    MOCK_METHOD(void,handleSendCallDropped,(common::PhoneNumber from),(final));
+    MOCK_METHOD(void,handleSendCallRequest,(common::PhoneNumber from),(final));
 };
 
 class IUserPortMock : public IUserPort
@@ -35,6 +37,11 @@ public:
     MOCK_METHOD(void,composeSms,(),(final));
     MOCK_METHOD(void,showSingleSms,(SMS sms),(final));
     MOCK_METHOD(void,smsNotification,(),(final));
+    MOCK_METHOD(void,showCalling,(common::PhoneNumber from),(final));
+    MOCK_METHOD(void,makeACall,(),(final));
+    MOCK_METHOD(void,alertUser,(std::string msg),(final));
+    MOCK_METHOD(void,setCallMode,(),(final));
+    MOCK_METHOD(void,waitingForCallRespond,(),(final));
 };
 
 }

@@ -21,7 +21,8 @@ protected:
     StrictMock<IListViewModeMock> listViewModeMock;
     StrictMock<ITextModeMock> textModeMock;
     StrictMock<ISmsComposeModeMock> smsComposeModeMock;
-
+    StrictMock<IDialModeMock> dialModeMock;
+    StrictMock<ICallModeMock> callModeMock;
     UserPort objectUnderTest{loggerMock, guiMock, PHONE_NUMBER};
 
     UserPortTestSuite()
@@ -57,6 +58,7 @@ TEST_F(UserPortTestSuite, shallShowMenuOnConnected)
     EXPECT_CALL(listViewModeMock, clearSelectionList());
     EXPECT_CALL(listViewModeMock, addSelectionListItem(_, _)).Times(AtLeast(1));
     EXPECT_CALL(guiMock,setAcceptCallback(_));
+    EXPECT_CALL(guiMock,setRejectCallback(_));
     objectUnderTest.showConnected();
 }
 TEST_F(UserPortTestSuite,shallShowSmsList)
@@ -111,4 +113,25 @@ TEST_F(UserPortTestSuite,shallShowNewSms)
 
     objectUnderTest.smsNotification();
 }
+
+TEST_F(UserPortTestSuite,shallMakeACall)
+{
+    EXPECT_CALL(guiMock,setDialMode()).WillOnce(ReturnRef(dialModeMock));
+    EXPECT_CALL(guiMock,setRejectCallback(_));
+    EXPECT_CALL(guiMock,setAcceptCallback(_));
+
+    objectUnderTest.makeACall();
+}
+
+TEST_F(UserPortTestSuite,shallShowCalling)
+{
+    EXPECT_CALL(guiMock,setAlertMode()).WillOnce(ReturnRef(textModeMock));
+    EXPECT_CALL(textModeMock,setText(_));
+    EXPECT_CALL(guiMock,setRejectCallback(_));
+    EXPECT_CALL(guiMock,setAcceptCallback(_));
+
+    objectUnderTest.showCalling(PHONE_NUMBER);
+}
+
+
 }

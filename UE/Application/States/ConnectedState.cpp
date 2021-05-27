@@ -15,11 +15,10 @@ void ConnectedState::handleDisconnected()
 {
     context.setState<NotConnectedState>();
 }
-//handle drop from calling
-
 
 void ConnectedState::handleSendCallRequest(common::PhoneNumber to) {
-    context.bts.sendCallRequest(to);
+        context.bts.sendCallRequest(to);
+        context.user.waitingForCallRespond();
         using namespace std::chrono_literals;
         context.timer.startTimer(60s);
 }
