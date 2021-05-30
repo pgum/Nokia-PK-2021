@@ -124,9 +124,9 @@ TEST_F(BtsPortTestSuite,shallSendSms)
     common::BinaryMessage msg;
     SMS testSMS;
 
-    testSMS.setFrom(PHONE_NUMBER);
-    testSMS.setTo(common::PhoneNumber{20});
-    testSMS.setMessage("testString");
+    testSMS.from = PHONE_NUMBER;
+    testSMS.to = common::PhoneNumber{20};
+    testSMS.message = "testString";
 
     EXPECT_CALL(transportMock,sendMessage(_)).WillOnce([&msg](auto param){msg = std::move(param);return true;});
 

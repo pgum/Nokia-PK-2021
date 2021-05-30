@@ -68,12 +68,12 @@ TEST_F(UserPortTestSuite,shallShowSmsList)
     EXPECT_CALL(guiMock,setRejectCallback(_));
 
     std::vector<SMS> testVector;
-
     SMS testSmsToShow{"",common::PhoneNumber{1},PHONE_NUMBER,smsRead::NotRead,smsReceived::Received};
+    testVector.push_back(testSmsToShow);\
 
-    testVector.push_back(testSmsToShow);
+    std::unique_ptr<std::vector<SMS>> ptrTestVector = std::make_unique<std::vector<SMS>>(testVector);
 
-    //objectUnderTest.showSmsList(testVector);
+    objectUnderTest.showSmsList(std::move(ptrTestVector));
 }
 TEST_F(UserPortTestSuite,shallHandleSmsList)
 {
