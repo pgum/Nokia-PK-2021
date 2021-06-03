@@ -19,6 +19,7 @@ public:
     void sendCallRequest(const common::PhoneNumber to) override;
     void sendMessage(const common::PhoneNumber to, const std::string& message) override;
     void sendCallAccepted(const common::PhoneNumber from) override;
+    void sendCallMessage(const common::PhoneNumber to, const std::string &text) override;
 
 private:
     void handleDisconnected();

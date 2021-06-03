@@ -57,4 +57,14 @@ void ConnectedState::handleSendCallAccepted(const common::PhoneNumber from)
     context.bts.sendCallAccepted(from);
 }
 
+void ConnectedState::handleSendCallMessage(const common::PhoneNumber to, const std::string &text)
+{
+    context.bts.sendCallMessage(to, text);
+}
+
+void ConnectedState::handleCallTalk(const common::PhoneNumber from, const std::string &message)
+{
+    context.user.callTalkMessage(from, message);
+}
+
 }
