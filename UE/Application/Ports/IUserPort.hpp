@@ -14,6 +14,7 @@ public:
     virtual ~IUserEventsHandler() = default;
     virtual void handleSendCallRequest(const common::PhoneNumber to) = 0;
     virtual void handleSendMessage(const common::PhoneNumber to, const std::string& message) = 0;
+    virtual void handleSendCallAccepted(const common::PhoneNumber from) = 0;
 };
 
 class IUserPort
@@ -28,6 +29,7 @@ public:
     virtual void showSmsReceived() = 0;
     virtual void setDialMode() = 0;
     virtual void setConversationMode(const common::PhoneNumber from) = 0;
+    virtual void setCallRequestMode(const common::PhoneNumber from) = 0;
 };
 
 }

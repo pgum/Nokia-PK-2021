@@ -77,4 +77,9 @@ void Application::handleCallAccepted(const common::PhoneNumber from)
     context.state->handleCallAccepted(from);
 }
 
+void Application::handleSendCallAccepted(const common::PhoneNumber from)
+{
+    context.state->handleSendCallAccepted(from);
+}
+
 }

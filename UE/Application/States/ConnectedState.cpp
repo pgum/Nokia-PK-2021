@@ -34,7 +34,7 @@ void ConnectedState::handleSendMessage(const common::PhoneNumber to, const std::
 
 void ConnectedState::handleCallRequest(common::PhoneNumber from)
 {
-    logger.logInfo("Received call request from ", from);
+    context.user.setCallRequestMode(from);
 }
 
 void ConnectedState::handleReceivedCallDrop(common::PhoneNumber recipient)
@@ -50,6 +50,11 @@ void ConnectedState::handleSendCallRequest(const common::PhoneNumber to)
 void ConnectedState::handleCallAccepted(const common::PhoneNumber from)
 {
     context.user.setConversationMode(from);
+}
+
+void ConnectedState::handleSendCallAccepted(const common::PhoneNumber from)
+{
+    context.bts.sendCallAccepted(from);
 }
 
 }
