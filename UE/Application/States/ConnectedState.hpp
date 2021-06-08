@@ -20,6 +20,9 @@ public:
     void handleSendMessage(const common::PhoneNumber to, const std::string& message) final;
     void handleSendCallRequest(const common::PhoneNumber to) final;
     void handleCallAccepted(const common::PhoneNumber from) final;
+    void handleSendCallAccepted(const common::PhoneNumber from) final;
+    void handleSendCallMessage(const common::PhoneNumber to, const std::string &text) final;
+    void handleCallTalk(const common::PhoneNumber from, const std::string &message) final;
 
 };
 

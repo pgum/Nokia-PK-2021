@@ -3,6 +3,7 @@
 #include "UeGui/ISmsComposeMode.hpp"
 #include "UeGui/IDialMode.hpp"
 #include "UeGui/ICallMode.hpp"
+#include "UeGui/ITextMode.hpp"
 
 namespace ue
 {
@@ -77,6 +78,8 @@ void UserPort::setDialMode()
 {
     IUeGui::IDialMode& dial = gui.setDialMode();
     gui.setAcceptCallback([&](){
+        IUeGui::ITextMode& call = gui.setAlertMode();
+        call.setText("Calling to " + to_string(dial.getPhoneNumber()));
         handler->handleSendCallRequest(dial.getPhoneNumber());
     });
 }
@@ -84,6 +87,29 @@ void UserPort::setDialMode()
 void UserPort::setConversationMode(const common::PhoneNumber from)
 {
     IUeGui::ICallMode& call = gui.setCallMode();
+    /*
+    virtual void appendIncomingText(const std::string &text) = 0;
+    virtual void clearOutgoingText() = 0;
+    virtual std::string getOutgoingText() const = 0;
+    */
+    gui.setAcceptCallback([&, from](){
+        handler->handleSendCallMessage(from, call.getOutgoingText());
+        call.clearOutgoingText();
+    });
+
+}
+
+void UserPort::setCallRequestMode(const common::PhoneNumber from)
+{
+    IUeGui::ITextMode& call = gui.setAlertMode();
+    call.setText(to_string(from) + " is calling");
+    setConversationMode(from);
+    handler->handleSendCallAccepted(from);
+}
+
+void UserPort::callTalkMessage(const common::PhoneNumber from, const std::string &text)
+{
+    gui.setCallMode().appendIncomingText(text);
 }
 
 }
