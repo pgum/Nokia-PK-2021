@@ -86,4 +86,9 @@ void BaseState::handleCallTalk(const common::PhoneNumber from, const std::string
     logger.logError("Uexpected: handleCallTalk");
 }
 
+void BaseState::handleSendCallReject(const common::PhoneNumber to)
+{
+    logger.logError("Uexpected: handleSendCallReject");
+}
+
 }

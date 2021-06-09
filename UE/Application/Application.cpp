@@ -92,4 +92,9 @@ void Application::handleCallTalk(const common::PhoneNumber from, const std::stri
     context.state->handleCallTalk(from, message);
 }
 
+void Application::handleSendCallReject(const common::PhoneNumber to)
+{
+    context.state->handleSendCallReject(to);
+}
+
 }

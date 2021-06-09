@@ -16,6 +16,7 @@ public:
     MOCK_METHOD(void, handleSendMessage, (const common::PhoneNumber to, const std::string& message), (final));
     MOCK_METHOD(void, handleSendCallAccepted, (const common::PhoneNumber from), (final));
     MOCK_METHOD(void, handleSendCallMessage, (const common::PhoneNumber to, const std::string &text), (final));
+    MOCK_METHOD(void, handleSendCallReject, (const common::PhoneNumber to), (final));
 
 };
 

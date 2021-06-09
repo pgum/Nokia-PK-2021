@@ -55,6 +55,7 @@ void UserPort::showConnected()
             break;
         }
     });
+    gui.setRejectCallback([](){});
 }
 
 void UserPort::setSmsComposeMode()
@@ -87,16 +88,15 @@ void UserPort::setDialMode()
 void UserPort::setConversationMode(const common::PhoneNumber from)
 {
     IUeGui::ICallMode& call = gui.setCallMode();
-    /*
-    virtual void appendIncomingText(const std::string &text) = 0;
-    virtual void clearOutgoingText() = 0;
-    virtual std::string getOutgoingText() const = 0;
-    */
     gui.setAcceptCallback([&, from](){
         handler->handleSendCallMessage(from, call.getOutgoingText());
         call.clearOutgoingText();
     });
-
+    gui.setRejectCallback([&, from](){
+        handler->handleSendCallReject(from);
+        call.clearOutgoingText();
+        showConnected();
+    });
 }
 
 void UserPort::setCallRequestMode(const common::PhoneNumber from)

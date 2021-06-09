@@ -67,4 +67,9 @@ void ConnectedState::handleCallTalk(const common::PhoneNumber from, const std::s
     context.user.callTalkMessage(from, message);
 }
 
+void ConnectedState::handleSendCallReject(const common::PhoneNumber to)
+{
+    context.bts.sendCallReject(to);
+}
+
 }
