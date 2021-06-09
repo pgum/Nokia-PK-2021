@@ -100,6 +100,13 @@ void UserPort::setConversationMode(const common::PhoneNumber from)
         handler->handleSendCallMessage(from, call.getOutgoingText());
         call.clearOutgoingText();
     });
+
+    gui.setRejectCallback([&, from](){
+    handler->handleSendCallReject(from);
+    call.clearOutgoingText();
+    showConnected();
+
+    });
 }
 
 void UserPort::setCallRequestMode(const common::PhoneNumber from)
