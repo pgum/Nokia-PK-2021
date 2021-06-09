@@ -100,27 +100,21 @@ void UserPort::setConversationMode(const common::PhoneNumber from)
         handler->handleSendCallMessage(from, call.getOutgoingText());
         call.clearOutgoingText();
     });
-    gui.setRejectCallback([&, from](){
-        handler->handleSendCallReject(from);
-        call.clearOutgoingText();
-        showConnected();
-    });
 }
 
 void UserPort::setCallRequestMode(const common::PhoneNumber from)
 {
     IUeGui::ITextMode& call = gui.setAlertMode();
     call.setText(to_string(from) + " is calling");
-    //setConversationMode(from);
-    //handler->handleSendCallAccepted(from);
 
     gui.setAcceptCallback([&, from](){
+        handler->handleSendCallAccepted(from);
         setConversationMode(from);
-        //handler->handleSendCallAccepted(from);
+
     });
     gui.setRejectCallback([&](){
+        handler->handleSendCallReject(from);
         showConnected();
-        //handler->handleSendCallReject(from);
 
     });
 }
