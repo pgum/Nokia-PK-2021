@@ -55,6 +55,7 @@ void UserPort::showConnected()
             break;
         }
     });
+    gui.setRejectCallback([](){});
 }
 
 void UserPort::setSmsComposeMode()
@@ -65,6 +66,10 @@ void UserPort::setSmsComposeMode()
         handler->handleSendMessage(sms.getPhoneNumber(), sms.getSmsText());
         showConnected();
         sms.clearSmsText();
+    });
+    gui.setRejectCallback([&](){
+        sms.clearSmsText();
+        showConnected();
     });
 }
 
@@ -82,21 +87,24 @@ void UserPort::setDialMode()
         call.setText("Calling to " + to_string(dial.getPhoneNumber()));
         handler->handleSendCallRequest(dial.getPhoneNumber());
     });
+    gui.setRejectCallback([&](){
+        showConnected();
+    });
 }
 
 void UserPort::setConversationMode(const common::PhoneNumber from)
 {
     IUeGui::ICallMode& call = gui.setCallMode();
-    /*
-    virtual void appendIncomingText(const std::string &text) = 0;
-    virtual void clearOutgoingText() = 0;
-    virtual std::string getOutgoingText() const = 0;
-    */
+    call.clearOutgoingText();
     gui.setAcceptCallback([&, from](){
         handler->handleSendCallMessage(from, call.getOutgoingText());
         call.clearOutgoingText();
     });
-
+    gui.setRejectCallback([&, from](){
+        handler->handleSendCallReject(from);
+        call.clearOutgoingText();
+        showConnected();
+    });
 }
 
 void UserPort::setCallRequestMode(const common::PhoneNumber from)
@@ -110,6 +118,11 @@ void UserPort::setCallRequestMode(const common::PhoneNumber from)
 void UserPort::callTalkMessage(const common::PhoneNumber from, const std::string &text)
 {
     gui.setCallMode().appendIncomingText(text);
+}
+
+void UserPort::setCallDropped(const common::PhoneNumber recipient)
+{
+    showConnected();
 }
 
 }

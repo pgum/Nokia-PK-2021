@@ -62,7 +62,7 @@ void Application::handleCallRequest(common::PhoneNumber from)
 {
     context.state->handleCallRequest(from);
 }
-void Application::handleReceivedCallDrop(common::PhoneNumber phoneNumber)
+void Application::handleReceivedCallDrop(const common::PhoneNumber phoneNumber)
 {
     context.state->handleReceivedCallDrop(phoneNumber);
 }
@@ -90,6 +90,11 @@ void Application::handleSendCallMessage(const common::PhoneNumber to, const std:
 void Application::handleCallTalk(const common::PhoneNumber from, const std::string &message)
 {
     context.state->handleCallTalk(from, message);
+}
+
+void Application::handleSendCallReject(const common::PhoneNumber to)
+{
+    context.state->handleSendCallReject(to);
 }
 
 }

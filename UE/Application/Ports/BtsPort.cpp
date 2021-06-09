@@ -160,4 +160,13 @@ void BtsPort::sendCallMessage(const common::PhoneNumber to, const std::string &t
     transport.sendMessage(msg.getMessage());
 }
 
+void BtsPort::sendCallReject(const common::PhoneNumber to)
+{
+    logger.logDebug("sendCallReject: ", to);
+    common::OutgoingMessage msg{common::MessageId::CallDropped,
+                                phoneNumber,
+                                to};
+    transport.sendMessage(msg.getMessage());
+}
+
 }

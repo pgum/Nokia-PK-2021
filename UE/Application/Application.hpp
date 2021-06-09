@@ -34,11 +34,12 @@ public:
     void handleSendCallRequest(const common::PhoneNumber) override;
     void handleCallAccepted(const common::PhoneNumber from) override;
     void handleCallRequest(common::PhoneNumber from) override;
-    void handleReceivedCallDrop(common::PhoneNumber PhoneNumber) override;
+    void handleReceivedCallDrop(const common::PhoneNumber PhoneNumber) override;
     void handleSendMessage(const common::PhoneNumber to, const std::string& message) override;
     void handleSendCallAccepted(const common::PhoneNumber from) override;
     void handleSendCallMessage(const common::PhoneNumber to, const std::string &text) override;
     void handleCallTalk(const common::PhoneNumber from, const std::string &message) override;
+    void handleSendCallReject(const common::PhoneNumber to) override;
 
 private:
     Context context;
