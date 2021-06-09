@@ -66,9 +66,9 @@ void BaseState::handleCallRequest(common::PhoneNumber from)
     logger.logDebug("Unexpected: handleCallRequest");
 }
 
-void BaseState::handleReceivedCallDrop(common::PhoneNumber from)
+void BaseState::handleReceivedCallDrop(const common::PhoneNumber from)
 {
-    logger.logError("Unexpected ReceivedCallDrop: ", from);
+    logger.logError("Unexpected handleReceivedCallDrop: ", from);
 }
 
 void BaseState::handleSendCallAccepted(const common::PhoneNumber from)

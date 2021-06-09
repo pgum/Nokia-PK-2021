@@ -37,9 +37,9 @@ void ConnectedState::handleCallRequest(common::PhoneNumber from)
     context.user.setCallRequestMode(from);
 }
 
-void ConnectedState::handleReceivedCallDrop(common::PhoneNumber recipient)
+void ConnectedState::handleReceivedCallDrop(const common::PhoneNumber recipient)
 {
-    context.logger.logDebug("Received Call drop from ", recipient);
+    context.user.setCallDropped(recipient);
 }
 
 void ConnectedState::handleSendCallRequest(const common::PhoneNumber to)
