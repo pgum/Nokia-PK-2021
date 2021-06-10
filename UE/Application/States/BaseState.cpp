@@ -91,4 +91,9 @@ void BaseState::handleSendCallReject(const common::PhoneNumber to)
     logger.logError("Uexpected: handleSendCallReject");
 }
 
+void BaseState::handleUnknownRecipient(const common::PhoneNumber from)
+{
+    logger.logError("Uexpected: handleUnknownRecipient");
+}
+
 }

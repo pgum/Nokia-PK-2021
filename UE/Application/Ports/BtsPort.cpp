@@ -92,7 +92,8 @@ void BtsPort::handleMessage(BinaryMessage msg)
         }
         case common::MessageId::UnknownRecipient:
         {
-            //TODO
+            logger.logDebug("Unknown recipient : ",from);
+            handler->handleUnknownRecipient(from);
             break;
         }
         default:

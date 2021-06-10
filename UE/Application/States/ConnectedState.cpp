@@ -72,4 +72,9 @@ void ConnectedState::handleSendCallReject(const common::PhoneNumber to)
     context.bts.sendCallReject(to);
 }
 
+void ConnectedState::handleUnknownRecipient(const common::PhoneNumber from)
+{
+    //context.db.setUnknownRecipient(from);
+}
+
 }
