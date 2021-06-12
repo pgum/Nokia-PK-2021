@@ -16,8 +16,8 @@ void ConnectedState::handleDisconnected()
 }
 
 
-void ConnectedState::handleSmsReceived(common::PhoneNumber from,
-                                       std::string text)
+void ConnectedState::handleSmsReceived(const common::PhoneNumber from, const std::string text)
+
 {
     //Sms incomingSms(from,text);
     //incomingSms.read = false;
@@ -32,7 +32,7 @@ void ConnectedState::handleSendMessage(const common::PhoneNumber to, const std::
     context.bts.sendMessage(to, message);
 }
 
-void ConnectedState::handleCallRequest(common::PhoneNumber from)
+void ConnectedState::handleCallRequest( const common::PhoneNumber from)
 {
     context.user.setCallRequestMode(from);
 }
