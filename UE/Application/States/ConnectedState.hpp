@@ -26,7 +26,8 @@ public:
     void handleSendCallReject(const common::PhoneNumber to) final;
     void handleUnknownRecipient(const common::PhoneNumber from) final;
     void handleTimeout() final;
-
+private:
+    PhoneNumber participant;
 };
 
 }

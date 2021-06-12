@@ -36,6 +36,8 @@ void ConnectedState::handleSendMessage(const common::PhoneNumber to, const std::
 
 void ConnectedState::handleCallRequest(common::PhoneNumber from)
 {
+    participant = from;
+    context.timer.startTimer(30s);
     context.user.setCallRequestMode(from);
 }
 
@@ -47,33 +49,36 @@ void ConnectedState::handleReceivedCallDrop(const common::PhoneNumber recipient)
 
 void ConnectedState::handleSendCallRequest(const common::PhoneNumber to)
 {
-    context.timer.startTimer(3s);
+    participant = to;
+    context.timer.startTimer(60s);
     context.bts.sendCallRequest(to);
 }
 
 void ConnectedState::handleCallAccepted(const common::PhoneNumber from)
 {
-    context.timer.startTimer(5s);
+    context.timer.stopTimer();
+    context.timer.startTimer(120s);
     context.user.setConversationMode(from);
 }
 
 void ConnectedState::handleSendCallAccepted(const common::PhoneNumber from)
 {
-    context.timer.startTimer(5s);
+    context.timer.stopTimer();
+    context.timer.startTimer(120s);
     context.bts.sendCallAccepted(from);
 }
 
 void ConnectedState::handleSendCallMessage(const common::PhoneNumber to, const std::string &text)
 {
     context.timer.stopTimer();
-    context.timer.startTimer(5s);
+    context.timer.startTimer(120s);
     context.bts.sendCallMessage(to, text);
 }
 
 void ConnectedState::handleCallTalk(const common::PhoneNumber from, const std::string &message)
 {
     context.timer.stopTimer();
-    context.timer.startTimer(5s);
+    context.timer.startTimer(120s);
     context.user.callTalkMessage(from, message);
 }
 
@@ -97,6 +102,7 @@ void ConnectedState::handleUnknownRecipient(const common::PhoneNumber from)
 void ConnectedState::handleTimeout()
 {
     context.user.showConnected();
+    context.bts.sendCallReject(participant);
 }
 
 }
