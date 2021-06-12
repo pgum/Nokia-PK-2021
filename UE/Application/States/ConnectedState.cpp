@@ -16,7 +16,7 @@ void ConnectedState::handleDisconnected()
 }
 
 
-void ConnectedState::handleSmsReceived(const common::PhoneNumber from, const std::string text)
+void ConnectedState::handleSmsReceived(const common::PhoneNumber from, const std::string& text)
 
 {
     //Sms incomingSms(from,text);
