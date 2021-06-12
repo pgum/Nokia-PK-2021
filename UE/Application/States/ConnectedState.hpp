@@ -14,7 +14,7 @@ public:
 public:
     void handleDisconnected() final;
 
-    void handleSmsReceived(const common::PhoneNumber phoneNumber, std::string& msg) final;
+    void handleSmsReceived(const common::PhoneNumber phoneNumber, const std::string& msg) final;
     void handleCallRequest(const common::PhoneNumber from);
     void handleReceivedCallDrop(const common::PhoneNumber recipient) final;
     void handleSendMessage(const common::PhoneNumber to, const std::string& message) final;
