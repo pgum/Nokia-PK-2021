@@ -25,6 +25,7 @@ public:
     void handleCallTalk(const common::PhoneNumber from, const std::string &message) final;
     void handleSendCallReject(const common::PhoneNumber to) final;
     void handleUnknownRecipient(const common::PhoneNumber from) final;
+    void handleTimeout() final;
 
 };
 
