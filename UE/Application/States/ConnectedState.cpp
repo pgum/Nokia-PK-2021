@@ -74,7 +74,12 @@ void ConnectedState::handleSendCallReject(const common::PhoneNumber to)
 
 void ConnectedState::handleUnknownRecipient(const common::PhoneNumber from)
 {
-    //context.db.setUnknownRecipient(from);
+    if (context.user.isTalking()) {
+        context.user.setUnknownRecipientTalking();
+    }
+    else {
+        //context.db.setUnknownRecipient(from);
+    }
 }
 
 }

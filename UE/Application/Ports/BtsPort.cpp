@@ -73,12 +73,17 @@ void BtsPort::handleMessage(BinaryMessage msg)
         case common::MessageId::CallRequest:
         {
             logger.logDebug("BtsPort, CallRequest from: ", from);
-            handler->handleCallRequest(from);
+            if (from == to) {
+                handler->handleReceivedCallDrop(from);
+            }
+            else {
+                handler->handleCallRequest(from);
+            }
             break;
         }
         case common::MessageId::CallDropped:
         {
-            logger.logDebug("Call dropped from: ",from);
+            logger.logDebug("Call dropped from: ", from);
             handler->handleReceivedCallDrop(from);
             break;
         }
@@ -92,7 +97,7 @@ void BtsPort::handleMessage(BinaryMessage msg)
         }
         case common::MessageId::UnknownRecipient:
         {
-            logger.logDebug("Unknown recipient : ",from);
+            logger.logDebug("Unknown recipient : ", from);
             handler->handleUnknownRecipient(from);
             break;
         }

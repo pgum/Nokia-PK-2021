@@ -42,6 +42,7 @@ void UserPort::showConnected()
     menu.addSelectionListItem("Compose SMS", "");
     menu.addSelectionListItem("View SMS", "");
     menu.addSelectionListItem("Call", "");
+    this->isUserTalking = false;
     gui.setAcceptCallback([&](){
         switch (menu.getCurrentItemIndex().second) {
         case 0:
@@ -83,14 +84,17 @@ void UserPort::setDialMode()
 {
     IUeGui::IDialMode& dial = gui.setDialMode();
     gui.setAcceptCallback([&](){
+        const common::PhoneNumber to = dial.getPhoneNumber();
         IUeGui::ITextMode& call = gui.setAlertMode();
-        call.setText("Calling to " + to_string(dial.getPhoneNumber()));
+        call.setText("Calling to " + to_string(to));
+        this->isUserTalking = true;
+        handler->handleSendCallRequest(to);
 
-        handler->handleSendCallRequest(dial.getPhoneNumber());
-        gui.setRejectCallback([&, to = dial.getPhoneNumber()](){
+        gui.setRejectCallback([&, to](){
             handler->handleSendCallReject(to);
             showConnected();
         });
+        gui.setAcceptCallback([](){});
     });
     gui.setRejectCallback([&](){
         showConnected();
@@ -100,6 +104,7 @@ void UserPort::setDialMode()
 void UserPort::setConversationMode(const common::PhoneNumber from)
 {
     IUeGui::ICallMode& call = gui.setCallMode();
+    this->isUserTalking = true;
     call.clearOutgoingText();
     gui.setAcceptCallback([&, from](){
         handler->handleSendCallMessage(from, call.getOutgoingText());
@@ -117,6 +122,7 @@ void UserPort::setCallRequestMode(const common::PhoneNumber from)
 {
     IUeGui::ITextMode& call = gui.setAlertMode();
     call.setText(to_string(from) + " is calling");
+    this->isUserTalking = true;
 
     gui.setAcceptCallback([&, from](){
         handler->handleSendCallAccepted(from);
@@ -136,6 +142,16 @@ void UserPort::callTalkMessage(const common::PhoneNumber from, const std::string
 }
 
 void UserPort::setCallDropped(const common::PhoneNumber recipient)
+{
+    showConnected();
+}
+
+bool UserPort::isTalking()
+{
+    return this->isUserTalking;
+}
+
+void UserPort::setUnknownRecipientTalking()
 {
     showConnected();
 }
