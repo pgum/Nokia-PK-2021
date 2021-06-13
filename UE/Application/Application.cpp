@@ -97,4 +97,9 @@ void Application::handleSendCallReject(const common::PhoneNumber to)
     context.state->handleSendCallReject(to);
 }
 
+void Application::handleUnknownRecipient(const common::PhoneNumber from)
+{
+    context.state->handleUnknownRecipient(from);
+}
+
 }

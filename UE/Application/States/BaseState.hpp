@@ -32,6 +32,7 @@ public:
     void handleSendCallMessage(const common::PhoneNumber to, const std::string &text) override;
     void handleCallTalk(const common::PhoneNumber from, const std::string &message) override;
     void handleSendCallReject(const common::PhoneNumber to) override;
+    void handleUnknownRecipient(const common::PhoneNumber to) override;
 
 protected:
     Context& context;

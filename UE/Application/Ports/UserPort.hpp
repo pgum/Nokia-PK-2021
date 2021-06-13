@@ -31,6 +31,8 @@ public:
     void setCallRequestMode(const common::PhoneNumber from) override;
     void callTalkMessage(const common::PhoneNumber from, const std::string &text) override;
     void setCallDropped(const common::PhoneNumber recipient) override;
+    bool isTalking() override;
+    void setUnknownRecipientTalking() override;
 
 
 
@@ -39,6 +41,7 @@ private:
     IUeGui& gui;
     common::PhoneNumber phoneNumber;
     IUserEventsHandler* handler = nullptr;
+    bool isUserTalking = false;
 };
 
 }

@@ -20,6 +20,7 @@ public:
     virtual void handleCallRequest(common::PhoneNumber) = 0;
     virtual void handleReceivedCallDrop(const common::PhoneNumber) = 0;
     virtual void handleCallTalk(const common::PhoneNumber from, const std::string &message) = 0;
+    virtual void handleUnknownRecipient(const common::PhoneNumber from) = 0;
 
 };
 
