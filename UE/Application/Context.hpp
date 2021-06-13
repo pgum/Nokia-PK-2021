@@ -10,6 +10,7 @@ namespace ue
 struct Context
 {
     common::ILogger& logger;
+    common::PhoneNumber& mynumber;
     IBtsPort& bts;
     IUserPort& user;
     ITimerPort& timer;
