@@ -10,8 +10,7 @@ void SmsDb::addSms(const common::PhoneNumber from, const common::PhoneNumber to,
 
 std::vector<Sms>& SmsDb::getAllSms()
 {
-    return& db;
+    return db;
 }
-
 
 }

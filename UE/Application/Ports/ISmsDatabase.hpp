@@ -10,7 +10,7 @@ namespace ue
 {
 class ISmsDb{
 public:
-    virtual ~ISmsDatabase() = default;
+    virtual ~ISmsDb() = default;
 
     virtual void addSms(const common::PhoneNumber from, const common::PhoneNumber to, const string& text) = 0;
     virtual std::vector<Sms>& getAllSms() = 0;
