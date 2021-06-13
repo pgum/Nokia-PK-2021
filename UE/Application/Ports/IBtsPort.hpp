@@ -15,9 +15,9 @@ public:
     virtual void handleSib(common::BtsId) = 0;
     virtual void handleAttachAccept() = 0;
     virtual void handleAttachReject() = 0;
-    virtual void handleSmsReceived(common::PhoneNumber, std::string) = 0;
-    virtual void handleCallAccepted(common::PhoneNumber from) = 0;
-    virtual void handleCallRequest(common::PhoneNumber) = 0;
+    virtual void handleSmsReceived(const common::PhoneNumber, const std::string&) = 0;
+    virtual void handleCallAccepted(const common::PhoneNumber from) = 0;
+    virtual void handleCallRequest(const common::PhoneNumber) = 0;
     virtual void handleReceivedCallDrop(const common::PhoneNumber) = 0;
     virtual void handleCallTalk(const common::PhoneNumber from, const std::string &message) = 0;
     virtual void handleUnknownRecipient(const common::PhoneNumber from) = 0;
