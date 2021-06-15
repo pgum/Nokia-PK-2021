@@ -3,6 +3,7 @@
 #include "IUserPort.hpp"
 #include "Logger/PrefixedLogger.hpp"
 #include "IUeGui.hpp"
+#include <memory>
 #include "Messages/PhoneNumber.hpp"
 
 namespace ue
@@ -21,9 +22,8 @@ public:
     void showNotConnected() override;
     void showConnecting() override;
     void showConnected() override;
-
     void alertUser(std::string msg) override;
-    void showSmsList(std::vector<SMS> smsList) override;
+    void showSmsList(std::unique_ptr<std::vector<SMS>> smsList) override;
     void smsListViewHandler(OptionalSelection messageIndex) override;
     void composeSms() override;
     void showSingleSms(SMS sms) override;

@@ -127,6 +127,10 @@ TEST_F(BtsPortTestSuite,shallSendSms)
     testSMS.setTo(common::PhoneNumber{});
     testSMS.setMessage("testString");
 
+    testSMS.from = PHONE_NUMBER;
+    testSMS.to = common::PhoneNumber{20};
+    testSMS.message = "testString";
+
     EXPECT_CALL(transportMock,sendMessage(_)).WillOnce([&msg](auto param){msg = std::move(param);return true;});
 
     objectUnderTest.sendSms(testSMS);
@@ -135,7 +139,7 @@ TEST_F(BtsPortTestSuite,shallSendSms)
 
     ASSERT_NO_THROW(EXPECT_EQ(common::MessageId::Sms, reader.readMessageId()) );
     ASSERT_NO_THROW(EXPECT_EQ(PHONE_NUMBER, reader.readPhoneNumber()));
-    ASSERT_NO_THROW(EXPECT_EQ(common::PhoneNumber{}, reader.readPhoneNumber()));
+    ASSERT_NO_THROW(EXPECT_EQ(common::PhoneNumber{20}, reader.readPhoneNumber()));
     ASSERT_NO_THROW(EXPECT_EQ("testString", reader.readRemainingText()));
     ASSERT_NO_THROW(reader.checkEndOfMessage());
 }

@@ -32,6 +32,7 @@ namespace ue {
         context.state->handleSib(btsId);
     }
 
+
     void Application::handleAttachAccept() {
         context.state->handleAttachAccept();
     }
@@ -56,24 +57,26 @@ namespace ue {
         }
     }
 
-    void Application::handleViewSmsList() {
-        std::vector<SMS> smsList = context.smsDb.getAllReceivedSms();
-        context.user.showSmsList(smsList);
+    void Application::handleViewSmsList()
+    {
+      context.user.showSmsList(context.smsDb.getAllReceivedSms());
     }
 
-    void Application::handleSingleSms(int messageIndex) {
-        SMS currentSms = context.smsDb.getReceivedSms(messageIndex);
-        context.user.showSingleSms(currentSms);
+    void Application::handleSingleSms(int messageIndex)
+    {
+      context.user.showSingleSms(context.smsDb.getReceivedSms(messageIndex));
     }
 
-    void Application::handleSendSms(SMS sendingSms) {
-        context.smsDb.addSendSms(sendingSms);
-        context.bts.sendSms(sendingSms);
+    void Application::handleSendSms(SMS sendingSms)
+    {
+      context.smsDb.addSendSms(sendingSms);
+      context.bts.sendSms(sendingSms);
     }
 
-    void Application::handleNewSms(SMS sms) {
-        context.smsDb.addReceivedSms(sms);
-        context.user.smsNotification();
+    void Application::handleNewSms(SMS sms)
+    {
+      context.smsDb.addReceivedSms(sms);
+      context.user.smsNotification();
     }
 
     void Application::handleUnknownRecipient() {

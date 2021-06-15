@@ -32,7 +32,7 @@ public:
     MOCK_METHOD(void, showNotConnected, (), (final));
     MOCK_METHOD(void, showConnecting, (), (final));
     MOCK_METHOD(void, showConnected, (), (final));
-    MOCK_METHOD(void,showSmsList,(std::vector<SMS> smsList),(final));
+    MOCK_METHOD(void,showSmsList,(std::unique_ptr<std::vector<SMS>> smsList),(final));
     MOCK_METHOD(void,smsListViewHandler,(OptionalSelection messageIndex),(final));
     MOCK_METHOD(void,composeSms,(),(final));
     MOCK_METHOD(void,showSingleSms,(SMS sms),(final));

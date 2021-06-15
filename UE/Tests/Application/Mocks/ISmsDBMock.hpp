@@ -9,7 +9,7 @@ namespace ue{
         public:
             ISmsDBMock();
             MOCK_METHOD(SMS,getReceivedSms,(int smsIndex),(final));
-            MOCK_METHOD(std::vector<SMS>,getAllReceivedSms,(),(final));
+            MOCK_METHOD(std::unique_ptr<std::vector<SMS>>,getAllReceivedSms,(),(final));
             MOCK_METHOD(void,addSendSms,(SMS sms),(final));
             MOCK_METHOD(void,addReceivedSms,(SMS sms),(final));
             MOCK_METHOD(void,unknownRecipientSms,(),(final));

@@ -127,15 +127,14 @@ TEST_F(ApplicationConnectedTestSuite, shallReattach)
 }
 TEST_F(ApplicationConnectedTestSuite, shallHandleViewSmsList)
 {
-    std::vector<SMS> smsVector;
-    EXPECT_CALL(smsDbMock,getAllReceivedSms()).WillOnce(Return (smsVector));
-    EXPECT_CALL(userPortMock,showSmsList(smsVector));
+    EXPECT_CALL(smsDbMock,getAllReceivedSms()).WillOnce(Return(ByMove(std::make_unique<std::vector<SMS>>())));
+    EXPECT_CALL(userPortMock,showSmsList(_));
     objectUnderTest.handleViewSmsList();
 }
 TEST_F(ApplicationConnectedTestSuite, shallHandleSingleSms)
 {
     SMS testSms;
-    int testMessageIndex;
+    int testMessageIndex = 0;
     EXPECT_CALL(smsDbMock,getReceivedSms(testMessageIndex)).WillOnce(Return (testSms));
     EXPECT_CALL(userPortMock,showSingleSms(testSms));
     objectUnderTest.handleSingleSms(testMessageIndex);
@@ -143,8 +142,8 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSingleSms)
 TEST_F(ApplicationConnectedTestSuite,shallHandleSendSms)
 {
     SMS testSendingSms;
-    EXPECT_CALL(smsDbMock,addSendSms(_));
-    EXPECT_CALL(btsPortMock,sendSms(_));
+    EXPECT_CALL(smsDbMock,addSendSms(testSendingSms));
+    EXPECT_CALL(btsPortMock,sendSms(testSendingSms));
     objectUnderTest.handleSendSms(testSendingSms);
 }
 TEST_F(ApplicationConnectedTestSuite,shallHandleNewSms)
