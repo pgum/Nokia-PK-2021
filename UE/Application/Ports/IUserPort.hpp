@@ -1,6 +1,8 @@
 #pragma once
 #include <utility>
+#pragma once
 #include <vector>
+#include <memory>
 #include "SMS.hpp"
 
 
@@ -29,7 +31,7 @@ public:
     virtual void showConnecting() = 0;
     virtual void showConnected() = 0;
 
-    virtual void showSmsList(std::vector<SMS> smsList) = 0;
+    virtual void showSmsList(std::unique_ptr<std::vector<SMS>> smsList) = 0;
     virtual void smsListViewHandler(OptionalSelection messageIndex) = 0;
     virtual void composeSms() = 0;
     virtual void showSingleSms(SMS sms) = 0;

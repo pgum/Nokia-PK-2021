@@ -1,6 +1,7 @@
 #pragma once
 #include "ISmsDb.hpp"
 #include "SMS.hpp"
+#include <memory>
 
 namespace ue {
 
@@ -12,7 +13,7 @@ namespace ue {
 
         public:
             SmsDb();
-            std::vector<SMS> getAllReceivedSms() override;
+            std::unique_ptr<std::vector<SMS>> getAllReceivedSms() override;
             SMS getReceivedSms(int smsIndex) override;
             void addReceivedSms(SMS sms) override;
 

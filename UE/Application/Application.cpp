@@ -48,18 +48,22 @@ void Application::handleAttachReject()
 }
 void Application::handleMenuList(unsigned int selectionIndex)
 {
-    if(selectionIndex == 0)context.user.composeSms();
-    else handleViewSmsList();
+    if(selectionIndex == 0)
+    {
+        context.user.composeSms();
+    }
+    else
+    {
+        handleViewSmsList();
+    }
 }
 void Application::handleViewSmsList()
 {
-    std::vector<SMS> smsList = context.smsDb.getAllReceivedSms();
-    context.user.showSmsList(smsList);
+    context.user.showSmsList(context.smsDb.getAllReceivedSms());
 }
 void Application::handleSingleSms(int messageIndex)
 {
-    SMS currentSms = context.smsDb.getReceivedSms(messageIndex);
-    context.user.showSingleSms(currentSms);
+    context.user.showSingleSms(context.smsDb.getReceivedSms(messageIndex));
 }
 void Application::handleSendSms(SMS sendingSms)
 {
