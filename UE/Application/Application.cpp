@@ -77,7 +77,7 @@ namespace ue {
     }
 
     void Application::handleUnknownRecipient() {
-        context.smsDb.unknownRecipientSms();
+        context.state->handleUnknownRecipient();
     }
     void Application::handleCallRequest(common::PhoneNumber from){
         context.state->handleCallRequest(from);
@@ -96,6 +96,12 @@ namespace ue {
     }
     void Application::handleReceivedCallReject(common::PhoneNumber from) {
         context.state->handleReceivedCallReject(from);
+    }
+    void Application::handleSendCallTalk(common::PhoneNumber to, const std::string &msg) {
+        context.state->handleSendCallTalk(to, msg);
+    }
+    void Application::handleReceivedCallTalk(const std::string &text) {
+        context.state->handleReceivedCallTalk(text);
     }
 }
 

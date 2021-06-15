@@ -13,6 +13,7 @@ public:
     // IBtsEventsHandler interface
     void handleReceivedCallAccept(common::PhoneNumber from) final;
     void handleReceivedCallReject(common::PhoneNumber from) final;
+    void handleUnknownRecipient() final;
 public:
     void handleDisconnected() final;
     void handleCallRequest(common::PhoneNumber from) final;

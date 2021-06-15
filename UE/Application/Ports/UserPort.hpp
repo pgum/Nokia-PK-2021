@@ -30,13 +30,15 @@ public:
     void smsNotification() override;
     void showCalling(common::PhoneNumber from) override;
     void makeACall() override;
-    void setCallMode() override;
+    void setCallMode(common::PhoneNumber partnerPhoneNumber) override;
     void waitingForCallRespond() override;
+    void newCallMessage(const std::string &text) override;
 private:
     common::PrefixedLogger logger;
     IUeGui& gui;
     common::PhoneNumber phoneNumber;
     IUserEventsHandler* handler = nullptr;
+    IUeGui::ICallMode *callMode= nullptr;//uniqeprint
 };
 
 }

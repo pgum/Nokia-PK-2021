@@ -1,6 +1,8 @@
 #pragma once
 
 #include <chrono>
+#include <thread>
+#include <future>
 
 namespace ue
 {
@@ -19,7 +21,7 @@ public:
     using Duration = std::chrono::milliseconds;
 
     virtual ~ITimerPort() = default;
-
+    virtual void countTime(Duration duration) =0;
     virtual void startTimer(Duration) = 0;
     virtual void stopTimer() = 0;
 };

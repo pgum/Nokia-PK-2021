@@ -40,7 +40,11 @@ public:
     MOCK_METHOD(void,showCalling,(common::PhoneNumber from),(final));
     MOCK_METHOD(void,makeACall,(),(final));
     MOCK_METHOD(void,alertUser,(std::string msg),(final));
-    MOCK_METHOD(void,setCallMode,(),(final));
+    MOCK_METHOD(void,setCallMode,(),(final))
+
+    void setCallMode(common::PhoneNumber partnerPhoneNumber)
+
+    ;
     MOCK_METHOD(void,waitingForCallRespond,(),(final));
 };
 

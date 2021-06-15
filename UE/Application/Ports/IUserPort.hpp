@@ -18,6 +18,8 @@ public:
     virtual void handleSendCallAccepted(common::PhoneNumber from)=0;
     virtual void handleSendCallDropped(common::PhoneNumber from)=0;
     virtual void handleSendCallRequest(common::PhoneNumber to)=0;
+    virtual void handleSendCallTalk(common::PhoneNumber to, const std::string &msg) =0;
+
 
 };
 
@@ -26,6 +28,8 @@ class IUserPort
 public:
     using Selection = unsigned;
     using OptionalSelection = std::pair<bool,Selection>;
+
+
 
     virtual ~IUserPort() = default;
 
@@ -40,8 +44,10 @@ public:
     virtual void showCalling(common::PhoneNumber from)=0;
     virtual void makeACall()=0;
     virtual void alertUser(std::string msg)=0;
-    virtual void setCallMode()=0;
+    virtual void setCallMode(common::PhoneNumber partnerPhoneNumber) =0;
     virtual void waitingForCallRespond()=0;
+    virtual void newCallMessage(const std::string &text)=0;
+
 };
 
 }
