@@ -18,7 +18,10 @@ public:
     void sendAttachRequest(common::BtsId) override;
 
     void sendSms(SMS sendingSMS) override;
-
+    void sendCallAccept(common::PhoneNumber to) override;
+    void sendCallDropped(common::PhoneNumber to) override;
+    void sendCallRequest(common::PhoneNumber to) override;
+    void sendCallTalk(common::PhoneNumber to,const std::string & text) override;
 private:
     void handleDisconnected();
     void handleMessage(BinaryMessage msg);

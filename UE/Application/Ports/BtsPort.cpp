@@ -68,9 +68,29 @@ void BtsPort::handleMessage(BinaryMessage msg)
             handler->handleUnknownRecipient();
             break;
         }
+
+        case common::MessageId::CallRequest:
+        {
+            handler->handleCallRequest(from);
+            break;
+        }
+        case common::MessageId::CallAccepted:
+        {
+            handler->handleReceivedCallAccept(from);
+            break;
+        }
+        case common::MessageId::CallDropped:
+        {
+            handler->handleReceivedCallReject(from);
+            break;
+        }
+        case common::MessageId::CallTalk:
+        {
+            handler->handleReceivedCallTalk(reader.readRemainingText());
+            break;
+        }
         default:
             logger.logError("unknow message: ", msgId, ", from: ", from," to: ",to);
-
         }
     }
     catch (std::exception const& ex)
@@ -97,6 +117,28 @@ void BtsPort::sendSms(SMS sendingSMS)
                                sendingSMS.from,
                                sendingSMS.to};
     msg.writeText(sendingSMS.message);
+    transport.sendMessage(msg.getMessage());
+}
+
+void BtsPort::sendCallAccept(common::PhoneNumber to) {
+    logger.logInfo("sending CallAccepted"+to_string(to));
+    common::OutgoingMessage msg{common::MessageId::CallAccepted,phoneNumber,to};
+    transport.sendMessage(msg.getMessage());
+}
+void BtsPort::sendCallDropped(common::PhoneNumber to) {
+    logger.logInfo("sending CallDropped"+to_string(to));
+    common::OutgoingMessage msg{common::MessageId::CallDropped,phoneNumber,to};
+    transport.sendMessage(msg.getMessage());
+}
+
+void BtsPort::sendCallRequest(common::PhoneNumber to) {
+    common::OutgoingMessage msg{common::MessageId::CallRequest,phoneNumber,to};
+    transport.sendMessage(msg.getMessage());
+}
+void BtsPort::sendCallTalk(common::PhoneNumber to, const std::string &text) {
+    logger.logInfo("numer "+to_string(to)+"  "+text);
+    common::OutgoingMessage msg{common::MessageId::CallTalk,phoneNumber,to};
+    msg.writeText(text);
     transport.sendMessage(msg.getMessage());
 }
 }

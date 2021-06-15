@@ -1,8 +1,10 @@
+#include <future>
+#include <UeGui/ICallMode.hpp>
 #include "UserPort.hpp"
 #include "UeGui/IListViewMode.hpp"
 #include "UeGui/ITextMode.hpp"
 #include "UeGui/ISmsComposeMode.hpp"
-
+#include "UeGui/IDialMode.hpp"
 namespace ue
 {
 
@@ -84,20 +86,90 @@ void UserPort::composeSms(){
 
 void UserPort::showConnected()
 {
-
-
+    callMode= nullptr;
     IUeGui::IListViewMode& menu = gui.setListViewMode();
     menu.clearSelectionList();
     menu.addSelectionListItem("Compose SMS", "");
     menu.addSelectionListItem("View SMS", "");
+    menu.addSelectionListItem("Call","");
     gui.setAcceptCallback([this,&menu](){
-                    OptionalSelection selectedItem = menu.getCurrentItemIndex();
-                    Selection selectedItemIndex = selectedItem.second;
-                    this->handler->handleMenuList(selectedItemIndex);
+        OptionalSelection selectedItem = menu.getCurrentItemIndex();
+        Selection selectedItemIndex = selectedItem.second;
+        this->handler->handleMenuList(selectedItemIndex);
     });
+    gui.setRejectCallback(nullptr);
 }
 void UserPort::smsNotification()
 {
     gui.showNewSms();
 }
+
+void UserPort::showCalling(common::PhoneNumber from)
+{
+    logger.logInfo("showCalling");
+    auto & alertMode = gui.setAlertMode();
+    alertMode.setText("call from " + to_string(from));
+
+    gui.setAcceptCallback([this,from]{
+        this->handler->handleSendCallAccepted(from);
+    });
+
+    gui.setRejectCallback([this,from]{
+        this->handler->handleSendCallDropped(from);
+    });
+}
+
+void UserPort::makeACall(){
+    auto &dialMenu=gui.setDialMode();
+
+    gui.setAcceptCallback([this,&dialMenu](){
+        common::PhoneNumber enteredPhoneNumber=dialMenu.getPhoneNumber();
+        logger.logInfo("Calling "+ to_string( enteredPhoneNumber));
+        handler->handleSendCallRequest(enteredPhoneNumber);
+
+        gui.setRejectCallback([this,&dialMenu]{
+            common::PhoneNumber enteredPhoneNumber=dialMenu.getPhoneNumber();
+            logger.logInfo("Sending droped call to "+ to_string( enteredPhoneNumber));
+            handler->handleSendCallDropped(enteredPhoneNumber);
+        });
+    });
+
+    gui.setRejectCallback([this](){showConnected();});
+
+}
+
+void UserPort::setCallMode(common::PhoneNumber partnerPhoneNumber) {
+    callMode=&gui.setCallMode();
+
+    gui.setAcceptCallback([=](){
+        auto text=callMode->getOutgoingText();
+        if(!(text.empty())){
+            logger.logInfo("setCallMode  "+to_string(partnerPhoneNumber));
+            handler->handleSendCallTalk(partnerPhoneNumber,text);
+            callMode->clearOutgoingText();
+        }
+    });
+    gui.setRejectCallback([=](){handler->handleSendCallDropped(partnerPhoneNumber);});
+}
+
+void UserPort::newCallMessage(const std::string &text) {
+    callMode->appendIncomingText(text);
+}
+
+void UserPort::waitingForCallRespond() {
+    auto &alert=gui.setAlertMode();
+    alert.setText("Calling ...");
+}
+
+
+void UserPort::alertUser(std::string msg) {
+
+    auto &alert=gui.setAlertMode();
+    alert.setText((msg));
+    gui.setAcceptCallback([=](){showConnected();});
+    gui.setRejectCallback([=](){showConnected();});
+}
+
+
+//  Calling CallTalk Alert ComposeSMS ViewSMS MenuMain
 }

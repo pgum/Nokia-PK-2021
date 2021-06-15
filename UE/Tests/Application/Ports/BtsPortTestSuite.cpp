@@ -123,6 +123,9 @@ TEST_F(BtsPortTestSuite,shallSendSms)
 {
     common::BinaryMessage msg;
     SMS testSMS;
+    testSMS.setFrom(PHONE_NUMBER);
+    testSMS.setTo(common::PhoneNumber{});
+    testSMS.setMessage("testString");
 
     testSMS.from = PHONE_NUMBER;
     testSMS.to = common::PhoneNumber{20};
@@ -133,10 +136,54 @@ TEST_F(BtsPortTestSuite,shallSendSms)
     objectUnderTest.sendSms(testSMS);
 
     common::IncomingMessage reader(msg);
+
     ASSERT_NO_THROW(EXPECT_EQ(common::MessageId::Sms, reader.readMessageId()) );
     ASSERT_NO_THROW(EXPECT_EQ(PHONE_NUMBER, reader.readPhoneNumber()));
     ASSERT_NO_THROW(EXPECT_EQ(common::PhoneNumber{20}, reader.readPhoneNumber()));
     ASSERT_NO_THROW(EXPECT_EQ("testString", reader.readRemainingText()));
     ASSERT_NO_THROW(reader.checkEndOfMessage());
 }
+
+TEST_F(BtsPortTestSuite,shallSendCallRequest)
+{
+    common::BinaryMessage msg;
+    auto reciver=common::PhoneNumber{123};
+
+    EXPECT_CALL(transportMock,sendMessage(_)).WillOnce([&msg](auto param){msg = std::move(param);return true;});
+    objectUnderTest.sendCallRequest(reciver);
+
+    common::IncomingMessage reader(msg);
+    ASSERT_NO_THROW(EXPECT_EQ(common::MessageId::CallRequest, reader.readMessageId()) );
+    ASSERT_NO_THROW(EXPECT_EQ(PHONE_NUMBER, reader.readPhoneNumber()));
+    ASSERT_NO_THROW(EXPECT_EQ(common::PhoneNumber{123}, reader.readPhoneNumber()));
+}
+
+
+TEST_F(BtsPortTestSuite,shallSendCallAccept)
+{
+        common::BinaryMessage msg;
+        auto reciver=common::PhoneNumber{123};
+
+        EXPECT_CALL(transportMock,sendMessage(_)).WillOnce([&msg](auto param){msg = std::move(param);return true;});
+        objectUnderTest.sendCallAccept(reciver);
+
+        common::IncomingMessage reader(msg);
+        ASSERT_NO_THROW(EXPECT_EQ(common::MessageId::CallAccepted, reader.readMessageId()) );
+        ASSERT_NO_THROW(EXPECT_EQ(PHONE_NUMBER, reader.readPhoneNumber()));
+        ASSERT_NO_THROW(EXPECT_EQ(common::PhoneNumber{123}, reader.readPhoneNumber()));
+}
+
+TEST_F(BtsPortTestSuite,shallSendCallDropped)
+{
+        common::BinaryMessage msg;
+        auto reciver=common::PhoneNumber{123};
+        EXPECT_CALL(transportMock,sendMessage(_)).WillOnce([&msg](auto param){msg = std::move(param);return true;});
+        objectUnderTest.sendCallDropped(reciver);
+
+        common::IncomingMessage reader(msg);
+        ASSERT_NO_THROW(EXPECT_EQ(common::MessageId::CallDropped, reader.readMessageId()) );
+        ASSERT_NO_THROW(EXPECT_EQ(PHONE_NUMBER, reader.readPhoneNumber()));
+        ASSERT_NO_THROW(EXPECT_EQ(common::PhoneNumber{123}, reader.readPhoneNumber()));
+}
+
 }

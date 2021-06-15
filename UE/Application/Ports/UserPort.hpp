@@ -22,18 +22,23 @@ public:
     void showNotConnected() override;
     void showConnecting() override;
     void showConnected() override;
-
+    void alertUser(std::string msg) override;
     void showSmsList(std::unique_ptr<std::vector<SMS>> smsList) override;
     void smsListViewHandler(OptionalSelection messageIndex) override;
     void composeSms() override;
     void showSingleSms(SMS sms) override;
     void smsNotification() override;
-
+    void showCalling(common::PhoneNumber from) override;
+    void makeACall() override;
+    void setCallMode(common::PhoneNumber partnerPhoneNumber) override;
+    void waitingForCallRespond() override;
+    void newCallMessage(const std::string &text) override;
 private:
     common::PrefixedLogger logger;
     IUeGui& gui;
     common::PhoneNumber phoneNumber;
     IUserEventsHandler* handler = nullptr;
+    IUeGui::ICallMode *callMode= nullptr;//uniqeprint
 };
 
 }
