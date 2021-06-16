@@ -71,7 +71,7 @@ TEST_F(UserPortTestSuite,shallShowSmsList)
 
     std::vector<SMS> testVector;
     SMS testSmsToShow{"",common::PhoneNumber{1},PHONE_NUMBER,smsRead::NotRead,smsReceived::Received};
-    testVector.push_back(testSmsToShow);\
+    testVector.push_back(testSmsToShow);
 
     std::unique_ptr<std::vector<SMS>> ptrTestVector = std::make_unique<std::vector<SMS>>(testVector);
 
@@ -133,5 +133,32 @@ TEST_F(UserPortTestSuite,shallShowCalling)
     objectUnderTest.showCalling(PHONE_NUMBER);
 }
 
+TEST_F(UserPortTestSuite,shallAlertUser)
+{
+    EXPECT_CALL(guiMock,setAlertMode()).WillOnce(ReturnRef(textModeMock));
+    EXPECT_CALL(textModeMock,setText(_));
+    EXPECT_CALL(guiMock,setRejectCallback(_));
+    EXPECT_CALL(guiMock,setAcceptCallback(_));
+    objectUnderTest.alertUser("to jest test");
+}
+
+TEST_F(UserPortTestSuite,shallSetCallModeAndNewCallMessage)
+{
+    EXPECT_CALL(guiMock,setCallMode()).WillOnce(ReturnRef(callModeMock));
+    EXPECT_CALL(guiMock,setRejectCallback(_));
+    EXPECT_CALL(guiMock,setAcceptCallback(_));
+    objectUnderTest.setCallMode(PHONE_NUMBER);
+
+    EXPECT_CALL(callModeMock,clearIncomingText());
+    EXPECT_CALL(callModeMock,appendIncomingText(_));
+    objectUnderTest.newCallMessage("to jest test");
+}
+
+TEST_F(UserPortTestSuite,shallWaitingForCallRespond)
+{
+    EXPECT_CALL(guiMock,setAlertMode()).WillOnce(ReturnRef(textModeMock));
+    EXPECT_CALL(textModeMock,setText(_));
+    objectUnderTest.waitingForCallRespond();
+}
 
 }
