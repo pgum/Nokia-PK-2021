@@ -1,5 +1,5 @@
 #include "TimerPort.hpp"
-#include <future>
+
 #include <thread>
 namespace ue
 {
@@ -25,31 +25,36 @@ void TimerPort::startTimer(Duration duration)
 {
     running=true;
     std::thread timer(&TimerPort::countTime,this,duration);
-    timer.join();
+    newThreadID= timer.get_id();
+    timer.detach();
     logger.logDebug("Start timer: ", duration.count(), "ms");
+
 }
 
 void TimerPort::countTime(Duration duration) {
-    using namespace std::literals::chrono_literals;
 
+    using namespace std::literals::chrono_literals;
     auto start=std::chrono::high_resolution_clock::now();
     std::chrono::duration<float>result=0ms;
 
-    std::cout<<running<<"\n";
     while (duration>result){
-        std::this_thread::sleep_for(1s);
+        std::this_thread::sleep_for(200ms);
+        if (!this->running){return;}
+
         auto end=std::chrono::high_resolution_clock::now();
         result=end-start;
-        std::cout<<result.count()<<"\n";
-        if (!running){return;}
+        logger.logInfo(result.count());
+        if (std::this_thread::get_id()!=newThreadID){return;}
     }
     handler->handleTimeout();
 }
 
 void TimerPort::stopTimer()
 {
+
     running= false;
     logger.logDebug("Stop timer");
+
 }
 
 }

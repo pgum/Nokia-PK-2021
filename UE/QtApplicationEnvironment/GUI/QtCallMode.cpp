@@ -54,6 +54,10 @@ void QtCallMode::clearOutgoingText()
     outgoingTextEdit.clear();
 }
 
+void QtCallMode::clearIncomingText() {
+    incomingTextEdit.clear();
+}
+
 std::string QtCallMode::getOutgoingText() const
 {
     return outgoingTextEdit.toPlainText().toStdString();

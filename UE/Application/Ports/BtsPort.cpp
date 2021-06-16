@@ -65,10 +65,16 @@ void BtsPort::handleMessage(BinaryMessage msg)
         }
         case common::MessageId::UnknownRecipient:
         {
-            handler->handleUnknownRecipient();
+            switch (reader.readMessageHeader().messageId) {
+                case common::MessageId::Sms:
+                    handler->handleUnknownRecipientSMS();
+                    break;
+                case common::MessageId::CallRequest:
+                    handler->handleUnknownRecipient();
+                    break;
+            }
             break;
         }
-
         case common::MessageId::CallRequest:
         {
             handler->handleCallRequest(from);

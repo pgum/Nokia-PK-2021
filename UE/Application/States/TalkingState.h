@@ -14,6 +14,7 @@ public:
     void handleSendCallDropped(common::PhoneNumber from) final;
     void handleTimeout() final;
     // IBtsEventsHandler interface
+    void handleCallRequest(common::PhoneNumber from) final;
     void handleReceivedCallTalk(const std::string &text) final;
     void handleReceivedCallReject(common::PhoneNumber from) final;
     void handleUnknownRecipient() final;

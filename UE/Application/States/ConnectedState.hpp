@@ -11,6 +11,7 @@ public:
     ConnectedState(Context& context);
     void handleTimeout() final;
     // IBtsEventsHandler interface
+    void handleUnknownRecipientSMS()final;
     void handleReceivedCallAccept(common::PhoneNumber from) final;
     void handleReceivedCallReject(common::PhoneNumber from) final;
     void handleUnknownRecipient() final;

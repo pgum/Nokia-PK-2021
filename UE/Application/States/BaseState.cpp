@@ -90,4 +90,7 @@ void BaseState::handleSendCallTalk(common::PhoneNumber to, const std::string &ms
 void BaseState::handleReceivedCallTalk(const std::string &text) {
     logger.logError("Unexpected : handleReceivedCallTalk ");
 }
+void BaseState::handleUnknownRecipientSMS() {
+    logger.logError("Unexpected : handleUnknownRecipientSMS ");
+}
 }

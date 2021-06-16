@@ -27,6 +27,7 @@ public:
     void handleReceivedCallAccept(common::PhoneNumber from) override;
     void handleReceivedCallReject(common::PhoneNumber from) override;
     void handleReceivedCallTalk(const std::string &text) override;
+    void handleUnknownRecipientSMS()override;
     //IUserEventsHandler
     void handleViewSmsList() override;
     void handleSingleSms(int messageIndex) override;

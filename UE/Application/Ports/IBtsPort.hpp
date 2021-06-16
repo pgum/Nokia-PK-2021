@@ -19,6 +19,7 @@ public:
     virtual void handleAttachReject()=0;
     virtual void handleNewSms(SMS newSms) = 0;
     virtual void handleUnknownRecipient() = 0;
+    virtual void handleUnknownRecipientSMS()=0;
     virtual void handleCallRequest(common::PhoneNumber from)=0;
     virtual void handleReceivedCallAccept(common::PhoneNumber from)=0;
     virtual void handleReceivedCallReject(common::PhoneNumber from)=0;

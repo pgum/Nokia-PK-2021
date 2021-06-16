@@ -18,7 +18,7 @@ public:
                QtStackedWidget& stackedWidget);
 
     void activateForDialMode();
-
+    void clearIncomingText() override;
     void appendIncomingText(const std::string &text) override;
     void clearOutgoingText() override;
     std::string getOutgoingText() const override;

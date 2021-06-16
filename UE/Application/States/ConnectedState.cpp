@@ -19,12 +19,10 @@ void ConnectedState::handleDisconnected()
 void ConnectedState::handleSendCallRequest(common::PhoneNumber to) {
         context.bts.sendCallRequest(to);
         context.user.waitingForCallRespond();
-        //tutaj zmieniaj setcallback
         using namespace std::chrono_literals;
-        context.timer.startTimer(10s);
+        context.timer.startTimer(30s);
 }
 void ConnectedState::handleReceivedCallAccept(common::PhoneNumber from) {
-    context.timer.stopTimer();
     context.setState<TalkingState>(from);
 }
 
@@ -39,7 +37,7 @@ void ConnectedState::handleTimeout() {
 }
 
 void ConnectedState::handleCallRequest(common::PhoneNumber from) {
-        context.user.showCalling(from);
+    context.user.showCalling(from);
 }
 
 void ConnectedState::handleSendCallAccepted(common::PhoneNumber from){
@@ -53,12 +51,14 @@ void ConnectedState::handleSendCallDropped(common::PhoneNumber from){
     context.bts.sendCallDropped(from);
     context.user.showConnected();
 }
+void ConnectedState::handleUnknownRecipientSMS() {
+    context.smsDb.unknownRecipientSms();
+}
 
 void ConnectedState::handleUnknownRecipient() {
-//    context.smsDb.unknownRecipientSms();
-    context.user.alertUser("User unreacheable");
-    //alert user ?
-
+    context.timer.stopTimer();
+    context.user.alertUser("User unreachable");
+    //dodaj clear incomingmessage
 }
 
 }

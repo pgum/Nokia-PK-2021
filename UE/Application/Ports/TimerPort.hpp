@@ -2,7 +2,6 @@
 
 #include "ITimerPort.hpp"
 #include "Logger/PrefixedLogger.hpp"
-#include <future>
 namespace ue
 {
 
@@ -20,6 +19,7 @@ public:
     void countTime(Duration duration) override;
 private:
     bool running= false;
+    std::thread::id newThreadID;
     common::PrefixedLogger logger;
     ITimerEventsHandler* handler = nullptr;
 };

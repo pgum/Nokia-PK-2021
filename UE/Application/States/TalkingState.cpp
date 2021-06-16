@@ -1,6 +1,3 @@
-//
-// Created by jacob on 13.05.2021.
-//
 
 #include "TalkingState.h"
 #include "ConnectedState.hpp"
@@ -10,6 +7,7 @@ namespace ue
 TalkingState::TalkingState(Context &context,common::PhoneNumber partnerPhoneNumber)
     : BaseState(context,"TalkingState")
     {
+        context.timer.stopTimer();
         context.user.setCallMode(partnerPhoneNumber);
         using namespace std::chrono_literals;
         context.timer.startTimer(120s);
@@ -45,10 +43,15 @@ void TalkingState::handleReceivedCallReject(common::PhoneNumber from) {
 void TalkingState::handleTimeout() {
     context.timer.stopTimer();
     context.setState<ConnectedState>();
+    context.user.alertUser("User does not respond");
 }
 
 void TalkingState::handleUnknownRecipient() {
     context.timer.stopTimer();
     context.setState<ConnectedState>();
+}
+
+void TalkingState::handleCallRequest(common::PhoneNumber from) {
+    context.bts.sendCallDropped(from);
 }
 }

@@ -106,10 +106,8 @@ void UserPort::smsNotification()
 
 void UserPort::showCalling(common::PhoneNumber from)
 {
-    logger.logInfo("showCalling");
     auto & alertMode = gui.setAlertMode();
     alertMode.setText("call from " + to_string(from));
-
     gui.setAcceptCallback([this,from]{
         this->handler->handleSendCallAccepted(from);
     });
@@ -153,6 +151,7 @@ void UserPort::setCallMode(common::PhoneNumber partnerPhoneNumber) {
 }
 
 void UserPort::newCallMessage(const std::string &text) {
+    callMode->clearIncomingText();
     callMode->appendIncomingText(text);
 }
 
@@ -170,6 +169,4 @@ void UserPort::alertUser(std::string msg) {
     gui.setRejectCallback([=](){showConnected();});
 }
 
-
-//  Calling CallTalk Alert ComposeSMS ViewSMS MenuMain
 }

@@ -38,7 +38,7 @@ private:
     IUeGui& gui;
     common::PhoneNumber phoneNumber;
     IUserEventsHandler* handler = nullptr;
-    IUeGui::ICallMode *callMode= nullptr;//uniqeprint
+    IUeGui::ICallMode *callMode= nullptr;
 };
 
 }

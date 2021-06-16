@@ -78,6 +78,9 @@ namespace ue {
       context.smsDb.addReceivedSms(sms);
       context.user.smsNotification();
     }
+    void Application::handleUnknownRecipientSMS() {
+        context.state->handleUnknownRecipientSMS();
+    }
 
     void Application::handleUnknownRecipient() {
         context.state->handleUnknownRecipient();
