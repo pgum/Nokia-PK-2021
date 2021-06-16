@@ -7,7 +7,7 @@ namespace ue
 TalkingState::TalkingState(Context &context,common::PhoneNumber partnerPhoneNumber)
     : BaseState(context,"TalkingState")
     {
-        context.timer.stopTimer();
+
         context.user.setCallMode(partnerPhoneNumber);
         using namespace std::chrono_literals;
         context.timer.startTimer(120s);

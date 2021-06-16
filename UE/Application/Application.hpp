@@ -23,30 +23,30 @@ public:
     ~Application();
 
     // ITimerEventsHandler interface
-    void handleTimeout() override;
+    void handleTimeout() override;//<--C T
 
     // IBtsEventsHandler interface
     void handleDisconnected() override;
     void handleSib(common::BtsId btsId) override;
     void handleAttachAccept() override;
     void handleAttachReject() override;
-    void handleCallRequest(common::PhoneNumber from) override;
+    void handleCallRequest(common::PhoneNumber from) override;//T<--
     void handleReceivedCallAccept(common::PhoneNumber from) override;
-    void handleReceivedCallReject(common::PhoneNumber from) override;
-    void handleReceivedCallTalk(const std::string &text)override;
+    void handleReceivedCallReject(common::PhoneNumber from) override;//<--T
+    void handleReceivedCallTalk(const std::string &text)override;//<-T
     void handleUnknownRecipientSMS()override;
+    void handleUnknownRecipient() override;//<--T
     //IUserEventsHandler
     void handleViewSmsList() override;
     void handleSingleSms(int messageIndex) override;
     void handleSendSms(SMS sendingSMS) override;
     void handleNewSms(SMS sms) override;
-    void handleUnknownRecipient() override;
     void handleMenuList(unsigned selectionIndex) override;
 
-    void handleSendCallAccepted(common::PhoneNumber from) override;//done Test
-    void handleSendCallDropped(common::PhoneNumber from) override;//done Test
-    void handleSendCallRequest(common::PhoneNumber to) override;//done Test
-    void handleSendCallTalk(common::PhoneNumber to, const std::string &msg) override;
+    void handleSendCallAccepted(common::PhoneNumber from) override;
+    void handleSendCallDropped(common::PhoneNumber from) override;//T
+    void handleSendCallRequest(common::PhoneNumber to) override;
+    void handleSendCallTalk(common::PhoneNumber to, const std::string &msg) override;//<--T
 private:
     Context context;
     common::PrefixedLogger logger;

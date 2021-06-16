@@ -23,6 +23,7 @@ void ConnectedState::handleSendCallRequest(common::PhoneNumber to) {
         context.timer.startTimer(30s);
 }
 void ConnectedState::handleReceivedCallAccept(common::PhoneNumber from) {
+    context.timer.stopTimer();
     context.setState<TalkingState>(from);
 }
 

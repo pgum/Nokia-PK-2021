@@ -97,17 +97,29 @@ void ApplicationConnectedTestSuite::doConnected()
 }
 struct ApplicationTalkingTestSuite :ApplicationConnectedTestSuite
 {
-        ApplicationTalkingTestSuite();
+    ApplicationTalkingTestSuite();
+    void setTalkingState();
 };
 
 ApplicationTalkingTestSuite::ApplicationTalkingTestSuite()
 {
-//    EXPECT_CALL(userPortMock,setCallMode());
+    setTalkingState();
+}
+
+void ApplicationTalkingTestSuite::setTalkingState()
+{
+    EXPECT_CALL(timerPortMock,stopTimer());
+    EXPECT_CALL(userPortMock,setCallMode(_));
+    EXPECT_CALL(timerPortMock,startTimer(_));
+    objectUnderTest.handleReceivedCallAccept(PHONE_NUMBER);
+}
+
+TEST_F(ApplicationTalkingTestSuite,shallShowCallModeOnRecivedCallAccept)
+{
 }
 
 TEST_F(ApplicationConnectedTestSuite, shallShowConnectedOnAttachAccept)
 {
-
     // see test-suite constructor
 }
 
@@ -121,16 +133,17 @@ TEST_F(ApplicationConnectedTestSuite, shallReattach)
 {
     EXPECT_CALL(userPortMock, showNotConnected());
     objectUnderTest.handleDisconnected();
-
     doConnecting();
     doConnected();
 }
+
 TEST_F(ApplicationConnectedTestSuite, shallHandleViewSmsList)
 {
     EXPECT_CALL(smsDbMock,getAllReceivedSms()).WillOnce(Return(ByMove(std::make_unique<std::vector<SMS>>())));
     EXPECT_CALL(userPortMock,showSmsList(_));
     objectUnderTest.handleViewSmsList();
 }
+
 TEST_F(ApplicationConnectedTestSuite, shallHandleSingleSms)
 {
     SMS testSms;
@@ -139,6 +152,7 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSingleSms)
     EXPECT_CALL(userPortMock,showSingleSms(testSms));
     objectUnderTest.handleSingleSms(testMessageIndex);
 }
+
 TEST_F(ApplicationConnectedTestSuite,shallHandleSendSms)
 {
     SMS testSendingSms;
@@ -146,6 +160,7 @@ TEST_F(ApplicationConnectedTestSuite,shallHandleSendSms)
     EXPECT_CALL(btsPortMock,sendSms(testSendingSms));
     objectUnderTest.handleSendSms(testSendingSms);
 }
+
 TEST_F(ApplicationConnectedTestSuite,shallHandleNewSms)
 {
     SMS testSms;
@@ -153,13 +168,21 @@ TEST_F(ApplicationConnectedTestSuite,shallHandleNewSms)
     EXPECT_CALL(userPortMock,smsNotification());
     objectUnderTest.handleNewSms(testSms);
 }
-//TEST_F(ApplicationConnectedTestSuite,shallHandleUnknownRecipient)
-//{
-//    EXPECT_CALL(smsDbMock,unknownRecipientSms());
-//    objectUnderTest.handleUnknownRecipient();
-//}
 
-TEST_F(ApplicationConnectedTestSuite,shallHandleCallRequest)
+TEST_F(ApplicationConnectedTestSuite,handleUnknownRecipientSMS)
+{
+    EXPECT_CALL(smsDbMock,unknownRecipientSms());
+    objectUnderTest.handleUnknownRecipientSMS();
+}
+
+TEST_F(ApplicationConnectedTestSuite,handleUnknownRecipientOnConnected)
+{
+    EXPECT_CALL(timerPortMock,stopTimer());
+    EXPECT_CALL(userPortMock,alertUser(_));
+    objectUnderTest.handleUnknownRecipient();
+}
+
+TEST_F(ApplicationConnectedTestSuite,shallHandleCallRequestOnConnected)
 {
     auto sender=common::PhoneNumber{123};
     EXPECT_CALL(userPortMock,showCalling(_));
@@ -168,44 +191,101 @@ TEST_F(ApplicationConnectedTestSuite,shallHandleCallRequest)
 
 TEST_F(ApplicationConnectedTestSuite,shallHandleReceivedCallAccept)
 {
-//    auto sender=common::PhoneNumber{123};
-//    EXPECT_CALL(timerPortMock,stopTimer());
-//    EXPECT_CALL(userPortMock,setCallMode());
-//    objectUnderTest.handleReceivedCallAccept(sender);
+
+    EXPECT_CALL(timerPortMock,stopTimer());
+    EXPECT_CALL(userPortMock,setCallMode(_));
+    EXPECT_CALL(timerPortMock,startTimer(_));
+    objectUnderTest.handleReceivedCallAccept(PHONE_NUMBER);
 }
-TEST_F(ApplicationConnectedTestSuite,shallHandleReceivedCallReject)
+
+TEST_F(ApplicationConnectedTestSuite,shallHandleReceivedCallRejectOnConnected)
 {
-    auto sender=common::PhoneNumber{123};
+
     EXPECT_CALL(timerPortMock,stopTimer());
     EXPECT_CALL(userPortMock,alertUser(_));
-    objectUnderTest.handleReceivedCallReject(sender);
+    objectUnderTest.handleReceivedCallReject(PHONE_NUMBER);
 }
+
 TEST_F(ApplicationConnectedTestSuite,shallHandleSendCallAccepted)
 {
-//    auto reciver=common::PhoneNumber{123};
-//    EXPECT_CALL(btsPortMock,sendCallAccept(reciver));
-//    EXPECT_CALL(userPortMock,setCallMode());
-//
-//    objectUnderTest.handleSendCallAccepted(reciver);
+    EXPECT_CALL(timerPortMock,stopTimer());
+    EXPECT_CALL(btsPortMock,sendCallAccept(_));
+    EXPECT_CALL(userPortMock,setCallMode(_));
+    EXPECT_CALL(timerPortMock,startTimer(_));
+    objectUnderTest.handleSendCallAccepted(PHONE_NUMBER);
 }
-//TEST_F(ApplicationConnectedTestSuite,shallHandleSendCallDropped)
-//{
-//    auto reciver=common::PhoneNumber{123};
-//
-//    EXPECT_CALL(btsPortMock,sendCallDropped(reciver));
-//    EXPECT_CALL(userPortMock,showConnected());
-//
-//    objectUnderTest.handleSendCallDropped(reciver);
-//}
-TEST_F(ApplicationConnectedTestSuite,handleSendCallRequest)
-{
-    auto reciver=common::PhoneNumber{123};
 
-    EXPECT_CALL(btsPortMock,sendCallRequest(reciver));
+TEST_F(ApplicationConnectedTestSuite,shallHandleSendCallDroppedOnConnected)
+{
+    EXPECT_CALL(timerPortMock,stopTimer());
+    EXPECT_CALL(btsPortMock,sendCallDropped(_));
+    EXPECT_CALL(userPortMock,showConnected());
+
+    objectUnderTest.handleSendCallDropped(PHONE_NUMBER);
+}
+TEST_F(ApplicationConnectedTestSuite,shallHandleSendCallRequest)
+{
+    EXPECT_CALL(btsPortMock,sendCallRequest(_));
     EXPECT_CALL(userPortMock,waitingForCallRespond());
     EXPECT_CALL(timerPortMock,startTimer(_));
 
-    objectUnderTest.handleSendCallRequest(reciver);
+    objectUnderTest.handleSendCallRequest(PHONE_NUMBER);
+}
+
+TEST_F(ApplicationConnectedTestSuite,shallHandleTimeoutOnConnected)
+{
+    EXPECT_CALL(timerPortMock,stopTimer());
+    EXPECT_CALL(userPortMock,alertUser(_));
+    objectUnderTest.handleTimeout();
+}
+
+TEST_F(ApplicationTalkingTestSuite,shallHandleSendCallTalk){
+    EXPECT_CALL(timerPortMock,stopTimer());
+    EXPECT_CALL(btsPortMock,sendCallTalk(_,_));
+    EXPECT_CALL(timerPortMock,startTimer(_));
+    objectUnderTest.handleSendCallTalk(PHONE_NUMBER,"to tylko test");
+}
+
+TEST_F(ApplicationTalkingTestSuite,shallHandleSendCallDroppedOnTalkingState){
+    EXPECT_CALL(timerPortMock,stopTimer());
+    EXPECT_CALL(btsPortMock,sendCallDropped(_));
+    EXPECT_CALL(userPortMock,showConnected());
+    EXPECT_CALL(userPortMock,alertUser(_));
+    objectUnderTest.handleSendCallDropped(PHONE_NUMBER);
+}
+TEST_F(ApplicationTalkingTestSuite,shallhandleReceivedCallTalk){
+    EXPECT_CALL(timerPortMock,stopTimer());
+    EXPECT_CALL(userPortMock,newCallMessage(_));
+    EXPECT_CALL(timerPortMock,startTimer(_));
+    objectUnderTest.handleReceivedCallTalk("to jest test");
+}
+
+TEST_F(ApplicationTalkingTestSuite,shallhandleReceivedCallRejectOnTalkingState)
+{
+    EXPECT_CALL(timerPortMock,stopTimer());
+    EXPECT_CALL(userPortMock,showConnected());
+    objectUnderTest.handleReceivedCallReject(PHONE_NUMBER);
+
+}
+
+TEST_F(ApplicationTalkingTestSuite,shallhandleUnknownRecipientOnTalkingState)
+{
+    EXPECT_CALL(timerPortMock,stopTimer());
+    EXPECT_CALL(userPortMock,showConnected());
+    objectUnderTest.handleUnknownRecipient();
+}
+
+TEST_F(ApplicationTalkingTestSuite,shallhandleCallRequestOnTalkingState)
+{
+    EXPECT_CALL(btsPortMock,sendCallDropped(_));
+    objectUnderTest.handleCallRequest(PHONE_NUMBER);
+}
+TEST_F(ApplicationTalkingTestSuite,shallHandleTimeoutOnTalkingState)
+{
+    EXPECT_CALL(timerPortMock,stopTimer());
+    EXPECT_CALL(userPortMock,showConnected());
+    EXPECT_CALL(userPortMock,alertUser(_));
+    objectUnderTest.handleTimeout();
 }
 
 }
