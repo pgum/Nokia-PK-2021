@@ -58,7 +58,6 @@ void ConnectedState::handleUnknownRecipientSMS() {
 void ConnectedState::handleUnknownRecipient() {
     context.timer.stopTimer();
     context.user.alertUser("User unreachable");
-    //dodaj clear incomingmessage
 }
 
 }
